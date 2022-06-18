@@ -31,6 +31,10 @@
 			background: linear-gradient(to top, black, transparent);
 		}
 
+		.similar-second {
+			display: none;
+		}
+
 		.texture-image {
 			height: 64px;
 			image-rendering: crisp-edges;
@@ -52,7 +56,11 @@
 		<div class="name"></div>
 
 		<h3>Similar Blocks</h3>
-		<div class="similar"></div>
+		<div class="similar-best"></div>
+		<div>
+			<a class="similar-toggle">More...</a>
+			<div class="similar-second"></div>
+		</div>
 	</div>
 	<div class="controls">
 		<label>
@@ -159,6 +167,55 @@ class Tooltip {
 	}
 }
 
+class SimilarBlocks {
+	constructor() {
+		const selectedBlockEl = document.querySelector('.selected-block');
+
+		this.moreEl = selectedBlockEl.querySelector('.similar-toggle');
+		this.bestEl = selectedBlockEl.querySelector('.similar-best');
+		this.secondBestEl = selectedBlockEl.querySelector('.similar-second');
+
+		this.moreEl.addEventListener('click', (e) => {
+			const display = this.secondBestEl.style.display;
+
+			this.secondBestEl.style.display = display === 'block' ? 'none' : 'block';
+		});
+	}
+
+	update(blocks) {
+		const best = blocks.slice(0, MAX_SIMILAR_BLOCKS);
+		const secondBest = blocks.slice(MAX_SIMILAR_BLOCKS);
+
+		this.clear();
+
+		this.moreEl.style.display = secondBest.length > 0 ? '' : 'none';
+
+		for (const blockMatch of best) {
+			const block = blockMatch.block;
+			const item = buildBlockSwatch(block.name, infoTooltip);
+
+			item.alt = block.name;
+
+			this.bestEl.appendChild(item);
+		}
+
+		for (const blockMatch of secondBest) {
+			const block = blockMatch.block;
+			const item = buildBlockSwatch(block.name, infoTooltip);
+
+			item.alt = block.name;
+
+			this.secondBestEl.appendChild(item);
+		}
+	}
+
+	clear() {
+		this.moreEl.style.display = 'none';
+		this.bestEl.textContent = '';
+		this.secondBestEl.textContent = '';
+	}
+}
+
 
 let allBlocks = [];
 let paletteEntry = 'average';
@@ -168,9 +225,9 @@ const infoTooltipEl = document.querySelector('.info-tooltip');
 const infoTooltipNameEl = infoTooltipEl.querySelector('.name');
 
 const infoTooltip = new Tooltip();
+const similar = new SimilarBlocks();
 
 const selectedBlockNameEl = document.querySelector('.selected-block .name');
-const selectedBlockSimilarEl = document.querySelector('.selected-block .similar');
 const controlsPaletteSelectEl = document.querySelector('.controls .pallette-select');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -181,12 +238,13 @@ document.body.appendChild( renderer.domElement );
 
 const controls = new THREE.OrbitControls( camera, renderer.domElement );
 
-// Show the selection
 const XYZ_SELECTION_RADIUS = 0.025;
 const LAB_SELECTION_RADIUS = 0.4;
 const SELECTION_RADIUS = LAB_SELECTION_RADIUS;
 const BLOCK_SIZE = SELECTION_RADIUS / 10;
+const MAX_SIMILAR_BLOCKS = 8;
 
+// Show the selection
 const selectionGeom = new THREE.RingGeometry( SELECTION_RADIUS, SELECTION_RADIUS + 0.01, 32 );
 const selectionMat = new THREE.MeshBasicMaterial({
 	color: 0xffffff,
@@ -265,27 +323,19 @@ renderer.domElement.addEventListener('click', (e) => {
 		const color = blockData.palette[paletteEntry];
 		const near = findNear(allBlocks, color.lab, SELECTION_RADIUS);
 
+		similar.update(near);
+
 		selectedBlockNameEl.textContent = blockData.name;
-		selectedBlockSimilarEl.textContent = '';
 
 		// Position the selection ring
 		selectionMesh.position.x = color.lab.a;
 		selectionMesh.position.y = color.lab.l;
 		selectionMesh.position.z = color.lab.b;
 		selectionMesh.material.visible = true;
-
-		for (const blockMatch of near) {
-			const block = blockMatch.block;
-			const item = buildBlockSwatch(block.name, infoTooltip);
-
-			item.alt = block.name;
-
-			selectedBlockSimilarEl.appendChild(item);
-		}
 	} else {
 		selectedBlockNameEl.textContent = '';
-		selectedBlockSimilarEl.textContent = '';
 		selectionMesh.material.visible = false;
+		similar.clear();
 	}
 });
 
@@ -309,8 +359,9 @@ controlsPaletteSelectEl.addEventListener('change', (e) => {
 
 		// Hide the selection
 		selectedBlockNameEl.textContent = '';
-		selectedBlockSimilarEl.textContent = '';
 		selectionMesh.material.visible = false;
+
+		similar.clear();
 	}
 });
 
