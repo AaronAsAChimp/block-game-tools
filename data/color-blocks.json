@@ -1,0 +1,33 @@
+{
+	"constant": [
+		"birch_leaves",
+		"spruce_leaves",
+		"lily_pad"
+	],
+	"grass": [
+		"grass_block",
+		"grass",
+		"fern",
+		"tall_grass",
+		"large_fern",
+		"potted_fern",
+		"sugar_cane"
+	],
+	"foliage": [
+		"oak_leaves",
+		"jungle_leaves",
+		"acacia_leaves",
+		"dark_oak_leaves",
+		"mangrove_leaves",
+		"vine"
+	],
+	"stem": [
+		"pumpkin_stem",
+		"attached_pumpkin_stem",
+		"melon_stem",
+		"attached_melon_stem"
+	],
+	"water": [
+		"water"
+	]
+}

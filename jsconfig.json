@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "allowJs": true,
+    "checkJs": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*"],
+}

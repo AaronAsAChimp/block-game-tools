@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Minecraft Color Map</title>
+	<script src="https://cdn.jsdelivr.net/npm/three@0.141.0/build/three.min.js" integrity="sha256-diUVSG+CubltjkC73exAZ9fQwLdug/3fKjTAzA7ZbYA=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/three@0.141.0/examples/js/controls/OrbitControls.js" integrity="sha256-hOdGIbdvfAY90E36aqjQm1XIscd0Uy6+DtvgzneLq4U=" crossorigin="anonymous"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet"> 
+	<style>
+		body {
+			margin: 0;
+		    font-family: 'PT Sans', sans-serif;
+		}
+
+		.selected-block {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			color: white;
+			padding: 1em;
+			background: linear-gradient(to top, black, transparent);
+		}
+
+		.texture-image {
+			height: 64px;
+			image-rendering: crisp-edges;
+		}
+
+		.info-tooltip {
+			pointer-events: none;
+			position: absolute;
+			color: white;
+			background: #48484875;
+			transform: translateX(1em);
+			padding: 0.4em 0.8em;
+			border-radius: 0.4em;
+		}
+	</style>
+</head>
+<body>
+	<div class="selected-block">
+		<div class="name"></div>
+
+		<h3>Similar Blocks</h3>
+		<div class="similar"></div>
+	</div>
+	<div class="info-tooltip">
+		<div class="name"></div>
+	</div>
+	<script>
+
+function distanceSquared(pos1, pos2) {
+	const delta = {
+		l: pos2.l - pos1.l,
+		a: pos2.a - pos1.a,
+		b: pos2.b - pos1.b
+	};
+
+	return (delta.l * delta.l) +
+		(delta.a * delta.a) +
+		(delta.b * delta.b);
+}
+
+function findNear(blocks, pos, radius) {
+	const radiusSquared = radius * radius;
+	const near = [];
+
+	for (const block of blocks) {
+		const dist = distanceSquared(pos, block.palette[paletteEntry].lab);
+
+		if (dist < radiusSquared) {
+			near.push({
+				distSquared: dist,
+				block
+			});
+		}
+	}
+
+	near.sort((a, b) => {
+		return a.distSquared - b.distSquared;
+	});
+
+	return near;
+}
+
+function buildTextureImage(name) {
+	const img = document.createElement('img');
+
+	img.className = 'texture-image';
+	img.src = dataDir + 'textures/' + name + '.png';
+
+	return img;
+}
+
+function buildBlockSwatch(name, tooltip) {
+	const textureEl = buildTextureImage(name);
+
+	textureEl.addEventListener('mouseenter', (e) => {
+		tooltip.show();
+	});
+
+	textureEl.addEventListener('mousemove', (e) => {
+		tooltip.update(e.clientX, e.clientY, e.target.alt);
+	});
+
+	textureEl.addEventListener('mouseleave', () => {
+		tooltip.hide();
+	});
+
+	return textureEl;
+}
+
+class Tooltip {
+	constructor() {
+		this.tooltipEl = document.querySelector('.info-tooltip');
+		this.nameEl = this.tooltipEl.querySelector('.name');
+	}
+
+	show() {
+		this.tooltipEl.style.display = 'block';
+	}
+
+	update(x, y, text) {
+		const tooltipEl = this.tooltipEl;
+
+		tooltipEl.style.left = x + 'px';
+		tooltipEl.style.top = y + 'px';
+
+		this.nameEl.textContent = text;
+	}
+
+	hide() {
+		this.tooltipEl.style.display = 'none';
+
+		this.nameEl.textContent = '';
+	}
+}
+
+
+let allBlocks = [];
+let paletteEntry = 'average';
+
+const dataDir = '/data/extracts/1.19/';
+const infoTooltipEl = document.querySelector('.info-tooltip');
+const infoTooltipNameEl = infoTooltipEl.querySelector('.name');
+
+const infoTooltip = new Tooltip();
+
+const selectedBlockNameEl = document.querySelector('.selected-block .name');
+const selectedBlockSimilarEl = document.querySelector('.selected-block .similar');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+
+const controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+// Show the selection
+const XYZ_SELECTION_RADIUS = 0.025;
+const LAB_SELECTION_RADIUS = 0.4;
+const SELECTION_RADIUS = LAB_SELECTION_RADIUS;
+const BLOCK_SIZE = SELECTION_RADIUS / 10;
+
+const selectionGeom = new THREE.RingGeometry( SELECTION_RADIUS, SELECTION_RADIUS + 0.01, 32 );
+const selectionMat = new THREE.MeshBasicMaterial({
+	color: 0xffffff,
+	transparent: true,
+	opacity: 0.6,
+});
+const selectionMesh = new THREE.Mesh( selectionGeom, selectionMat );
+
+selectionMat.visible = false;
+
+scene.add( selectionMesh );
+
+// Block group
+
+const blockGroup = new THREE.Group();
+
+scene.add(blockGroup);
+
+
+fetch(dataDir + 'blocks.json')
+	.then(async (res) => {
+		return res.json();
+	})
+	.then((json) => {
+		console.log(json);
+
+		allBlocks = json.blocks;
+
+		for (const block of json.blocks) {
+			const color = block.palette[paletteEntry];
+			const geometry = new THREE.BoxGeometry(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+			const material = new THREE.MeshBasicMaterial( { color: color.css } );
+			const cube = new THREE.Mesh( geometry, material );
+			cube.position.x = color.lab.a;
+			cube.position.y = color.lab.l;
+			cube.position.z = color.lab.b;
+			cube.userData.block = block;
+
+			blockGroup.add( cube );
+		}
+	});
+
+camera.position.z = 5;
+controls.update();
+
+renderer.domElement.addEventListener('mousemove', (e) => {
+	const mx = (e.offsetX / window.innerWidth) * 2 - 1;
+	const my = -(e.offsetY / window.innerHeight) * 2 + 1;
+
+	var vector = new THREE.Vector3( mx, my, 1 );
+	vector.unproject( camera );
+	var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+	var intersects = ray.intersectObjects( blockGroup.children );
+
+	if (intersects.length > 0) {
+		const blockData = intersects[0].object.userData.block;
+
+		infoTooltip.show();
+		infoTooltip.update(e.clientX, e.clientY, blockData.name);
+	} else {
+		infoTooltip.hide();
+	}
+});
+
+renderer.domElement.addEventListener('click', (e) => {
+	const mx = (e.offsetX / window.innerWidth) * 2 - 1;
+	const my = -(e.offsetY / window.innerHeight) * 2 + 1;
+
+	var vector = new THREE.Vector3( mx, my, 1 );
+	vector.unproject( camera );
+	var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+	var intersects = ray.intersectObjects( blockGroup.children );
+
+	if (intersects.length > 0) {
+		const blockData = intersects[0].object.userData.block;
+		const color = blockData.palette[paletteEntry];
+		const near = findNear(allBlocks, color.lab, SELECTION_RADIUS);
+
+		selectedBlockNameEl.textContent = blockData.name;
+		selectedBlockSimilarEl.textContent = '';
+		selectionMesh.position.x = color.lab.a;
+		selectionMesh.position.y = color.lab.l;
+		selectionMesh.position.z = color.lab.b;
+		selectionMesh.material.visible = true;
+
+		for (const blockMatch of near) {
+			const block = blockMatch.block;
+			const item = buildBlockSwatch(block.name, infoTooltip);
+
+			item.alt = block.name;
+
+			selectedBlockSimilarEl.appendChild(item);
+		}
+	} else {
+		selectedBlockNameEl.textContent = '';
+		selectedBlockSimilarEl.textContent = '';
+		selectionMesh.material.visible = false;
+	}
+});
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	selectionMesh.quaternion.copy( camera.quaternion );
+}
+animate();
+	</script>
+</body>
+</html>

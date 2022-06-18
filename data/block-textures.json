@@ -1,0 +1,105 @@
+{
+	"birch_leaves": [
+		"birch_leaves"
+	],
+	"spruce_leaves": [
+		"spruce_leaves"
+	],
+	"lily_pad": [
+		"lily_pad"
+	],
+	"grass_block": [
+		"grass_block_top",
+		"grass_block_side",
+		"grass_block_side_overlay"
+	],
+	"grass": [
+		"grass"
+	],
+	"fern": [
+		"fern"
+	],
+	"tall_grass": [
+		"tall_grass_top",
+		"tall_grass_bottom"
+	],
+	"large_fern": [
+		"large_fern_top",
+		"large_fern_bottom"
+	],
+	"sugar_cane": [
+		"sugar_cane"
+	],
+	"oak_leaves": [
+		"oak_leaves"
+	],
+	"jungle_leaves": [
+		"jungle_leaves"
+	],
+	"acacia_leaves": [
+		"acacia_leaves"
+	],
+	"dark_oak_leaves": [
+		"dark_oak_leaves"
+	],
+	"mangrove_leaves": [
+		"mangrove_leaves"
+	],
+	"vine": [
+		"vine"
+	],
+	"water": [
+		"water_flow",
+		"water_overlay",
+		"water_still"
+	],
+	"jigsaw": [
+		"jigsaw_bottom",
+		"jigsaw_lock",
+		"jigsaw_side",
+		"jigsaw_top"
+	],
+	"melon_stem": [
+		"melon_stem"
+	],
+	"attached_melon_stem": [
+		"attached_melon_stem"
+	],
+	"pumpkin_stem": [
+		"pumpkin_stem"
+	],
+	"attached_pumpkin_stem": [
+		"attached_pumpkin_stem"
+	],
+	"structure_block": [
+		"structure_block",
+		"structure_block_data",
+		"structure_block_save",
+		"structure_block_corner",
+		"structure_block_load"
+	],
+	"redstone_wire": [
+		"redstone_dust_dot",
+		"redstone_dust_line0",
+		"redstone_dust_line1",
+		"redstone_dust_overlay"
+	],
+	"repeating_command_block": [
+		"repeating_command_block_conditional",
+		"repeating_command_block_side",
+		"repeating_command_block_front",
+		"repeating_command_block_back"
+	],
+	"chain_command_block": [
+		"chain_command_block_conditional",
+		"chain_command_block_side",
+		"chain_command_block_front",
+		"chain_command_block_back"
+	],
+	"command_block": [
+		"command_block_conditional",
+		"command_block_side",
+		"command_block_front",
+		"command_block_back"
+	]
+}
