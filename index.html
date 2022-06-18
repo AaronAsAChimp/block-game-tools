@@ -13,6 +13,13 @@
 		body {
 			margin: 0;
 		    font-family: 'PT Sans', sans-serif;
+			color: white;
+		}
+
+		.controls {
+			position: absolute;
+			top: 0;
+			right: 0;
 		}
 
 		.selected-block {
@@ -20,7 +27,6 @@
 			bottom: 0;
 			left: 0;
 			right: 0;
-			color: white;
 			padding: 1em;
 			background: linear-gradient(to top, black, transparent);
 		}
@@ -48,6 +54,15 @@
 		<h3>Similar Blocks</h3>
 		<div class="similar"></div>
 	</div>
+	<div class="controls">
+		<label>
+			Color Extraction Method:
+			<select class="pallette-select">
+				<option value="average">Average</option>
+				<option value="vibrant">Most Vibrant</option>
+			</select>
+		</label>
+	</div>
 	<div class="info-tooltip">
 		<div class="name"></div>
 	</div>
@@ -70,13 +85,17 @@ function findNear(blocks, pos, radius) {
 	const near = [];
 
 	for (const block of blocks) {
-		const dist = distanceSquared(pos, block.palette[paletteEntry].lab);
+		const color = block.palette[paletteEntry];
 
-		if (dist < radiusSquared) {
-			near.push({
-				distSquared: dist,
-				block
-			});
+		if (color !== null) {
+			const dist = distanceSquared(pos, color.lab);
+
+			if (dist < radiusSquared) {
+				near.push({
+					distSquared: dist,
+					block
+				});
+			}
 		}
 	}
 
@@ -152,6 +171,7 @@ const infoTooltip = new Tooltip();
 
 const selectedBlockNameEl = document.querySelector('.selected-block .name');
 const selectedBlockSimilarEl = document.querySelector('.selected-block .similar');
+const controlsPaletteSelectEl = document.querySelector('.controls .pallette-select');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
@@ -247,6 +267,8 @@ renderer.domElement.addEventListener('click', (e) => {
 
 		selectedBlockNameEl.textContent = blockData.name;
 		selectedBlockSimilarEl.textContent = '';
+
+		// Position the selection ring
 		selectionMesh.position.x = color.lab.a;
 		selectionMesh.position.y = color.lab.l;
 		selectionMesh.position.z = color.lab.b;
@@ -261,6 +283,31 @@ renderer.domElement.addEventListener('click', (e) => {
 			selectedBlockSimilarEl.appendChild(item);
 		}
 	} else {
+		selectedBlockNameEl.textContent = '';
+		selectedBlockSimilarEl.textContent = '';
+		selectionMesh.material.visible = false;
+	}
+});
+
+controlsPaletteSelectEl.addEventListener('change', (e) => {
+	paletteEntry = e.target.value;
+
+	for (const block of blockGroup.children) {
+		const blockData = block.userData.block;
+		const color = blockData.palette[paletteEntry];
+
+		block.material.visible = color !== null;
+
+		if (block.material.visible) {
+			block.position.x = color.lab.a;
+			block.position.y = color.lab.l;
+			block.position.z = color.lab.b;
+			block.material.setValues({
+				color: color.css
+			});
+		}
+
+		// Hide the selection
 		selectedBlockNameEl.textContent = '';
 		selectedBlockSimilarEl.textContent = '';
 		selectionMesh.material.visible = false;
