@@ -64,6 +64,12 @@
 	</div>
 	<div class="controls">
 		<label>
+			Search:
+			<input list="block-list" class="block-search" type="search" />
+			<datalist id="block-list">
+			</datalist>
+		</label>
+		<label>
 			Color Extraction Method:
 			<select class="pallette-select">
 				<option value="average">Average</option>
@@ -139,6 +145,28 @@ function buildBlockSwatch(name, tooltip) {
 	});
 
 	return textureEl;
+}
+
+function selectBlock(block, similar, selectionMesh, selectedBlockNameEl) {
+	if (block) {
+		const blockData = block.userData.block;
+		const color = blockData.palette[paletteEntry];
+		const near = findNear(allBlocks, color.lab, SELECTION_RADIUS);
+
+		similar.update(near);
+
+		selectedBlockNameEl.textContent = blockData.name;
+
+		// Position the selection ring
+		selectionMesh.position.x = color.lab.a;
+		selectionMesh.position.y = color.lab.l;
+		selectionMesh.position.z = color.lab.b;
+		selectionMesh.material.visible = true;
+	} else {
+		selectedBlockNameEl.textContent = '';
+		selectionMesh.material.visible = false;
+		similar.clear();
+	}
 }
 
 class Tooltip {
@@ -219,6 +247,7 @@ class SimilarBlocks {
 
 let allBlocks = [];
 let paletteEntry = 'average';
+let blockMap = {};
 
 const dataDir = '/data/extracts/1.19/';
 const infoTooltipEl = document.querySelector('.info-tooltip');
@@ -229,6 +258,8 @@ const similar = new SimilarBlocks();
 
 const selectedBlockNameEl = document.querySelector('.selected-block .name');
 const controlsPaletteSelectEl = document.querySelector('.controls .pallette-select');
+const controlBlockSearchEl = document.querySelector('.controls .block-search');
+const controlBlockListEl = document.querySelector('.controls #block-list');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
@@ -264,6 +295,8 @@ const blockGroup = new THREE.Group();
 scene.add(blockGroup);
 
 
+controlsPaletteSelectEl.value = paletteEntry;
+
 fetch(dataDir + 'blocks.json')
 	.then(async (res) => {
 		return res.json();
@@ -284,6 +317,14 @@ fetch(dataDir + 'blocks.json')
 			cube.userData.block = block;
 
 			blockGroup.add( cube );
+
+			// Add to mapping
+			blockMap[block.name] = cube;
+
+			// Add to the search
+			const blockOption = document.createElement('option');
+			blockOption.value = block.name;
+			controlBlockListEl.appendChild(blockOption);
 		}
 	});
 
@@ -318,24 +359,8 @@ renderer.domElement.addEventListener('click', (e) => {
 	var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
 	var intersects = ray.intersectObjects( blockGroup.children );
 
-	if (intersects.length > 0) {
-		const blockData = intersects[0].object.userData.block;
-		const color = blockData.palette[paletteEntry];
-		const near = findNear(allBlocks, color.lab, SELECTION_RADIUS);
-
-		similar.update(near);
-
-		selectedBlockNameEl.textContent = blockData.name;
-
-		// Position the selection ring
-		selectionMesh.position.x = color.lab.a;
-		selectionMesh.position.y = color.lab.l;
-		selectionMesh.position.z = color.lab.b;
-		selectionMesh.material.visible = true;
-	} else {
-		selectedBlockNameEl.textContent = '';
-		selectionMesh.material.visible = false;
-		similar.clear();
+	if (intersects.length) {
+		selectBlock(intersects[0].object, similar, selectionMesh, selectedBlockNameEl);
 	}
 });
 
@@ -362,6 +387,20 @@ controlsPaletteSelectEl.addEventListener('change', (e) => {
 		selectionMesh.material.visible = false;
 
 		similar.clear();
+	}
+});
+
+controlBlockSearchEl.addEventListener('input', (e) => {
+	const cube = blockMap[controlBlockSearchEl.value];
+	console.log('selected', cube);
+
+	if (cube) {
+		// camera.position.copy(cube.position);
+		camera.lookAt(cube.position);
+		console.log(cube.position);
+		controls.update();
+
+		selectBlock(cube, similar, selectionMesh, selectedBlockNameEl);
 	}
 });
 
