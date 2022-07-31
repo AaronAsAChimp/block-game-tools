@@ -1,6 +1,7 @@
 import fs from 'fs';
 import {PNG} from 'pngjs';
 import Vibrant from 'node-vibrant';
+import { quantize } from './quantizer.js';
 
 /**
  * @typedef {Object} Color
@@ -135,5 +136,31 @@ export class VibrantJsColorExtractor extends ColorExtractor {
 				a: 1
 			} : null
 		};
+	}
+}
+
+
+export class QuantizerColorExtractor extends ColorExtractor {
+	extract(filename) {
+		const self = this;
+
+		return new Promise((resolve, reject) => {
+			fs.createReadStream(filename)
+				.pipe(
+					new PNG({
+						filterType: 4,
+					})
+					)
+				.on("parsed", function () {
+					const mostCommon = quantize(this.data, this.width, this.height);
+
+					resolve({
+						mostCommon: mostCommon[0].color
+					});
+				})
+				.on("error", (err) => {
+					reject(err);
+				})
+		});
 	}
 }

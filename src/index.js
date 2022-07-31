@@ -3,7 +3,7 @@ import path from 'path';
 import blockTextures from '../data/block-textures.json' assert {type: "json"};
 import colorBlocks from '../data/color-blocks.json' assert {type: "json"};
 
-import {BasicColorExtractor, VibrantJsColorExtractor} from './color-extractor.js';
+import {BasicColorExtractor, VibrantJsColorExtractor, QuantizerColorExtractor} from './color-extractor.js';
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
@@ -79,11 +79,6 @@ export function xyzToLab({x, y, z}) {
 }
 
 
-function rgb_to_css(rgb) {
-	return `rgb(${ Math.round(rgb.r) }, ${ Math.round(rgb.g) }, ${ Math.round(rgb.b) })`;
-}
-
-
 /**
  * Add all of the textures for a block to the list of excludes
  * @param {string} blockId  The id of the block
@@ -133,7 +128,7 @@ function buildPaletteEntry(color) {
 		const xyz = srgb_to_xyz(color);
 
 		return {
-			css: rgb_to_css(color),
+			rgb: color,
 			lab: xyzToLab(xyz)
 		}
 	} else {
@@ -149,6 +144,7 @@ const json = [];
 const excludes = buildExcludes(colorBlocks, blockTextures);
 const averageExtractor = new BasicColorExtractor();
 const vibrantExtractor = new VibrantJsColorExtractor();
+const quantizerExtractor = new QuantizerColorExtractor();
 
 
 await fs.promises.mkdir(extractPath, {
@@ -167,19 +163,21 @@ for await (const filename of walk(dirPath)) {
 		continue;
 	}
 
-	const [, averagePalette, vibrantPalette] = await Promise.all([
+	const [, averagePalette, vibrantPalette, quantizerPalette] = await Promise.all([
 		fs.promises.copyFile(filename, path.join(extractedTexturesPath, name + '.png')),
 		averageExtractor.extract(filename),
-		vibrantExtractor.extract(filename)
+		vibrantExtractor.extract(filename),
+		quantizerExtractor.extract(filename),
 	]);
-	const palette = Object.assign(averagePalette, vibrantPalette);
+	const palette = Object.assign(averagePalette, vibrantPalette, quantizerPalette);
 
 	if (palette.average) {
 		json.push({
 			name,
 			palette: {
 				average: buildPaletteEntry(palette.average),
-				vibrant: buildPaletteEntry(palette.vibrant)
+				vibrant: buildPaletteEntry(palette.vibrant),
+				mostCommon: buildPaletteEntry(palette.mostCommon),
 			}
 		});
 

@@ -74,6 +74,7 @@
 			<select class="pallette-select">
 				<option value="average">Average</option>
 				<option value="vibrant">Most Vibrant</option>
+				<option value="mostCommon">Most Common</option>
 			</select>
 		</label>
 	</div>
@@ -246,7 +247,7 @@ class SimilarBlocks {
 
 
 let allBlocks = [];
-let paletteEntry = 'average';
+let paletteEntry = 'mostCommon';
 let blockMap = {};
 
 const dataDir = '/data/extracts/1.19/';
@@ -309,12 +310,14 @@ fetch(dataDir + 'blocks.json')
 		for (const block of json.blocks) {
 			const color = block.palette[paletteEntry];
 			const geometry = new THREE.BoxGeometry(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-			const material = new THREE.MeshBasicMaterial( { color: color.css } );
+			const material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF});
 			const cube = new THREE.Mesh( geometry, material );
 			cube.position.x = color.lab.a;
 			cube.position.y = color.lab.l;
 			cube.position.z = color.lab.b;
 			cube.userData.block = block;
+
+			material.color.setRGB(color.rgb.r / 255, color.rgb.g / 255, color.rgb.b / 255);
 
 			blockGroup.add( cube );
 
@@ -371,15 +374,50 @@ controlsPaletteSelectEl.addEventListener('change', (e) => {
 		const blockData = block.userData.block;
 		const color = blockData.palette[paletteEntry];
 
+		block.userData.mixer = new THREE.AnimationMixer(block);
+
 		block.material.visible = color !== null;
 
 		if (block.material.visible) {
-			block.position.x = color.lab.a;
-			block.position.y = color.lab.l;
-			block.position.z = color.lab.b;
-			block.material.setValues({
-				color: color.css
-			});
+			const postionKeyframe = new THREE.VectorKeyframeTrack(
+				'.position',
+				[0, 1],
+				[
+					block.position.x,
+					block.position.y,
+					block.position.z,
+					color.lab.a,
+					color.lab.l,
+					color.lab.b
+				]
+			);
+			const colorKeyframe = new THREE.ColorKeyframeTrack(
+				'.material.color',
+				[ 0, 1 ],
+				[
+					block.material.color.r,
+					block.material.color.g,
+					block.material.color.b,
+					color.rgb.r / 255,
+					color.rgb.g / 255,
+					color.rgb.b / 255
+				],
+				THREE.InterpolateLinear
+			);
+
+			console.log(block.material.color, color.rgb);
+
+			const clip = new THREE.AnimationClip(null, 5, [postionKeyframe, colorKeyframe]);
+			const animationAction = block.userData.mixer.clipAction(clip);
+
+			animationAction.clampWhenFinished = true;
+			animationAction.setLoop(THREE.LoopOnce);
+			animationAction.play();
+			block.userData.clock = new THREE.Clock();
+
+			// block.material.setValues({
+			// 	color: color.css
+			// });
 		}
 
 		// Hide the selection
@@ -405,10 +443,18 @@ controlBlockSearchEl.addEventListener('input', (e) => {
 });
 
 function animate() {
+	for (const block of blockGroup.children) {
+		if (block.userData.clock && block.userData.mixer) {
+			const delta = block.userData.clock.getDelta();
+
+			block.userData.mixer.update(delta);
+		}
+	}
+
+	selectionMesh.quaternion.copy( camera.quaternion );
+	renderer.render( scene, camera );
 
 	requestAnimationFrame( animate );
-	renderer.render( scene, camera );
-	selectionMesh.quaternion.copy( camera.quaternion );
 }
 animate();
 	</script>
