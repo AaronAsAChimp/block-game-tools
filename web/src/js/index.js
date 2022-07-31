@@ -1,87 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Minecraft Color Map</title>
-	<script src="https://cdn.jsdelivr.net/npm/three@0.141.0/build/three.min.js" integrity="sha256-diUVSG+CubltjkC73exAZ9fQwLdug/3fKjTAzA7ZbYA=" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/three@0.141.0/examples/js/controls/OrbitControls.js" integrity="sha256-hOdGIbdvfAY90E36aqjQm1XIscd0Uy6+DtvgzneLq4U=" crossorigin="anonymous"></script>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet"> 
-	<style>
-		body {
-			margin: 0;
-		    font-family: 'PT Sans', sans-serif;
-			color: white;
-		}
-
-		.controls {
-			position: absolute;
-			top: 0;
-			right: 0;
-		}
-
-		.selected-block {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			padding: 1em;
-			background: linear-gradient(to top, black, transparent);
-		}
-
-		.similar-second {
-			display: none;
-		}
-
-		.texture-image {
-			height: 64px;
-			image-rendering: crisp-edges;
-		}
-
-		.info-tooltip {
-			pointer-events: none;
-			position: absolute;
-			color: white;
-			background: #48484875;
-			transform: translateX(1em);
-			padding: 0.4em 0.8em;
-			border-radius: 0.4em;
-		}
-	</style>
-</head>
-<body>
-	<div class="selected-block">
-		<div class="name"></div>
-
-		<h3>Similar Blocks</h3>
-		<div class="similar-best"></div>
-		<div>
-			<a class="similar-toggle">More...</a>
-			<div class="similar-second"></div>
-		</div>
-	</div>
-	<div class="controls">
-		<label>
-			Search:
-			<input list="block-list" class="block-search" type="search" />
-			<datalist id="block-list">
-			</datalist>
-		</label>
-		<label>
-			Color Extraction Method:
-			<select class="pallette-select">
-				<option value="average">Average</option>
-				<option value="vibrant">Most Vibrant</option>
-				<option value="mostCommon">Most Common</option>
-			</select>
-		</label>
-	</div>
-	<div class="info-tooltip">
-		<div class="name"></div>
-	</div>
-	<script>
 
 function distanceSquared(pos1, pos2) {
 	const delta = {
@@ -250,7 +166,7 @@ let allBlocks = [];
 let paletteEntry = 'mostCommon';
 let blockMap = {};
 
-const dataDir = '/data/extracts/1.19/';
+const dataDir = '/data/1.19/';
 const infoTooltipEl = document.querySelector('.info-tooltip');
 const infoTooltipNameEl = infoTooltipEl.querySelector('.name');
 
@@ -457,6 +373,3 @@ function animate() {
 	requestAnimationFrame( animate );
 }
 animate();
-	</script>
-</body>
-</html>

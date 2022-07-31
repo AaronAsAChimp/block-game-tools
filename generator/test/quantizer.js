@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import {VBox, quantize} from '../src/quantizer.js';
+import {VBox, quantize} from '../src/generator/quantizer.js';
 
 test('adding colors to a VBox', t => {
 	// Arrange

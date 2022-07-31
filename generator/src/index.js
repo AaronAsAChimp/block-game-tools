@@ -138,7 +138,7 @@ function buildPaletteEntry(color) {
 
 const version = '1.19';
 const dirPath = `./jars/${ version }/minecraft-${ version }-client/assets/minecraft/textures/block/`;
-const extractPath = `./data/extracts/${ version }/`;
+const extractPath = `./web/data/${ version }/`;
 const extractedTexturesPath = path.join(extractPath, 'textures');
 const json = [];
 const excludes = buildExcludes(colorBlocks, blockTextures);

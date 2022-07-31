@@ -1,0 +1,39 @@
+body {
+	margin: 0;
+	font-family: 'PT Sans', sans-serif;
+	color: white;
+}
+
+.controls {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.selected-block {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 1em;
+	background: linear-gradient(to top, black, transparent);
+}
+
+.similar-second {
+	display: none;
+}
+
+.texture-image {
+	height: 64px;
+	image-rendering: crisp-edges;
+}
+
+.info-tooltip {
+	pointer-events: none;
+	position: absolute;
+	color: white;
+	background: #48484875;
+	transform: translateX(1em);
+	padding: 0.4em 0.8em;
+	border-radius: 0.4em;
+}
