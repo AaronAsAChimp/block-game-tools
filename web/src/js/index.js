@@ -179,6 +179,7 @@ const controlBlockSearchEl = document.querySelector('.controls .block-search');
 const controlBlockListEl = document.querySelector('.controls #block-list');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const loader = new THREE.OBJLoader();
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -246,6 +247,14 @@ fetch(dataDir + 'blocks.json')
 			controlBlockListEl.appendChild(blockOption);
 		}
 	});
+
+loader.load(dataDir + 'bounds.obj', (obj) => {
+	scene.add(obj);
+	const material = obj.children[0].material;
+
+	material.opacity = 0.35;
+	material.transparent = true;
+})
 
 camera.position.z = 5;
 controls.update();
@@ -321,7 +330,7 @@ controlsPaletteSelectEl.addEventListener('change', (e) => {
 				THREE.InterpolateLinear
 			);
 
-			console.log(block.material.color, color.rgb);
+			// console.log(block.material.color, color.rgb);
 
 			const clip = new THREE.AnimationClip(null, 5, [postionKeyframe, colorKeyframe]);
 			const animationAction = block.userData.mixer.clipAction(clip);

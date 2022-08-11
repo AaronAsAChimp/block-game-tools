@@ -4,6 +4,7 @@ import blockTextures from '../data/block-textures.json' assert {type: "json"};
 import colorBlocks from '../data/color-blocks.json' assert {type: "json"};
 
 import {BasicColorExtractor, VibrantJsColorExtractor, QuantizerColorExtractor} from './color-extractor.js';
+import {OBJFile} from './objfile.js';
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
@@ -192,4 +193,117 @@ jsonOutput.write(JSON.stringify({
 	minecraft_version: version,
 	blocks: json
 }, null, '    '));
+jsonOutput.close();
+
+// Build the bounds geometry.
+
+function drawLine(start, end, steps) {
+	if (!steps) {
+		throw new Error('steps is a required parameter.');
+	}
+
+	const points = new Array(steps + 1);
+	const step = {
+		r: (end.r - start.r) / steps,
+		g: (end.g - start.g) / steps,
+		b: (end.b - start.b) / steps
+	};
+
+	for (let i = 0; i <= steps; i++) {
+		const rgb = {
+			r: start.r + (step.r * i),
+			g: start.g + (step.g * i),
+			b: start.b + (step.b * i),
+		};
+		const xyz = srgb_to_xyz(rgb);
+		const lab = xyzToLab(xyz);
+
+		points[i] = [
+			lab.a,
+			lab.l,
+			lab.b
+		];
+	}
+
+	return points;
+}
+
+const objFile = new OBJFile();
+const STEPS = 16;
+
+const bottom = {
+	r: 0,
+	g: 0,
+	b: 0
+};
+
+const top = {
+	r: 255,
+	g: 255,
+	b: 255,
+}
+
+const red = {
+	r: 255,
+	g: 0,
+	b: 0
+};
+
+const yellow = {
+	r: 255,
+	g: 255,
+	b: 0
+};
+
+const green = {
+	r: 0,
+	g: 255,
+	b: 0
+};
+
+const cyan = {
+	r: 0,
+	g: 255,
+	b: 255
+};
+
+const blue = {
+	r: 0,
+	g: 0,
+	b: 255
+};
+
+const magenta = {
+	r: 255,
+	g: 0,
+	b: 255
+};
+
+// Front Face
+
+objFile.line(drawLine(bottom, red, STEPS));
+objFile.line(drawLine(red, yellow, STEPS));
+objFile.line(drawLine(yellow, green, STEPS));
+objFile.line(drawLine(green, bottom, STEPS));
+
+// Back Face
+
+objFile.line(drawLine(blue, magenta, STEPS));
+objFile.line(drawLine(magenta, top, STEPS));
+objFile.line(drawLine(top, cyan, STEPS));
+objFile.line(drawLine(cyan, blue, STEPS));
+
+// Side Faces
+
+objFile.line(drawLine(bottom, blue, STEPS));
+objFile.line(drawLine(red, magenta, STEPS));
+objFile.line(drawLine(yellow, top, STEPS));
+objFile.line(drawLine(green, cyan, STEPS));
+
+
+const objOutput = fs.createWriteStream(path.join(extractPath, `bounds.obj`));
+
+objOutput.write(objFile.toString());
+objOutput.close();
+
 

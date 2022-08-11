@@ -209,7 +209,7 @@ export class VBox {
 }
 
 
-const NUMBER_OF_SPLITS = 4;
+const NUMBER_OF_SPLITS = 3;
 
 
 /**
