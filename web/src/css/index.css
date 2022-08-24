@@ -10,6 +10,12 @@ body {
 	right: 0;
 }
 
+.app-title {
+	display: inline-block;
+	font-weight: bold;
+	margin-right: 1em;
+}
+
 .selected-block {
 	position: absolute;
 	bottom: 0;

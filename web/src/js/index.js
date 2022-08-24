@@ -161,6 +161,37 @@ class SimilarBlocks {
 	}
 }
 
+class Dialog {
+	/**
+	 * Construct a new Dialog
+	 * @param  {HTMLDialogElement} dialogEl  The element of the dialog.
+	 */
+	constructor(dialogEl) {
+		/**
+		 * The dialog element.
+		 *
+		 * @type {HTMLDialogElement}
+		 */
+		this.dialogEl = dialogEl;
+
+		const closeButtons = this.dialogEl.querySelectorAll('.close');
+
+		for (const button of closeButtons) {
+			button.addEventListener('click', () => {
+				this.close();
+			});
+		}
+	}
+
+	open() {
+		this.dialogEl.show();
+	}
+
+	close() {
+		this.dialogEl.close();
+	}
+}
+
 
 let allBlocks = [];
 let paletteEntry = 'mostCommon';
@@ -172,11 +203,13 @@ const infoTooltipNameEl = infoTooltipEl.querySelector('.name');
 
 const infoTooltip = new Tooltip();
 const similar = new SimilarBlocks();
+const aboutDialog = new Dialog(document.querySelector('.about-dialog'));
 
 const selectedBlockNameEl = document.querySelector('.selected-block .name');
 const controlsPaletteSelectEl = document.querySelector('.controls .pallette-select');
 const controlBlockSearchEl = document.querySelector('.controls .block-search');
 const controlBlockListEl = document.querySelector('.controls #block-list');
+const controlAboutButtonEl = document.querySelector('.controls .about');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 const loader = new THREE.OBJLoader();
@@ -365,6 +398,10 @@ controlBlockSearchEl.addEventListener('input', (e) => {
 
 		selectBlock(cube, similar, selectionMesh, selectedBlockNameEl);
 	}
+});
+
+controlAboutButtonEl.addEventListener('click', (e) => {
+	aboutDialog.open();
 });
 
 function animate() {
