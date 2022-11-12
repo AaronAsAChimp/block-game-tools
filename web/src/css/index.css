@@ -34,6 +34,19 @@ body {
 	image-rendering: crisp-edges;
 }
 
+.texture-animation {
+	background-size: 64px;
+	width: 64px;
+	height: 64px;
+	animation: infinite step-end;
+}
+
+.texture-image,
+.texture-animation {
+	image-rendering: crisp-edges;
+	display: inline-block;
+}
+
 .info-tooltip {
 	pointer-events: none;
 	position: absolute;

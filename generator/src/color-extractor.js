@@ -9,7 +9,7 @@ import { quantize } from './quantizer.js';
  * @property {number} r The Red component
  * @property {number} g The Green component
  * @property {number} b The Blue component
- * @property {number} a The Alpha component
+ * @property {number} [a] The Alpha component
  */
 
 /**
@@ -75,27 +75,10 @@ export class BasicColorExtractor extends ColorExtractor {
 		}
 	}
 
-	extract(filename) {
-		const self = this;
-
-		return new Promise((resolve, reject) => {
-			fs.createReadStream(filename)
-				.pipe(
-					new PNG({
-						filterType: 4,
-					})
-					)
-				.on("parsed", function () {
-					const average = self.#computeAverage(this.data, this.width, this.height);
-
-					resolve({
-						average
-					});
-				})
-				.on("error", (err) => {
-					reject(err);
-				})
-		});
+	async extract(filename, file) {
+		return {
+			average: this.#computeAverage(file.data, file.width, file.height)
+		};
 	}
 }
 
@@ -109,7 +92,7 @@ const RANKED_VIBRANT = [
 ];
 
 export class VibrantJsColorExtractor extends ColorExtractor {
-	async extract(filename) {
+	async extract(filename, _file) {
 		const vibrant = new Vibrant(filename, {
 			quality: 1
 		})
@@ -139,28 +122,23 @@ export class VibrantJsColorExtractor extends ColorExtractor {
 	}
 }
 
+export class SaturatedColorExtractor extends ColorExtractor {
+	async extract(filename, file) {
+		const mostCommon = quantize(file.data, file.width, file.height);
+
+		return {
+			saturated: mostCommon[0].color
+		};
+	}
+}
+
 
 export class QuantizerColorExtractor extends ColorExtractor {
-	extract(filename) {
-		const self = this;
+	async extract(filename, file) {
+		const mostCommon = quantize(file.data, file.width, file.height);
 
-		return new Promise((resolve, reject) => {
-			fs.createReadStream(filename)
-				.pipe(
-					new PNG({
-						filterType: 4,
-					})
-					)
-				.on("parsed", function () {
-					const mostCommon = quantize(this.data, this.width, this.height);
-
-					resolve({
-						mostCommon: mostCommon[0].color
-					});
-				})
-				.on("error", (err) => {
-					reject(err);
-				})
-		});
+		return {
+			mostCommon: mostCommon[0].color
+		};
 	}
 }

@@ -13,10 +13,10 @@
   "devDependencies": {
     "@types/pngjs": "^6.0.1",
     "ava": "^4.3.1",
-    "chalk": "^5.0.1",
-    "pngjs": "^6.0.0"
+    "chalk": "^5.0.1"
   },
   "dependencies": {
-    "node-vibrant": "^3.2.1-alpha.1"
+    "node-vibrant": "^3.2.1-alpha.1",
+    "pngjs": "^6.0.0"
   }
 }

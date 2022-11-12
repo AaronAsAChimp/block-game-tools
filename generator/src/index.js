@@ -2,7 +2,9 @@ import fs from "fs";
 import path from 'path';
 import blockTextures from '../data/block-textures.json' assert {type: "json"};
 import colorBlocks from '../data/color-blocks.json' assert {type: "json"};
+import {PNG} from 'pngjs';
 
+import {Animation} from './animation.js';
 import {BasicColorExtractor, VibrantJsColorExtractor, QuantizerColorExtractor} from './color-extractor.js';
 import {OBJFile} from './objfile.js';
 
@@ -124,6 +126,23 @@ function buildExcludes(colorBlocks, blockTextures) {
 	return excludes;
 }
 
+async function loadPng(filename) {
+		return new Promise((resolve, reject) => {
+			fs.createReadStream(filename)
+				.pipe(
+					new PNG({
+						filterType: 4,
+					})
+					)
+				.on("parsed", function () {
+					resolve(this);
+				})
+				.on("error", (err) => {
+					reject(err);
+				})
+		});
+}
+
 function buildPaletteEntry(color) {
 	if (color) {	
 		const xyz = srgb_to_xyz(color);
@@ -146,6 +165,7 @@ const excludes = buildExcludes(colorBlocks, blockTextures);
 const averageExtractor = new BasicColorExtractor();
 const vibrantExtractor = new VibrantJsColorExtractor();
 const quantizerExtractor = new QuantizerColorExtractor();
+const animationCssFile = fs.createWriteStream(path.join(extractPath, `texture-animations.css`));
 
 
 await fs.promises.mkdir(extractPath, {
@@ -164,17 +184,30 @@ for await (const filename of walk(dirPath)) {
 		continue;
 	}
 
+	const mcmetaName = filename + '.mcmeta';
+
+	const file = await loadPng(filename);
+
 	const [, averagePalette, vibrantPalette, quantizerPalette] = await Promise.all([
 		fs.promises.copyFile(filename, path.join(extractedTexturesPath, name + '.png')),
-		averageExtractor.extract(filename),
-		vibrantExtractor.extract(filename),
-		quantizerExtractor.extract(filename),
+		averageExtractor.extract(filename, file),
+		vibrantExtractor.extract(filename, file),
+		quantizerExtractor.extract(filename, file),
 	]);
 	const palette = Object.assign(averagePalette, vibrantPalette, quantizerPalette);
+	const hasMcmeta = fs.existsSync(mcmetaName);
+
+	if (hasMcmeta) {
+		const mcmeta = await fs.promises.readFile(mcmetaName);
+		const animation = Animation.fromMcmeta(JSON.parse(mcmeta), name, `/data/${version}/textures`, file.width, file.height);
+
+		animationCssFile.write(animation.toCSS());
+	}
 
 	if (palette.average) {
 		json.push({
 			name,
+			animated: hasMcmeta,
 			palette: {
 				average: buildPaletteEntry(palette.average),
 				vibrant: buildPaletteEntry(palette.vibrant),

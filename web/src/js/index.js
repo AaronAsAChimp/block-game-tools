@@ -37,7 +37,7 @@ function findNear(blocks, pos, radius) {
 	return near;
 }
 
-function buildTextureImage(name) {
+function buildTextureImage(name, isAnimated) {
 	const img = document.createElement('img');
 
 	img.className = 'texture-image';
@@ -46,8 +46,22 @@ function buildTextureImage(name) {
 	return img;
 }
 
-function buildBlockSwatch(name, tooltip) {
-	const textureEl = buildTextureImage(name);
+function buildTextureAnimation(name) {
+	const ani = document.createElement('div');
+
+	ani.className = 'texture-animation texture-' + name;
+
+	return ani;
+}
+
+function buildBlockSwatch(name, isAnimated, tooltip) {
+	let textureEl = null; 
+
+	if (!isAnimated) {
+		textureEl = buildTextureImage(name);
+	} else {
+		textureEl = buildTextureAnimation(name)
+	}
 
 	textureEl.addEventListener('mouseenter', (e) => {
 		tooltip.show();
@@ -137,7 +151,7 @@ class SimilarBlocks {
 
 		for (const blockMatch of best) {
 			const block = blockMatch.block;
-			const item = buildBlockSwatch(block.name, infoTooltip);
+			const item = buildBlockSwatch(block.name, block.animated, infoTooltip);
 
 			item.alt = block.name;
 
@@ -146,7 +160,7 @@ class SimilarBlocks {
 
 		for (const blockMatch of secondBest) {
 			const block = blockMatch.block;
-			const item = buildBlockSwatch(block.name, infoTooltip);
+			const item = buildBlockSwatch(block.name, block.animated, infoTooltip);
 
 			item.alt = block.name;
 
