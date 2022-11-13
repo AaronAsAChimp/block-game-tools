@@ -1,3 +1,5 @@
+import {relative} from 'path';
+
 const MS_PER_TICK = 1000 / 20;
 
 
@@ -28,10 +30,16 @@ export class Animation {
 		this._frames = [];
 	}
 
+	/**
+	 * Generate a CSS animation.
+	 *
+	 * @return {string}          The CSS>
+	 */
 	toCSS() {
 		const name = this._name;
 		const frameCount = this._frames.length;
-		const percentStep = 100 / (frameCount - 1)
+		const percentStep = 100 / (frameCount - 1);
+
 		let keyframes = ``;
 
 		for (let i = 0; i < this._frames.length; i++) {
@@ -43,6 +51,8 @@ export class Animation {
 
 `;
 		}
+
+		console.log(name, frameCount, this._frametime);
 
 		return `
 /*

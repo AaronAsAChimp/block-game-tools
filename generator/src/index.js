@@ -199,7 +199,7 @@ for await (const filename of walk(dirPath)) {
 
 	if (hasMcmeta) {
 		const mcmeta = await fs.promises.readFile(mcmetaName);
-		const animation = Animation.fromMcmeta(JSON.parse(mcmeta), name, `/data/${version}/textures`, file.width, file.height);
+		const animation = Animation.fromMcmeta(JSON.parse(mcmeta), name, `./textures`, file.width, file.height);
 
 		animationCssFile.write(animation.toCSS());
 	}

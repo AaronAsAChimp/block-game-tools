@@ -38,7 +38,8 @@ body {
 	background-size: 64px;
 	width: 64px;
 	height: 64px;
-	animation: infinite step-end;
+	animation-iteration-count: infinite;
+	animation-timing-function: step-end;
 }
 
 .texture-image,

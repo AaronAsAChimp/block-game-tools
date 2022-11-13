@@ -1,9 +1,13 @@
 {
 	"scripts": {
-	    "generator": "node generator/src/index.js"
+		"generator": "node generator/src/index.js"
 	},
 	"workspaces": [
 		"generator",
 		"web"
-	]
+	],
+	"staticFiles": {
+	    "staticPath": "data",
+	    "staticOutPath": "data"
+	}
 }
