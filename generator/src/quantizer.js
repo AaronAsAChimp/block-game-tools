@@ -220,7 +220,7 @@ const NUMBER_OF_SPLITS = 3;
  * @param  {number} height   The height of the image.
  * @return {QuantizedColor[]}   The colors.
  */
-export function quantize(pixels, width, height) {
+export function quantize(pixels, width, height, splits = NUMBER_OF_SPLITS) {
 	const initialVBox = new VBox();
 
 	for (let y = 0; y < height; y++) {
@@ -238,7 +238,7 @@ export function quantize(pixels, width, height) {
 
 	let splitVBoxes = [initialVBox];
 
-	for (let i = 0; i < NUMBER_OF_SPLITS; i++) {
+	for (let i = 0; i < splits; i++) {
 		splitVBoxes = splitVBoxes.flatMap(vbox => {
 			const splits = vbox.split();
 

@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import {VBox, quantize} from '../src/generator/quantizer.js';
+import {VBox, quantize} from '../src/quantizer.js';
 
 test('adding colors to a VBox', t => {
 	// Arrange
@@ -87,6 +87,9 @@ test('splitting the VBox along the red axis', t => {
 	const vbox = new VBox();
 
 	vbox.addPixel({r: 255, g: 0, b: 0});
+	vbox.addPixel({r: 255, g: 0, b: 0});
+	vbox.addPixel({r: 255, g: 0, b: 0});
+	vbox.addPixel({r: 255, g: 0, b: 0});
 	vbox.addPixel({r: 1, g: 0, b: 0});
 
 	// Act
@@ -96,7 +99,7 @@ test('splitting the VBox along the red axis', t => {
 	t.is(vboxes.length, 2, 'check that there are the correct number of VBoxes.');
 
 	const abovePixels = vboxes[0].getPixels();
-	t.is(abovePixels.length, 1, 'check that a pixel was added');
+	t.is(abovePixels.length, 4, 'check that a pixel was added');
 	t.is(abovePixels[0].r, 255, 'check that the correct pixel was added.');
 
 	const belowPixels = vboxes[1].getPixels();
@@ -136,7 +139,7 @@ test('quantizing a red gradient.', t => {
 	}
 
 	// Act
-	const colors = quantize(pixels, SIZE, 1);
+	const colors = quantize(pixels, SIZE, 1, 4);
 
 	// Assert
 	t.is(colors.length, 16, 'check the number of colors returned.');
