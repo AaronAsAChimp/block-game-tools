@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+
 /**
  * @typedef {Object} Color
  * @property {number} r The red component.
@@ -39,20 +41,25 @@ export class VBox {
 		};
 
 		/**
-		 * The totals for each component
-		 * @type {Color}
-		 */
-		this._sum = {
-			r: 0,
-			g: 0,
-			b: 0
-		};
-
-		/**
 		 * The pixels in this VBox
 		 * @type {Color[]}
 		 */
 		this._pixels = [];
+	}
+
+	/**
+	 * Find the median of the given values. This method only works for values
+	 * from 0 to 255.
+	 *
+	 * @param  {number[]} values The values to find the median of.
+	 * @return {number}          The median value.
+	 */
+	#findMedian(values) {
+		// This is a disgustingly slow implementation of an algorithm to find
+		// the median.
+		values = values.sort((a, b) => a - b);
+
+		return values[Math.floor(values.length / 2)];
 	}
 
 	/**
@@ -66,10 +73,6 @@ export class VBox {
 		if (a === 0) {
 			return;
 		}
-
-		this._sum.r += r;
-		this._sum.g += g;
-		this._sum.b += b;
 
 		if (this._min.r > r) {
 			this._min.r = r;
@@ -105,6 +108,10 @@ export class VBox {
 	 */
 	getPixels() {
 		return this._pixels;
+	}
+
+	isNotEmpty() {
+		return !!this._pixels.length;
 	}
 
 	getRedLength() {
@@ -154,14 +161,33 @@ export class VBox {
 	split() {
 		const colors = this._pixels;
 
+		/**
+		 * @type {[VBox, VBox]}
+		 */
+		let splitBoxes = null;
+
 		if (colors.length >= 5) {
 			const above = new VBox();
 			const below = new VBox();
 
 			const longestSide = this.identifyLongestSide();
-			const median = this._sum[longestSide] / colors.length; // Technically this is a MEAN cut.
+
+			// TODO: implement an optimized algorithm that combines splitting
+			// the vbox with with finding the median algorithm.
+			// 
+			// Most algorithms to find the median end up partially sorting the
+			// list this could probably be leveraged to optimize this
+			// whole method.
+			const median = this.#findMedian(colors.map(p => p[longestSide]));
 
 			for (const pixel of colors) {
+				// This can sometimes provide undesirable results in the case of 
+				// something like:
+				// 
+				// [22,22,22,22,25,25]
+				// 
+				// The median is 22, but none of the other pixels are below it
+				// meaning it never gets split.
 				if (pixel[longestSide] < median) {
 					below.addPixel(pixel);
 				} else {
@@ -169,13 +195,19 @@ export class VBox {
 				}
 			}
 
-			return [
-				above,
-				below
-			];
-		} else {
-			return null;
+			// console.log('Median: ' + longestSide + median + ', Above length: ' + above.getPixels().length + ', Below Length: ' + below.getPixels().length);
+
+			if (above.isNotEmpty() && below.isNotEmpty()) {
+				splitBoxes = [
+					above,
+					below
+				];
+			} else {
+				// console.log('Values:', colors);
+			}
 		}
+
+		return splitBoxes;
 	}
 
 	/**
@@ -184,9 +216,23 @@ export class VBox {
 	 * @return {QuantizedColor} The color.
 	 */
 	getRepresentitveColor() {
-		const r = (this._max.r - this._min.r) / 2;
-		const g = (this._max.g - this._min.g) / 2;
-		const b = (this._max.b - this._min.b) / 2;
+		let rSum = 0;
+		let gSum = 0;
+		let bSum = 0;
+
+		for (const pixel of this._pixels) {
+			rSum += pixel.r;
+			gSum += pixel.g;
+			bSum += pixel.b;
+		}
+
+		// After finding the average pixel color for the vbox, do a
+		// nearest neighbor search to find an actual pixel to reprisent
+		// this vbox.
+
+		const r = rSum / this._pixels.length;
+		const g = gSum / this._pixels.length;
+		const b = bSum / this._pixels.length;
 
 		let bestSoFar = Infinity;
 		let bestColor = null;
@@ -209,18 +255,17 @@ export class VBox {
 }
 
 
-const NUMBER_OF_SPLITS = 3;
-
+const NUMBER_OF_SPLITS = 4;
 
 /**
- * Reduce the list of colors to a small set.
+ * Split the pixes into VBoxes
  * 
  * @param  {Buffer | number[]} pixels The pixels
  * @param  {number} width    The width of the image.
  * @param  {number} height   The height of the image.
- * @return {QuantizedColor[]}   The colors.
+ * @return {VBox[]}   The colors.
  */
-export function quantize(pixels, width, height, splits = NUMBER_OF_SPLITS) {
+function splitVBoxes(pixels, width, height, splits = NUMBER_OF_SPLITS) {
 	const initialVBox = new VBox();
 
 	for (let y = 0; y < height; y++) {
@@ -228,6 +273,7 @@ export function quantize(pixels, width, height, splits = NUMBER_OF_SPLITS) {
 			const idx = (width * y + x) << 2;
 
 			initialVBox.addPixel({
+				pos: {x, y},
 				r: pixels[idx],
 				g: pixels[idx + 1],
 				b: pixels[idx + 2],
@@ -251,9 +297,57 @@ export function quantize(pixels, width, height, splits = NUMBER_OF_SPLITS) {
 		})
 	}
 
-	return splitVBoxes
-		.map(vbox => vbox.getRepresentitveColor())
-		.sort((a, b) => {
-			return b.population - a.population;
-		});
+	return splitVBoxes;
 }
+
+
+/**
+ * Reduce the list of colors to a small set.
+ * 
+ * @param  {Buffer | number[]} pixels The pixels
+ * @param  {number} width    The width of the image.
+ * @param  {number} height   The height of the image.
+ * @return {QuantizedColor[]}   The colors.
+ */
+export function quantize(pixels, width, height, splits = NUMBER_OF_SPLITS) {
+	return splitVBoxes(pixels, width, height, splits)
+		.map(vbox => vbox.getRepresentitveColor());
+}
+
+export function printQuantizedImage(pixels, width, height, splits = NUMBER_OF_SPLITS) {
+	const vboxes = splitVBoxes(pixels, width, height, splits);
+	const reconstructed = [];
+
+	for (const vbox of vboxes) {
+		const color = vbox.getRepresentitveColor();
+		const pixels = vbox.getPixels();
+
+		for (const pixel of pixels) {
+			const {x, y} = pixel.pos;
+			let row = reconstructed[y];
+
+			if (!row) {
+				row = [];
+				reconstructed[y] = row;
+			}
+
+			row[x] = chalk.rgb(color.color.r, color.color.g, color.color.b)('\u2588\u2588')
+		}
+
+		// console.table(pixels);
+		// console.log('Average: ' + chalk.rgb(color.color.r, color.color.g, color.color.b)('\u2588') + `(${color.color.r}, ${color.color.g}, ${color.color.b})`)
+	}
+
+	for (const row of reconstructed) {
+		if (row) {
+			for (let x = 0; x < row.length; x++) {
+				if (!row[x]) {
+					row[x] = '  ';
+				}
+			}
+
+			console.log(row.join(''));
+		} else {
+			console.log('\n');
+		}
+	}}

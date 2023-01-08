@@ -5,13 +5,19 @@ import colorBlocks from '../data/color-blocks.json' assert {type: "json"};
 import {PNG} from 'pngjs';
 
 import {Animation} from './animation.js';
-import {BasicColorExtractor, VibrantJsColorExtractor, QuantizerColorExtractor} from './color-extractor.js';
+import {BasicColorExtractor, VibrantJsColorExtractor, SaturatedColorExtractor, QuantizerColorExtractor} from './color-extractor.js';
 import {OBJFile} from './objfile.js';
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
  */
 
+
+/**
+ * Walk a directory and yield PNG files.
+ * @param {string} dirPath       The directory to walk.
+ * @yield {string} The path to the PNG file that was found
+ */
 async function* walk(dirPath) {
 	const dirs = await fs.promises.opendir(dirPath);
     for await (const dir of dirs) {
@@ -31,10 +37,10 @@ async function* walk(dirPath) {
 // from https://gist.github.com/mnito/da28c930d270f280f0989b9a707d71b5
 function srgb_to_xyz(srgb) {
 	var sxm = [
-		[0.4124000, 0.3576000, 0.1805000],
-		[0.2126000, 0.7152000, 0.0722000],
-		[0.0193000, 0.1192000, 0.9505000]
-		];
+		[0.4124564, 0.3575761, 0.1804375],
+		[0.2126729, 0.7151522, 0.0721750],
+		[0.0193339, 0.1191920, 0.9503041]
+	];
 
 	var inverted_transfer = function (c) {
 		if(c <= 0.04045) {
@@ -49,9 +55,9 @@ function srgb_to_xyz(srgb) {
 	var bLinear = inverted_transfer(srgb.b / 255);
 
 	var xyz = { };
-	xyz.x = rLinear * sxm[0][0] + gLinear * sxm[0][1] + bLinear * sxm[0][2];
-	xyz.y = rLinear * sxm[1][0] + gLinear * sxm[1][1] + bLinear * sxm[1][2];
-	xyz.z = rLinear * sxm[2][0] + gLinear * sxm[2][1] + bLinear * sxm[2][2];
+	xyz.x = (rLinear * sxm[0][0] + gLinear * sxm[0][1] + bLinear * sxm[0][2]) * 100;
+	xyz.y = (rLinear * sxm[1][0] + gLinear * sxm[1][1] + bLinear * sxm[1][2]) * 100;
+	xyz.z = (rLinear * sxm[2][0] + gLinear * sxm[2][1] + bLinear * sxm[2][2]) * 100;
 
 	return xyz;
 }
@@ -149,128 +155,35 @@ function buildPaletteEntry(color) {
 
 		return {
 			rgb: color,
-			lab: xyzToLab(xyz)
+			lab: xyzToLab(xyz),
+			xyz,
 		}
 	} else {
 		return null;
 	}
 }
 
-const version = '1.19';
-const dirPath = `./jars/${ version }/minecraft-${ version }-client/assets/minecraft/textures/block/`;
-const extractPath = `./web/data/${ version }/`;
-const extractedTexturesPath = path.join(extractPath, 'textures');
-const json = [];
-const excludes = buildExcludes(colorBlocks, blockTextures);
-const averageExtractor = new BasicColorExtractor();
-const vibrantExtractor = new VibrantJsColorExtractor();
-const quantizerExtractor = new QuantizerColorExtractor();
-const animationCssFile = fs.createWriteStream(path.join(extractPath, `texture-animations.css`));
+function buildLabel(name, color) {
+	const xyz = srgb_to_xyz(color);
 
-
-await fs.promises.mkdir(extractPath, {
-	recursive: true
-});
-
-await fs.promises.mkdir(extractedTexturesPath, {
-	recursive: true
-});
-
-
-for await (const filename of walk(dirPath)) {
-	const name = path.basename(filename, '.png');
-
-	if (excludes.has(name)) {
-		continue;
-	}
-
-	const mcmetaName = filename + '.mcmeta';
-
-	const file = await loadPng(filename);
-
-	const [, averagePalette, vibrantPalette, quantizerPalette] = await Promise.all([
-		fs.promises.copyFile(filename, path.join(extractedTexturesPath, name + '.png')),
-		averageExtractor.extract(filename, file),
-		vibrantExtractor.extract(filename, file),
-		quantizerExtractor.extract(filename, file),
-	]);
-	const palette = Object.assign(averagePalette, vibrantPalette, quantizerPalette);
-	const hasMcmeta = fs.existsSync(mcmetaName);
-
-	if (hasMcmeta) {
-		const mcmeta = await fs.promises.readFile(mcmetaName);
-		const animation = Animation.fromMcmeta(JSON.parse(mcmeta), name, `./textures`, file.width, file.height);
-
-		animationCssFile.write(animation.toCSS());
-	}
-
-	if (palette.average) {
-		json.push({
+	return {
 			name,
-			animated: hasMcmeta,
-			palette: {
-				average: buildPaletteEntry(palette.average),
-				vibrant: buildPaletteEntry(palette.vibrant),
-				mostCommon: buildPaletteEntry(palette.mostCommon),
-			}
-		});
-
-	} else {
-		console.log(filename);
-	}
-}
-
-const jsonOutput = fs.createWriteStream(path.join(extractPath, `blocks.json`));
-
-jsonOutput.write(JSON.stringify({
-	minecraft_version: version,
-	blocks: json
-}, null, '    '));
-jsonOutput.close();
-
-// Build the bounds geometry.
-
-function drawLine(start, end, steps) {
-	if (!steps) {
-		throw new Error('steps is a required parameter.');
-	}
-
-	const points = new Array(steps + 1);
-	const step = {
-		r: (end.r - start.r) / steps,
-		g: (end.g - start.g) / steps,
-		b: (end.b - start.b) / steps
+			rgb: color, 
+			lab: xyzToLab(xyz)
 	};
-
-	for (let i = 0; i <= steps; i++) {
-		const rgb = {
-			r: start.r + (step.r * i),
-			g: start.g + (step.g * i),
-			b: start.b + (step.b * i),
-		};
-		const xyz = srgb_to_xyz(rgb);
-		const lab = xyzToLab(xyz);
-
-		points[i] = [
-			lab.a,
-			lab.l,
-			lab.b
-		];
-	}
-
-	return points;
 }
 
-const objFile = new OBJFile();
-const STEPS = 16;
+//
+// Primaries
+// 
 
-const bottom = {
+const black = {
 	r: 0,
 	g: 0,
 	b: 0
 };
 
-const top = {
+const white = {
 	r: 255,
 	g: 255,
 	b: 255,
@@ -312,25 +225,150 @@ const magenta = {
 	b: 255
 };
 
+const version = '1.19';
+const dirPath = `./jars/${ version }/minecraft-${ version }-client/assets/minecraft/textures/block/`;
+const extractPath = `./web/data/${ version }/`;
+const extractedTexturesPath = path.join(extractPath, 'textures');
+const json = [];
+const labels = [
+	buildLabel('R', red),
+	buildLabel('G', green),
+	buildLabel('B', blue),
+	buildLabel('C', cyan),
+	buildLabel('M', magenta),
+	buildLabel('Y', yellow),
+	buildLabel('K', black),
+	buildLabel('W', white)
+];
+const excludes = buildExcludes(colorBlocks, blockTextures);
+const averageExtractor = new BasicColorExtractor();
+const vibrantExtractor = new VibrantJsColorExtractor();
+const quantizerExtractor = new QuantizerColorExtractor();
+const saturatedExtractor = new SaturatedColorExtractor();
+const animationCssFile = fs.createWriteStream(path.join(extractPath, `texture-animations.css`));
+
+
+await fs.promises.mkdir(extractPath, {
+	recursive: true
+});
+
+await fs.promises.mkdir(extractedTexturesPath, {
+	recursive: true
+});
+
+//
+// Build the block data
+// 
+
+for await (const filename of walk(dirPath)) {
+	const name = path.basename(filename, '.png');
+
+	if (excludes.has(name)) {
+		continue;
+	}
+
+	const mcmetaName = filename + '.mcmeta';
+
+	const file = await loadPng(filename);
+
+	const [, averagePalette, vibrantPalette, quantizerPalette, saturatedPalette] = await Promise.all([
+		fs.promises.copyFile(filename, path.join(extractedTexturesPath, name + '.png')),
+		averageExtractor.extract(filename, file),
+		vibrantExtractor.extract(filename, file),
+		quantizerExtractor.extract(filename, file),
+		saturatedExtractor.extract(filename, file),
+	]);
+	const palette = Object.assign(averagePalette, vibrantPalette, quantizerPalette, saturatedPalette);
+	const hasMcmeta = fs.existsSync(mcmetaName);
+
+	if (hasMcmeta) {
+		const mcmeta = await fs.promises.readFile(mcmetaName);
+		const animation = Animation.fromMcmeta(JSON.parse(mcmeta), name, `./textures`, file.width, file.height);
+
+		animationCssFile.write(animation.toCSS());
+	}
+
+	if (palette.average) {
+		json.push({
+			name,
+			animated: hasMcmeta,
+			palette: {
+				average: buildPaletteEntry(palette.average),
+				vibrant: buildPaletteEntry(palette.vibrant),
+				mostCommon: buildPaletteEntry(palette.mostCommon),
+				mostSaturated: buildPaletteEntry(palette.mostSaturated),
+			}
+		});
+
+	} else {
+		console.log(filename);
+	}
+}
+
+const jsonOutput = fs.createWriteStream(path.join(extractPath, `blocks.json`));
+
+jsonOutput.write(JSON.stringify({
+	minecraft_version: version,
+	labels,
+	blocks: json
+}, null, '    '));
+jsonOutput.close();
+
+// Build the bounds geometry.
+
+function drawLine(start, end, steps) {
+	if (!steps) {
+		throw new Error('steps is a required parameter.');
+	}
+
+	const points = new Array(steps + 1);
+	const step = {
+		r: (end.r - start.r) / steps,
+		g: (end.g - start.g) / steps,
+		b: (end.b - start.b) / steps
+	};
+
+	for (let i = 0; i <= steps; i++) {
+		const rgb = {
+			r: start.r + (step.r * i),
+			g: start.g + (step.g * i),
+			b: start.b + (step.b * i),
+		};
+		const xyz = srgb_to_xyz(rgb);
+		const lab = xyzToLab(xyz);
+
+		points[i] = [
+			lab.a,
+			lab.l,
+			lab.b
+		];
+	}
+
+	return points;
+}
+
+const objFile = new OBJFile();
+const STEPS = 32;
+
 // Front Face
 
-objFile.line(drawLine(bottom, red, STEPS));
+objFile.line(drawLine(black, red, STEPS));
 objFile.line(drawLine(red, yellow, STEPS));
 objFile.line(drawLine(yellow, green, STEPS));
-objFile.line(drawLine(green, bottom, STEPS));
+objFile.line(drawLine(green, black, STEPS));
 
 // Back Face
 
 objFile.line(drawLine(blue, magenta, STEPS));
-objFile.line(drawLine(magenta, top, STEPS));
-objFile.line(drawLine(top, cyan, STEPS));
+objFile.line(drawLine(magenta, white, STEPS));
+objFile.line(drawLine(white, cyan, STEPS));
 objFile.line(drawLine(cyan, blue, STEPS));
 
 // Side Faces
 
-objFile.line(drawLine(bottom, blue, STEPS));
+objFile.line(drawLine(black, blue, STEPS));
 objFile.line(drawLine(red, magenta, STEPS));
-objFile.line(drawLine(yellow, top, STEPS));
+objFile.line(drawLine(yellow, white, STEPS));
 objFile.line(drawLine(green, cyan, STEPS));
 
 

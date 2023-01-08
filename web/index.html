@@ -3,10 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Block Color Map</title>
-	<script src="https://cdn.jsdelivr.net/npm/three@0.141.0/build/three.min.js" integrity="sha256-diUVSG+CubltjkC73exAZ9fQwLdug/3fKjTAzA7ZbYA=" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/three@0.141.0/examples/js/controls/OrbitControls.js" integrity="sha256-hOdGIbdvfAY90E36aqjQm1XIscd0Uy6+DtvgzneLq4U=" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/three@0.143.0/examples/js/loaders/OBJLoader.js" integrity="sha256-s5kCgZwZTRMvisr2K4taZ6zVRNPhlG3eKsTtp/Zsqb4=" crossorigin="anonymous"></script>
+	<title>Block Game Color Map</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
@@ -27,7 +24,7 @@
 	</div>
 	<div class="controls">
 		<div class="app-title">
-			Block Color Map
+			Block Game Color Map
 		</div>
 		<label>
 			Search:
@@ -39,8 +36,9 @@
 			Color Extraction Method:
 			<select class="pallette-select">
 				<option value="average">Average</option>
-				<option value="vibrant">Most Vibrant</option>
-				<option value="mostCommon">Most Common</option>
+				<!-- <option value="vibrant">Most Vibrant</option> -->
+				<option value="mostSaturated">Most Saturated</option>
+				<option value="mostCommon" selected>Most Common</option>
 			</select>
 		</label>
 		<button class="about">About</button>
@@ -50,6 +48,10 @@
 	</div>
 	<dialog class="about-dialog">
 		<h3>About</h3>
+		<p>
+			Block Game Color Map allows you to find blocks that are similar in
+			color to other blocks.
+		</p>
 		<p>
 			NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.
 		</p>
@@ -79,6 +81,6 @@ SOFTWARE.
 		</pre>
 		<button class="close">Close</button>
 	</dialog>
-	<script src="./src/js/index.js"></script>
+	<script src="./src/js/index.js" type="module"></script>
 </body>
 </html>

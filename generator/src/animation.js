@@ -58,7 +58,7 @@ export class Animation {
 /*
 Animation: ${ name }
  */
-.texture-animation.texture-${ name } {
+.texture-${ name } {
 	background-image: url(${this._path}/${name}.png);
 	animation-name: ${ name };
 	animation-duration: ${ frameCount * this._frametime}ms;

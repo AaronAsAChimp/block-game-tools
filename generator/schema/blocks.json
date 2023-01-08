@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "The resource ID of the block.",
+        "type": "string"
+      },
+      "full": {
+        "description": "Is the block a full block?",
+        "type": "boolean"
+      },
+      "transparent": {
+        "description": "Is the block transparent?",
+        "type": "boolean"
+      },
+      "survival": {
+        "description": "Is the block obtainable in survival?",
+        "type": "boolean"
+      },
+      "lightLevel": {
+        "description": "The light level that the block emits or 0 if it doesn't emit light.",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 15
+      },
+      "textures": {
+        "description": "The names of the textures that are used for this block. You do not need to include the file extension.",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "additionalProperties": false
+  }
+}

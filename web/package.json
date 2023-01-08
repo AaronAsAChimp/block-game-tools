@@ -12,13 +12,14 @@
   "license": "ISC",
   "devDependencies": {
     "@types/pngjs": "^6.0.1",
+    "@types/three": "^0.146.0",
     "ava": "^4.3.1",
     "chalk": "^5.0.1",
+    "parcel": "^2.8.0",
     "parcel-reporter-static-files-copy": "^1.4.0",
-    "pngjs": "^6.0.0"
+    "parcel-transformer-google-fonts": "^0.1.4"
   },
   "dependencies": {
-    "node-vibrant": "^3.2.1-alpha.1",
-    "parcel": "^2.8.0"
+    "three": "^0.146.0"
   }
 }

@@ -7,7 +7,7 @@
 		"web"
 	],
 	"staticFiles": {
-	    "staticPath": "data",
-	    "staticOutPath": "data"
+		"staticPath": "data",
+		"staticOutPath": "data"
 	}
 }

@@ -1,7 +1,14 @@
+:root {
+	--background-color: #090909;
+	--inverse-color: #f0f0f0;
+}
+
 body {
 	margin: 0;
 	font-family: 'PT Sans', sans-serif;
-	color: white;
+	color: var(--inverse-color);
+	background: var(--background-color);
+	transition: background 0.5s;
 }
 
 .controls {
@@ -22,30 +29,12 @@ body {
 	left: 0;
 	right: 0;
 	padding: 1em;
-	background: linear-gradient(to top, black, transparent);
+	background: linear-gradient(to top, var(--background-color), transparent);
+	transition: background 0.5s;
 }
 
 .similar-second {
 	display: none;
-}
-
-.texture-image {
-	height: 64px;
-	image-rendering: crisp-edges;
-}
-
-.texture-animation {
-	background-size: 64px;
-	width: 64px;
-	height: 64px;
-	animation-iteration-count: infinite;
-	animation-timing-function: step-end;
-}
-
-.texture-image,
-.texture-animation {
-	image-rendering: crisp-edges;
-	display: inline-block;
 }
 
 .info-tooltip {

@@ -1,7 +1,6 @@
-import fs from 'fs';
-import {PNG} from 'pngjs';
 import Vibrant from 'node-vibrant';
-import { quantize } from './quantizer.js';
+import { printQuantizedImage, quantize } from './quantizer.js';
+import chalk from 'chalk';
 
 /**
  * @typedef {Object} Color
@@ -122,20 +121,116 @@ export class VibrantJsColorExtractor extends ColorExtractor {
 	}
 }
 
+function toHSL(r, g, b) {
+	r = r / 255;
+	g = g / 255;
+	b = b / 255;
+
+	const xMax = Math.max(r, g, b);
+	const xMin = Math.min(r, g, b);
+
+	const chroma = xMax - xMin;
+
+	const l = (xMax + xMin) / 2;
+
+	let h = 0;
+
+	if (chroma === 0) {
+		h = 0;
+	} else if (r === xMax) {
+		h = 60 * ((g - b) / chroma);
+	} else if (g === xMax) {
+		h = 60 * (2 + ((b - r) / chroma));
+	} else if (b === xMax) {
+		h = 60 * (4 + ((r - g) / chroma));
+	}
+
+	let s = 0;
+
+	if (l === 0 || l === 1) {
+		s = 0;
+	} else {
+		s = chroma / (1 - Math.abs(2 * xMax - chroma - 1));
+	}
+
+	return { h, s, l };
+}
+
 export class SaturatedColorExtractor extends ColorExtractor {
 	async extract(filename, file) {
-		const mostCommon = quantize(file.data, file.width, file.height);
+		const pixels = [];
+
+		for (let i = 0; i < file.data.length; i += 4) {
+			const r = file.data[i];
+			const g = file.data[i + 1];
+			const b = file.data[i + 2];
+			const a = file.data[i + 3];
+			const hsl = toHSL(r, g, b);
+
+			if (a !== 0) {
+				pixels.push({
+					hsl,
+					rgb: { r, g, b },
+					distance: Math.abs(hsl.l - 0.5)
+				});
+			}
+		}
+
+		// This isn't really sorting by most saturated, but by the amount of
+		// effect that lightness has.
+		const mostCommon = pixels
+			.sort((a, b) => {
+				return a.distance - b.distance;
+			});
+
+		if (filename.includes('tall_seagrass')) {
+			// printQuantizedImage(file.data, file.width, file.height);
+			console.log(filename);
+			console.log(mostCommon
+				.map(c => {
+					return `${toPixel(c.rgb)} - ${toHex(c.rgb)} - ${c.distance}`;
+				})
+				.join('\n'));
+		}
 
 		return {
-			saturated: mostCommon[0].color
+			mostSaturated: mostCommon[0].rgb
 		};
 	}
 }
 
+function toSat(color) {
+	const hsl = toHSL(color.r, color.g, color.b);
+
+	return hsl.s;
+}
+
+function toHex(color) {
+	const {r, g, b} = color;
+
+	return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+}
+
+function toPixel(color) {
+	const {r, g, b} = color;
+
+	return chalk.rgb(r, g, b)('\u2588\u2588')
+}
 
 export class QuantizerColorExtractor extends ColorExtractor {
 	async extract(filename, file) {
-		const mostCommon = quantize(file.data, file.width, file.height);
+		const mostCommon = quantize(file.data, file.width, file.height)
+			.sort((a, b) => {
+				return b.population - a.population;
+			});
+
+		// if (filename.includes('bookshelf')) {
+		// if (filename.includes('rail')) {
+		// 	printQuantizedImage(file.data, file.width, file.height);
+		// 	console.log(mostCommon.map(c => {
+		// 		return `${toPixel(c.color)} - ${toHex(c.color)} - ${c.population}`
+		// 	}).join('\n'));
+		// }
 
 		return {
 			mostCommon: mostCommon[0].color

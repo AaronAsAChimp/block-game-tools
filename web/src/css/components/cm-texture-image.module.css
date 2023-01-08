@@ -1,0 +1,27 @@
+.texture {
+	position: relative;
+	display: inline-block;
+}
+
+.texture-image,
+.texture-animation {
+	height: 64px;
+	image-rendering: crisp-edges;
+}
+
+.texture-animation {
+	background-size: 64px;
+	width: 64px;
+	height: 64px;
+	animation-iteration-count: infinite;
+	animation-timing-function: step-end;
+}
+
+.texture-image-swatch {
+	width: 1.2em;
+	aspect-ratio: 1;
+	position: absolute;
+	top: -0.2em;
+	right: -0.2em;
+	box-shadow: 0 0 1em #00000078;
+}
