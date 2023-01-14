@@ -5,8 +5,9 @@ import colorBlocks from '../data/color-blocks.json' assert {type: "json"};
 import {PNG} from 'pngjs';
 
 import {Animation} from './animation.js';
-import {BasicColorExtractor, VibrantJsColorExtractor, SaturatedColorExtractor, QuantizerColorExtractor} from './color-extractor.js';
+import {BasicColorExtractor, SaturatedColorExtractor, QuantizerColorExtractor} from './color-extractor.js';
 import {OBJFile} from './objfile.js';
+import {RGBColor, LabColor, XYZColor, Color} from "./color.js";
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
@@ -31,60 +32,6 @@ async function* walk(dirPath) {
         	}
         }
     }
-}
-
-
-// from https://gist.github.com/mnito/da28c930d270f280f0989b9a707d71b5
-function srgb_to_xyz(srgb) {
-	var sxm = [
-		[0.4124564, 0.3575761, 0.1804375],
-		[0.2126729, 0.7151522, 0.0721750],
-		[0.0193339, 0.1191920, 0.9503041]
-	];
-
-	var inverted_transfer = function (c) {
-		if(c <= 0.04045) {
-			return c / 12.92;
-		} else {
-			return Math.pow((c + 0.055)/1.055, 2.4);
-		}
-	};
-
-	var rLinear = inverted_transfer(srgb.r / 255);
-	var gLinear = inverted_transfer(srgb.g / 255);
-	var bLinear = inverted_transfer(srgb.b / 255);
-
-	var xyz = { };
-	xyz.x = (rLinear * sxm[0][0] + gLinear * sxm[0][1] + bLinear * sxm[0][2]) * 100;
-	xyz.y = (rLinear * sxm[1][0] + gLinear * sxm[1][1] + bLinear * sxm[1][2]) * 100;
-	xyz.z = (rLinear * sxm[2][0] + gLinear * sxm[2][1] + bLinear * sxm[2][2]) * 100;
-
-	return xyz;
-}
-
-/**
- * Converts CIE 1931 XYZ colors to CIE L*a*b*.
- * The conversion formula comes from <http://www.easyrgb.com/en/math.php>.
- * https://github.com/cangoektas/xyz-to-lab/blob/master/src/index.js
- * @param   {number[]} color The CIE 1931 XYZ color to convert which refers to
- *                           the D65/2° standard illuminant.
- * @returns {number[]}       The color in the CIE L*a*b* color space.
- */
-// X, Y, Z of a "D65" light source.
-// "D65" is a standard 6500K Daylight light source.
-// https://en.wikipedia.org/wiki/Illuminant_D65
-const D65 = [95.047, 100, 108.883]
-export function xyzToLab({x, y, z}) {
-  [x, y, z] = [x, y, z].map((v, i) => {
-    v = v / D65[i]
-    return v > 0.008856 ? Math.pow(v, 1 / 3) : v * 7.787 + 16 / 116
-  })
-
-  return {
-  	l: 116 * y - 16,
-  	a: 500 * (x - y),
-  	b: 200 * (y - z)
-  };
 }
 
 
@@ -149,13 +96,26 @@ async function loadPng(filename) {
 		});
 }
 
+
+/**
+ * @typedef {Object} PaletteEntry
+ * @property {RGBColor} rgb The RGB value of the color
+ * @property {LabColor} lab The Lab value of the color
+ * @property {XYZColor} xyz The XYZ value of the color
+ */
+
+/**
+ * Build a palette entry
+ * @param  {Color} color The color of the entry.
+ * @return {PaletteEntry | null}     The palette entry.
+ */
 function buildPaletteEntry(color) {
 	if (color) {	
-		const xyz = srgb_to_xyz(color);
+		const xyz = color.toXYZColor();
 
 		return {
-			rgb: color,
-			lab: xyzToLab(xyz),
+			rgb: color.toRGBColor(),
+			lab: xyz.toLabColor(),
 			xyz,
 		}
 	} else {
@@ -163,13 +123,24 @@ function buildPaletteEntry(color) {
 	}
 }
 
-function buildLabel(name, color) {
-	const xyz = srgb_to_xyz(color);
+/**
+ * @typedef {Object} ColorLabel
+ * @property {string} name The text of the label
+ * @property {RGBColor} rgb The RGB color of the label
+ * @property {LabColor} lab The Lab color of the label
+ */
 
+/**
+ * Build a label to display in the UI
+ * @param  {string} name  The text of the label
+ * @param  {Color} color The color of the label
+ * @return {ColorLabel}       [description]
+ */
+function buildLabel(name, color) {
 	return {
 			name,
-			rgb: color, 
-			lab: xyzToLab(xyz)
+			rgb: color.toRGBColor(), 
+			lab: color.toLabColor()
 	};
 }
 
@@ -177,53 +148,18 @@ function buildLabel(name, color) {
 // Primaries
 // 
 
-const black = {
-	r: 0,
-	g: 0,
-	b: 0
-};
+const black = RGBColor.fromInteger(0x000000);
+const white = RGBColor.fromInteger(0xFFFFFF);
 
-const white = {
-	r: 255,
-	g: 255,
-	b: 255,
-}
+const red = RGBColor.fromInteger(0xFF0000);
+const yellow = RGBColor.fromInteger(0xFFFF00);
 
-const red = {
-	r: 255,
-	g: 0,
-	b: 0
-};
+const green = RGBColor.fromInteger(0x00FF00);
+const cyan = RGBColor.fromInteger(0x00FFFF);
 
-const yellow = {
-	r: 255,
-	g: 255,
-	b: 0
-};
+const blue = RGBColor.fromInteger(0x0000FF);
+const magenta = RGBColor.fromInteger(0xFF00FF)
 
-const green = {
-	r: 0,
-	g: 255,
-	b: 0
-};
-
-const cyan = {
-	r: 0,
-	g: 255,
-	b: 255
-};
-
-const blue = {
-	r: 0,
-	g: 0,
-	b: 255
-};
-
-const magenta = {
-	r: 255,
-	g: 0,
-	b: 255
-};
 
 const version = '1.19';
 const dirPath = `./jars/${ version }/minecraft-${ version }-client/assets/minecraft/textures/block/`;
@@ -242,7 +178,6 @@ const labels = [
 ];
 const excludes = buildExcludes(colorBlocks, blockTextures);
 const averageExtractor = new BasicColorExtractor();
-const vibrantExtractor = new VibrantJsColorExtractor();
 const quantizerExtractor = new QuantizerColorExtractor();
 const saturatedExtractor = new SaturatedColorExtractor();
 const animationCssFile = fs.createWriteStream(path.join(extractPath, `texture-animations.css`));
@@ -271,14 +206,13 @@ for await (const filename of walk(dirPath)) {
 
 	const file = await loadPng(filename);
 
-	const [, averagePalette, vibrantPalette, quantizerPalette, saturatedPalette] = await Promise.all([
+	const [, averagePalette, quantizerPalette, saturatedPalette] = await Promise.all([
 		fs.promises.copyFile(filename, path.join(extractedTexturesPath, name + '.png')),
 		averageExtractor.extract(filename, file),
-		vibrantExtractor.extract(filename, file),
 		quantizerExtractor.extract(filename, file),
 		saturatedExtractor.extract(filename, file),
 	]);
-	const palette = Object.assign(averagePalette, vibrantPalette, quantizerPalette, saturatedPalette);
+	const palette = Object.assign(averagePalette, quantizerPalette, saturatedPalette);
 	const hasMcmeta = fs.existsSync(mcmetaName);
 
 	if (hasMcmeta) {
@@ -329,13 +263,13 @@ function drawLine(start, end, steps) {
 	};
 
 	for (let i = 0; i <= steps; i++) {
-		const rgb = {
-			r: start.r + (step.r * i),
-			g: start.g + (step.g * i),
-			b: start.b + (step.b * i),
-		};
-		const xyz = srgb_to_xyz(rgb);
-		const lab = xyzToLab(xyz);
+		const rgb = new RGBColor(
+			start.r + (step.r * i),
+			start.g + (step.g * i),
+			start.b + (step.b * i),
+		);
+		const xyz = rgb.toXYZColor();
+		const lab = xyz.toLabColor();
 
 		points[i] = [
 			lab.a,

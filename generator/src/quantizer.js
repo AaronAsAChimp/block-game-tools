@@ -1,7 +1,9 @@
 import chalk from 'chalk';
 
+import {RGBColor, Color} from './color.js';
+
 /**
- * @typedef {Object} Color
+ * @typedef {Object} JsonColor
  * @property {number} r The red component.
  * @property {number} g The green component.
  * @property {number} b The blue component.
@@ -22,7 +24,7 @@ export class VBox {
 	constructor() {
 		/**
 		 * The minimum point of the VBox
-		 * @type {Color}
+		 * @type {JsonColor}
 		 */
 		this._min = {
 			r: Infinity,
@@ -32,7 +34,7 @@ export class VBox {
 
 		/**
 		 * The maximum point of the VBox
-		 * @type {Color}
+		 * @type {JsonColor}
 		 */
 		this._max = {
 			r: -Infinity,
@@ -42,7 +44,7 @@ export class VBox {
 
 		/**
 		 * The pixels in this VBox
-		 * @type {Color[]}
+		 * @type {JsonColor[]}
 		 */
 		this._pixels = [];
 	}
@@ -65,7 +67,7 @@ export class VBox {
 	/**
 	 * Add a pixel to this VBox.
 	 *
-	 * @param {Color} pixel The pixel to add.
+	 * @param {JsonColor} pixel The pixel to add.
 	 */
 	addPixel(pixel) {
 		const {r, g, b, a} = pixel;
@@ -104,7 +106,7 @@ export class VBox {
 	/**
 	 * Get the points in this VBox.
 	 * 
-	 * @return {Color[]} The colors
+	 * @return {JsonColor[]} The colors
 	 */
 	getPixels() {
 		return this._pixels;
@@ -248,7 +250,7 @@ export class VBox {
 		}
 
 		return {
-			color: bestColor,
+			color: new RGBColor(bestColor.r, bestColor.g, bestColor.b),
 			population: this._pixels.length
 		};
 	}
@@ -321,6 +323,7 @@ export function printQuantizedImage(pixels, width, height, splits = NUMBER_OF_SP
 	for (const vbox of vboxes) {
 		const color = vbox.getRepresentitveColor();
 		const pixels = vbox.getPixels();
+		const rgb = color.color.toRGBColor();
 
 		for (const pixel of pixels) {
 			const {x, y} = pixel.pos;
@@ -331,7 +334,7 @@ export function printQuantizedImage(pixels, width, height, splits = NUMBER_OF_SP
 				reconstructed[y] = row;
 			}
 
-			row[x] = chalk.rgb(color.color.r, color.color.g, color.color.b)('\u2588\u2588')
+			row[x] = chalk.rgb(rgb.r, rgb.g, rgb.b)('\u2588\u2588')
 		}
 
 		// console.table(pixels);
@@ -350,4 +353,6 @@ export function printQuantizedImage(pixels, width, height, splits = NUMBER_OF_SP
 		} else {
 			console.log('\n');
 		}
-	}}
+	}
+}
+

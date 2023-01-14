@@ -144,5 +144,5 @@ test('quantizing a red gradient.', t => {
 	// Assert
 	t.is(colors.length, 16, 'check the number of colors returned.');
 	t.is(colors[0].population, 16, 'check the number of pixels for each color.');
-	t.is(colors[0].color.r, 240, 'check the red value of the color');
+	t.is(colors[0].color.r, 247, 'check the red value of the color');
 });

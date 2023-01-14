@@ -1,15 +1,8 @@
-import Vibrant from 'node-vibrant';
 import { printQuantizedImage, quantize } from './quantizer.js';
 import chalk from 'chalk';
 
-/**
- * @typedef {Object} Color
- *
- * @property {number} r The Red component
- * @property {number} g The Green component
- * @property {number} b The Blue component
- * @property {number} [a] The Alpha component
- */
+import {RGBColor, RGBAColor, Color} from './color.js';
+
 
 /**
  * @typedef {{[name: string]: Color}} Palette
@@ -27,7 +20,9 @@ class ColorExtractor {
 	 * @param {string} filename The name of the image file.
 	 * @return {Promise<Palette>}  The colors that make up the image.
 	 */
-	async extract(filename) {}
+	async extract(filename) {
+		throw new Error('Not Implemented!');
+	}
 }
 
 export class BasicColorExtractor extends ColorExtractor {
@@ -58,19 +53,14 @@ export class BasicColorExtractor extends ColorExtractor {
 		}
 
 		if (num !== 0) {
-			return {
-				r: Math.sqrt(r / num), 
-				g: Math.sqrt(g / num), 
-				b: Math.sqrt(b / num),
-				a: Math.sqrt(a / num)
-			};
+			return new RGBAColor(
+				Math.sqrt(r / num), 
+				Math.sqrt(g / num), 
+				Math.sqrt(b / num),
+				Math.sqrt(a / num)
+			);
 		} else {
-			return {
-				r: 0,
-				g: 0,
-				b: 0,
-				a: 0
-			};
+			return new RGBAColor(0, 0, 0, 0);
 		}
 	}
 
@@ -81,80 +71,6 @@ export class BasicColorExtractor extends ColorExtractor {
 	}
 }
 
-const RANKED_VIBRANT = [
-	'Vibrant',
-	'Muted',
-	'DarkVibrant',
-	'DarkMuted',
-	'LightVibrant',
-	'LightMuted',
-];
-
-export class VibrantJsColorExtractor extends ColorExtractor {
-	async extract(filename, _file) {
-		const vibrant = new Vibrant(filename, {
-			quality: 1
-		})
-		const palette = await vibrant.getPalette();
-
-		// console.log(filename);
-
-		let average = null;
-
-		for (const ranked of RANKED_VIBRANT) {
-			if (palette[ranked]) {
-				average = palette[ranked];
-				break;
-			} else {
-				// console.log('Missing ' + ranked);
-			}
-		}
-
-		return {
-			vibrant: average ? {
-				r: average.r,
-				g: average.g,
-				b: average.b,
-				a: 1
-			} : null
-		};
-	}
-}
-
-function toHSL(r, g, b) {
-	r = r / 255;
-	g = g / 255;
-	b = b / 255;
-
-	const xMax = Math.max(r, g, b);
-	const xMin = Math.min(r, g, b);
-
-	const chroma = xMax - xMin;
-
-	const l = (xMax + xMin) / 2;
-
-	let h = 0;
-
-	if (chroma === 0) {
-		h = 0;
-	} else if (r === xMax) {
-		h = 60 * ((g - b) / chroma);
-	} else if (g === xMax) {
-		h = 60 * (2 + ((b - r) / chroma));
-	} else if (b === xMax) {
-		h = 60 * (4 + ((r - g) / chroma));
-	}
-
-	let s = 0;
-
-	if (l === 0 || l === 1) {
-		s = 0;
-	} else {
-		s = chroma / (1 - Math.abs(2 * xMax - chroma - 1));
-	}
-
-	return { h, s, l };
-}
 
 export class SaturatedColorExtractor extends ColorExtractor {
 	async extract(filename, file) {
@@ -165,12 +81,14 @@ export class SaturatedColorExtractor extends ColorExtractor {
 			const g = file.data[i + 1];
 			const b = file.data[i + 2];
 			const a = file.data[i + 3];
-			const hsl = toHSL(r, g, b);
+
+			const rgb = new RGBColor(r, g, b);
+			const hsl = rgb.toHSLColor();
 
 			if (a !== 0) {
 				pixels.push({
 					hsl,
-					rgb: { r, g, b },
+					rgb,
 					distance: Math.abs(hsl.l - 0.5)
 				});
 			}
@@ -188,7 +106,7 @@ export class SaturatedColorExtractor extends ColorExtractor {
 			console.log(filename);
 			console.log(mostCommon
 				.map(c => {
-					return `${toPixel(c.rgb)} - ${toHex(c.rgb)} - ${c.distance}`;
+					return `${toPixel(c.rgb)} - ${c.rgb.toCSS()} - ${c.distance}`;
 				})
 				.join('\n'));
 		}
@@ -199,17 +117,6 @@ export class SaturatedColorExtractor extends ColorExtractor {
 	}
 }
 
-function toSat(color) {
-	const hsl = toHSL(color.r, color.g, color.b);
-
-	return hsl.s;
-}
-
-function toHex(color) {
-	const {r, g, b} = color;
-
-	return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-}
 
 function toPixel(color) {
 	const {r, g, b} = color;
