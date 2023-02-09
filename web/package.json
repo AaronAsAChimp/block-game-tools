@@ -2,14 +2,14 @@
   "name": "color-map-web",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "parcel index.html"
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
   "keywords": [],
   "type": "module",
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/pngjs": "^6.0.1",
     "@types/three": "^0.146.0",

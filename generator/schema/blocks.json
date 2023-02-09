@@ -1,7 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "A collection of block descriptions.",
   "type": "array",
   "items": {
+    "description": "A description of a block's properties",
     "type": "object",
     "properties": {
       "name": {

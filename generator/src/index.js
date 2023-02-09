@@ -162,7 +162,7 @@ const magenta = RGBColor.fromInteger(0xFF00FF)
 
 
 const version = '1.19';
-const dirPath = `./jars/${ version }/minecraft-${ version }-client/assets/minecraft/textures/block/`;
+const dirPath = `./jars/${ version }/assets/minecraft/textures/block/`;
 const extractPath = `./web/data/${ version }/`;
 const extractedTexturesPath = path.join(extractPath, 'textures');
 const json = [];

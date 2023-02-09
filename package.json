@@ -1,10 +1,12 @@
 {
 	"scripts": {
+		"load-versions": "node loader/src/index.js",
 		"generator": "node generator/src/index.js"
 	},
 	"workspaces": [
 		"generator",
-		"web"
+		"web",
+		"loader"
 	],
 	"staticFiles": {
 		"staticPath": "data",

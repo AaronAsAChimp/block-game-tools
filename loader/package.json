@@ -1,0 +1,25 @@
+{
+  "name": "loader",
+  "version": "1.0.0",
+  "description": "Download and prep Minecraft JARs for the generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AaronAsAChimp/block-game-tools.git"
+  },
+  "author": "Aaron Spaulding <aaron@sachimp.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AaronAsAChimp/block-game-tools/issues"
+  },
+  "homepage": "https://github.com/AaronAsAChimp/block-game-tools#readme",
+  "type": "module",
+  "dependencies": {
+    "adm-zip": "^0.5.10",
+    "got": "^12.5.3",
+    "sanitize-filename": "^1.6.3"
+  }
+}
