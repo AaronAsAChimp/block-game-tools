@@ -32,7 +32,7 @@ jobs:
     - run: npm test -w generator
     - run: npm run load-versions
     - run: npm run generator
-    - run: npm run build -w web -- --public-path /block-game-tools
+    - run: npm run build -w web -- --public-url /block-game-tools
     - name: Setup Pages
       uses: actions/configure-pages@v3
     - name: Upload artifact
