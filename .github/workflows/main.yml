@@ -23,8 +23,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci -w loader
-    - run: npm ci -w generator
+    - run: npm ci
     - run: npm test -w generator
     - run: npm run load-versions
     - run: npm run generator
