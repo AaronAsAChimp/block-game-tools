@@ -180,12 +180,12 @@ const excludes = buildExcludes(colorBlocks, blockTextures);
 const averageExtractor = new BasicColorExtractor();
 const quantizerExtractor = new QuantizerColorExtractor();
 const saturatedExtractor = new SaturatedColorExtractor();
-const animationCssFile = fs.createWriteStream(path.join(extractPath, `texture-animations.css`));
-
 
 await fs.promises.mkdir(extractPath, {
 	recursive: true
 });
+
+const animationCssFile = fs.createWriteStream(path.join(extractPath, `texture-animations.css`));
 
 await fs.promises.mkdir(extractedTexturesPath, {
 	recursive: true

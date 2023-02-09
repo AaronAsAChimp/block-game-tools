@@ -120,7 +120,7 @@ class VersionManifest {
 }
 
 const manifest = new MinecraftManifest();
-const versions = new Set(['1.19.3', '1.19']);
+const versions = new Set(['1.19']);
 const releases = await manifest.getSpecificVersions(versions);
 const root = './jars';
 
