@@ -5,6 +5,8 @@ import {OrbitControls as ThreeOrbitControls} from 'three/examples/jsm/controls/O
 import {TextGeometry as ThreeTextGeometry} from 'three/examples/jsm/geometries/TextGeometry.js'
 import helvetikerFont from 'three/examples/fonts/droid/droid_sans_regular.typeface.json';
 
+import {DATA_DIR} from './consts.js';
+
 import './components/cm-texture-image.js';
 import './components/cm-texture-animation.js';
 
@@ -413,8 +415,6 @@ let allBlocks = [];
 let paletteEntry = 'mostCommon';
 let blockMap = {};
 
-const dataDir = '/data/1.19/';
-
 const infoTooltip = new Tooltip(document.querySelector('.info-tooltip'));
 const similar = new SimilarBlocks();
 const aboutDialog = new Dialog(document.querySelector('.about-dialog'));
@@ -479,7 +479,7 @@ scene.add(blockGroup);
 
 controlsPaletteSelectEl.value = paletteEntry;
 
-fetch(dataDir + 'blocks.json')
+fetch(DATA_DIR + 'blocks.json')
 	.then(async (res) => {
 		return res.json();
 	})
@@ -534,7 +534,7 @@ fetch(dataDir + 'blocks.json')
 		repositionLabels(boundsObj, uiGroup);
 	});
 
-loader.load(dataDir + 'bounds.obj', (obj) => {
+loader.load(DATA_DIR + 'bounds.obj', (obj) => {
 	const mesh = obj.children[0];
 
 	boundsObj = obj;

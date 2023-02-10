@@ -1,1 +1,1 @@
-export const DATA_DIR = '/data/1.19/';
+export const DATA_DIR = (process.env.PUBLIC_URL ?? '') + '/data/1.19/';
