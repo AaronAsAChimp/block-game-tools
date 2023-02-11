@@ -138,11 +138,11 @@ function repositionLabels(boundsObj, uiGroup) {
 
 /**
  * Position the camer so that the whole bounds object is visible.
- *
- * From: https://wejn.org/2020/12/cracking-the-threejs-object-fitting-nut/
  * 
- * @param  {THREE.PerspectiveCamera} camera    The camera
- * @param  {THREE.Group} boundsObj  THe bounds object to center in view.
+ * From: https://wejn.org/2020/12/cracking-the-threejs-object-fitting-nut/
+ * @param {THREE.PerspectiveCamera} camera The camera
+ * @param {THREE.Group} boundsObj THe bounds object to center in view.
+ * @param {ThreeOrbitControls} orbitControls
  */
 function repositionCamera(camera, boundsObj, orbitControls) {
     const boundingBox = new THREE.Box3();
@@ -151,6 +151,7 @@ function repositionCamera(camera, boundsObj, orbitControls) {
     var middle = new THREE.Vector3();
     var size = new THREE.Vector3();
     boundingBox.getSize(size);
+    boundingBox.getCenter(middle);
 
     // figure out how to fit the box in the view:
     // 1. figure out horizontal FOV (on non-1.0 aspects)
@@ -197,6 +198,7 @@ function repositionCamera(camera, boundsObj, orbitControls) {
     // if( offset !== undefined && offset !== 0 ) cameraZ *= offset;
 
     camera.position.set( 0, 0, cameraZ );
+    camera.lookAt(middle);
 
     // set the far plane of the camera so that it easily encompasses the whole object
     const minZ = boundingBox.min.z;
@@ -207,7 +209,7 @@ function repositionCamera(camera, boundsObj, orbitControls) {
 
     if ( orbitControls !== undefined ) {
         // set camera to rotate around the center
-        orbitControls.target = new THREE.Vector3(0, 0, 0);
+        orbitControls.target = middle;
 
         // prevent camera from zooming out far enough to create far plane cutoff
         orbitControls.maxDistance = cameraToFarEdge * 2;
