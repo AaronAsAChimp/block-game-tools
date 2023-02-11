@@ -11,6 +11,13 @@ body {
 	transition: background 0.5s;
 }
 
+.dialog {
+	max-width: 30em;
+	max-height: 100vh;
+	overflow: auto;
+	box-sizing: border-box;
+}
+
 .controls {
 	position: absolute;
 	top: 0;

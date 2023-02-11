@@ -420,6 +420,7 @@ let blockMap = {};
 const infoTooltip = new Tooltip(document.querySelector('.info-tooltip'));
 const similar = new SimilarBlocks();
 const aboutDialog = new Dialog(document.querySelector('.about-dialog'));
+const helpDialog = new Dialog(document.querySelector('.help-dialog'));
 const constrastMgr = new ContrastManager(document.body);
 
 similar.setPaletteEntry(paletteEntry);
@@ -430,6 +431,7 @@ const controlsPaletteSelectEl = document.querySelector('.controls .pallette-sele
 const controlBlockSearchEl = document.querySelector('.controls .block-search');
 const controlBlockListEl = document.querySelector('.controls #block-list');
 const controlAboutButtonEl = document.querySelector('.controls .about');
+const controlHelpButtonEl = document.querySelector('.controls .help');
 
 
 const scene = new THREE.Scene();
@@ -694,6 +696,10 @@ controlBlockSearchEl.addEventListener('input', (e) => {
 		selectBlock(cube, similar, selectionMesh, selectedBlockNameEl);
 	}
 });
+
+controlHelpButtonEl.addEventListener('click', (e) => {
+	helpDialog.open();
+})
 
 controlAboutButtonEl.addEventListener('click', (e) => {
 	aboutDialog.open();

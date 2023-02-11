@@ -28,7 +28,7 @@
 		</div>
 		<label>
 			Search:
-			<input list="block-list" class="block-search" type="search" />
+			<input list="block-list" class="block-search" type="search" placeholder="" />
 			<datalist id="block-list">
 			</datalist>
 		</label>
@@ -41,12 +41,71 @@
 				<option value="mostCommon" selected>Most Common</option>
 			</select>
 		</label>
+		<button class="help">Help</button>
 		<button class="about">About</button>
 	</div>
 	<div class="info-tooltip">
 		<div class="name"></div>
 	</div>
-	<dialog class="about-dialog">
+	<dialog class="help-dialog dialog">
+		<h3>Help</h3>
+		<h4>Controls</h4>
+		<dl>
+			<dt>Rotate view</dt>
+			<dd>Click and drag</dd>
+
+			<dt>Pan</dt>
+			<dd>Shift + Click and drag</dd>
+
+			<dt>Zoom</dt>
+			<dd>Scroll</dd>
+
+			<dt>Inspect Block</dt>
+			<dd>In the 3D view, click on the block you want to inspect.</dd>
+		</dl>
+
+		<h4>Search</h4>
+		<p>
+			Search for textures by name. A list of texture names will appear as
+			you type that you can select from. Press enter to confirm your
+			choice.
+		</p>
+
+		<h4>Color Extraction Method</h4>
+		<p>
+			The color extraction method selection allows you to choose how the
+			colors are extracted from the block's texture.
+		</p>
+
+		<dl>
+			<dt>Average</dt>
+			<dd>
+				This method averages the colors of the texture. This method is
+				best for builds that will be viewed at a distance.
+			</dd>
+			<dt>Most Common</dt>
+			<dd>
+				This method groups the colors by similarity and then choses a
+				representative color from the largest group. This method is best
+				for builds that will be viewed at a medium distance.
+			</dd>
+			<dt>Most Saturated</dt>
+			<dd>
+				This method chooses the most saturated color. This method is
+				best for builds that will be viewed up close.
+			</dd>
+		</dl>
+
+		<h4>Similar Blocks</h4>
+		<p>
+			This section will be populated when inspecting a block. It shows the
+			textures that are the most similar in color. If there is a lot of
+			blocks that are similar, you can "More..." to see any additional
+			blocks.
+		</p>
+		<button class="close">Close</button>
+	</dialog>
+	<dialog class="about-dialog dialog">
 		<h3>About</h3>
 		<p>
 			Block Game Color Map allows you to find blocks that are similar in
