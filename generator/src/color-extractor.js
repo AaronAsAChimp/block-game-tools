@@ -89,27 +89,24 @@ export class SaturatedColorExtractor extends ColorExtractor {
 				pixels.push({
 					hsl,
 					rgb,
-					distance: Math.abs(hsl.l - 0.5)
+					distance: Math.pow(Math.abs(hsl.l - 0.5), 2) + Math.pow(hsl.s, 2)
 				});
 			}
 		}
 
-		// This isn't really sorting by most saturated, but by the amount of
-		// effect that lightness has.
 		const mostCommon = pixels
 			.sort((a, b) => {
-				return a.distance - b.distance;
+				return b.distance - a.distance;
 			});
 
-		if (filename.includes('tall_seagrass')) {
-			// printQuantizedImage(file.data, file.width, file.height);
-			console.log(filename);
-			console.log(mostCommon
-				.map(c => {
-					return `${toPixel(c.rgb)} - ${c.rgb.toCSS()} - ${c.distance}`;
-				})
-				.join('\n'));
-		}
+		// if (filename.includes('tall_seagrass')) {
+		// 	console.log(filename);
+		// 	console.log(mostCommon
+		// 		.map(c => {
+		// 			return `${toPixel(c.rgb)} - ${c.rgb.toCSS()} - ${c.distance}`;
+		// 		})
+		// 		.join('\n'));
+		// }
 
 		return {
 			mostSaturated: mostCommon[0].rgb
