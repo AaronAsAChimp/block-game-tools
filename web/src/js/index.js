@@ -563,15 +563,15 @@ controls.update();
 
 let grabbing = false;
 
-renderer.domElement.addEventListener('mousedown', (e) => {
+renderer.domElement.addEventListener('pointerdown', (e) => {
 	grabbing = true;
 });
 
-renderer.domElement.addEventListener('mouseup', (e) => {
+renderer.domElement.addEventListener('pointerup', (e) => {
 	grabbing = false;
 });
 
-renderer.domElement.addEventListener('mousemove', (e) => {
+renderer.domElement.addEventListener('pointermove', (e) => {
 	if (!grabbing) {
 		const mx = (e.offsetX / window.innerWidth) * 2 - 1;
 		const my = -(e.offsetY / window.innerHeight) * 2 + 1;
