@@ -705,6 +705,16 @@ controlAboutButtonEl.addEventListener('click', (e) => {
 	aboutDialog.open();
 });
 
+window.addEventListener('resize', (e) => {
+	const width = window.innerWidth;
+	const height = window.innerHeight;
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(width, height);
+});
+
 function animate() {
 	for (const block of blockGroup.children) {
 		if (block.userData.clock && block.userData.mixer) {
