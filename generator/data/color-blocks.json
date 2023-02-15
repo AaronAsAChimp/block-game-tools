@@ -2,7 +2,9 @@
 	"constant": [
 		"birch_leaves",
 		"spruce_leaves",
-		"lily_pad"
+		"lily_pad",
+		"attached_melon_stem",
+		"attached_pumpkin_stem"
 	],
 	"grass": [
 		"grass_block",
@@ -23,9 +25,7 @@
 	],
 	"stem": [
 		"pumpkin_stem",
-		"attached_pumpkin_stem",
-		"melon_stem",
-		"attached_melon_stem"
+		"melon_stem"
 	],
 	"water": [
 		"water"

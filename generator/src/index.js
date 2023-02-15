@@ -1,13 +1,15 @@
 import fs from "fs";
 import path from 'path';
+import {PNG} from 'pngjs';
+
 import blockTextures from '../data/block-textures.json' assert {type: "json"};
 import colorBlocks from '../data/color-blocks.json' assert {type: "json"};
-import {PNG} from 'pngjs';
 
 import {Animation} from './animation.js';
 import {BasicColorExtractor, SaturatedColorExtractor, QuantizerColorExtractor} from './color-extractor.js';
 import {OBJFile} from './objfile.js';
 import {RGBColor, LabColor, XYZColor, Color} from "./color.js";
+import {buildTintMap, tintTexture} from './color-shift.js';
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
@@ -54,12 +56,11 @@ function addBlockExcludes(blockId, blockTextures, excludes) {
 function buildExcludes(colorBlocks, blockTextures) {
 	const excludes = new Set();
 
-	// For now just exclude all colored blocks.
-	for (const key of Object.keys(colorBlocks)) {
-		for (const blockId of colorBlocks[key]) {
-			addBlockExcludes(blockId, blockTextures, excludes);
-		}
-	}
+	// Exclude the grass block because it uses overlays that the current tinting
+	// algorithm doesn't really know how to handle
+	addBlockExcludes("grass_block", blockTextures, excludes);
+
+	excludes.add("water_overlay");
 
 	// destroy stages
 	for (let i = 0; i <= 9; i++) {
@@ -94,6 +95,22 @@ async function loadPng(filename) {
 					reject(err);
 				})
 		});
+}
+
+async function savePng(texture, filename) {
+	return new Promise((resolve, reject) => {
+		const writeStream = fs.createWriteStream(filename);
+
+		texture.pack().pipe(writeStream);
+
+		writeStream.on('close', () => {
+			resolve();
+		})
+
+		writeStream.on('error', (err) => {
+			reject(err);
+		})
+	});
 }
 
 
@@ -180,6 +197,7 @@ const excludes = buildExcludes(colorBlocks, blockTextures);
 const averageExtractor = new BasicColorExtractor();
 const quantizerExtractor = new QuantizerColorExtractor();
 const saturatedExtractor = new SaturatedColorExtractor();
+const tintMap = buildTintMap(colorBlocks, blockTextures);
 
 await fs.promises.mkdir(extractPath, {
 	recursive: true
@@ -195,6 +213,8 @@ await fs.promises.mkdir(extractedTexturesPath, {
 // Build the block data
 // 
 
+console.log(tintMap);
+
 for await (const filename of walk(dirPath)) {
 	const name = path.basename(filename, '.png');
 
@@ -205,9 +225,21 @@ for await (const filename of walk(dirPath)) {
 	const mcmetaName = filename + '.mcmeta';
 
 	const file = await loadPng(filename);
+	const destName = path.join(extractedTexturesPath, name + '.png');
+	let copyTask;
+
+	if (name in tintMap) {
+		tintTexture(file, tintMap[name]);
+
+		// Write texture instead of copying it now that we've tinted it.
+		copyTask = savePng(file, destName);
+	} else {
+		// copy texture
+		copyTask = fs.promises.copyFile(filename, destName);
+	}
 
 	const [, averagePalette, quantizerPalette, saturatedPalette] = await Promise.all([
-		fs.promises.copyFile(filename, path.join(extractedTexturesPath, name + '.png')),
+		copyTask,
 		averageExtractor.extract(filename, file),
 		quantizerExtractor.extract(filename, file),
 		saturatedExtractor.extract(filename, file),

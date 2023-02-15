@@ -52,7 +52,7 @@ export class Animation {
 `;
 		}
 
-		console.log(name, frameCount, this._frametime);
+		// console.log(name, frameCount, this._frametime);
 
 		return `
 /*

@@ -27,6 +27,9 @@
 		"large_fern_top",
 		"large_fern_bottom"
 	],
+	"potted_fern": [
+		"fern"
+	],
 	"sugar_cane": [
 		"sugar_cane"
 	],
