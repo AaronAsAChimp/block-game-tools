@@ -20,6 +20,8 @@
     "parcel-transformer-google-fonts": "^0.1.4"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "three": "^0.146.0"
   }
 }

@@ -5,10 +5,17 @@ import {OrbitControls as ThreeOrbitControls} from 'three/examples/jsm/controls/O
 import {TextGeometry as ThreeTextGeometry} from 'three/examples/jsm/geometries/TextGeometry.js'
 import helvetikerFont from 'three/examples/fonts/droid/droid_sans_regular.typeface.json';
 
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons/faQuestion';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo';
+
 import {DATA_DIR} from './consts.js';
 
 import './components/cm-texture-image.js';
 import './components/cm-texture-animation.js';
+
+library.add(faQuestion, faCircleInfo);
+dom.watch();
 
 /**
  * @typedef {Object} RGBColor
