@@ -53,3 +53,9 @@ body {
 	padding: 0.4em 0.8em;
 	border-radius: 0.4em;
 }
+
+@media only screen and (max-width: 600px) {
+	.dialog {
+		max-width: 100vw;
+	}
+}
