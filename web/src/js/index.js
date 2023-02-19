@@ -9,6 +9,8 @@ import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons/faQuestion';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo';
 
+import { RGBColor } from 'shared/src/color.js';
+
 import {DATA_DIR} from './consts.js';
 
 import './components/cm-texture-image.js';
@@ -40,7 +42,7 @@ function findNear(blocks, pos, radius) {
 	const radiusSquared = radius * radius;
 	const near = [];
 
-	for (const block of blocks) {
+	for (const block of blocks) { 
 		const color = block.palette[paletteEntry];
 
 		if (color !== null) {
@@ -60,6 +62,30 @@ function findNear(blocks, pos, radius) {
 	});
 
 	return near;
+}
+
+/**
+ * Like findNear but finds the one block that is the closest or null if there
+ * are none.
+ */
+function findNearest(blocks, pos) {
+	let nearest = null;
+	let nearestDistanceSquared = Infinity;
+
+	for (const block of blocks) { 
+		const color = block.palette[paletteEntry];
+
+		if (color !== null) {
+			const dist = distanceSquared(pos, color.lab);
+
+			if (dist < nearestDistanceSquared) {
+				nearest = block;
+				nearestDistanceSquared = dist;
+			}
+		}
+	}
+
+	return nearest;
 }
 
 
@@ -691,7 +717,28 @@ controlsPaletteSelectEl.addEventListener('change', (e) => {
 });
 
 controlBlockSearchEl.addEventListener('input', (e) => {
-	const cube = blockMap[controlBlockSearchEl.value];
+	const term = controlBlockSearchEl.value.trim();
+	let cube;
+
+	// Attempt to parse the term as a color, all of the checks happen internally
+	// to the parsing method.
+	const color = RGBColor.parseCSSHex(term);
+
+	// This logic is for special search types
+	if (color !== null) {
+		const lab = color.toLabColor();
+		const block = findNearest(allBlocks, lab);
+
+		// TODO: consider refactoring this code to not use the name to look up
+		//       the cube from the block.
+		cube = blockMap[block.name];
+	}
+
+	// If no special search types were found just look it up if it were a name.
+	if (!cube) {
+		cube = blockMap[controlBlockSearchEl.value];
+	}
+
 	console.log('selected', cube);
 
 	if (cube) {

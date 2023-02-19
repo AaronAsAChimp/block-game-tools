@@ -6,7 +6,8 @@
 	"workspaces": [
 		"generator",
 		"web",
-		"loader"
+		"loader",
+		"shared"
 	],
 	"staticFiles": {
 		"staticPath": "data",

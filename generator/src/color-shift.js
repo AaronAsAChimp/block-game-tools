@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-import {RGBColor} from './color.js';
+import {RGBColor} from 'shared';
 
 /**
  * These values were copied from the wiki at:

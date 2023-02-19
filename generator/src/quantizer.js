@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-import {RGBColor, Color} from './color.js';
+import {RGBColor, Color} from 'shared/src/color.js';
 
 /**
  * @typedef {Object} JsonColor

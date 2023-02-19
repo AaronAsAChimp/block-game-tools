@@ -8,7 +8,7 @@ import colorBlocks from '../data/color-blocks.json' assert {type: "json"};
 import {Animation} from './animation.js';
 import {BasicColorExtractor, SaturatedColorExtractor, QuantizerColorExtractor} from './color-extractor.js';
 import {OBJFile} from './objfile.js';
-import {RGBColor, LabColor, XYZColor, Color} from "./color.js";
+import {RGBColor, LabColor, XYZColor, Color} from "shared/src/color.js";
 import {buildTintMap, tintTexture} from './color-shift.js';
 
 /**

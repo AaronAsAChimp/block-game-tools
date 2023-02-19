@@ -168,6 +168,26 @@ export class RGBColor extends Color {
 
 		return new RGBColor(r, g, b);
 	}
+
+	/**
+	 * Parse a color from a CSS Hex code such as #ffcc00.
+	 *
+	 * @param  {string} value The value to parse.
+	 * @return {Color}        The parsed color or null if it is not a valid color.
+	 */
+	static parseCSSHex(value) {
+		let result = null;
+
+		if (value.length === 7 && value[0] === '#') {
+			const r = parseInt(value.substring(1, 3), 16);
+			const g = parseInt(value.substring(3, 5), 16);
+			const b = parseInt(value.substring(5, 7), 16);
+
+			result = new RGBColor(r, g, b);
+		}
+
+		return result;
+	}
 }
 
 export class RGBAColor extends RGBColor {
