@@ -1,0 +1,47 @@
+name: Toolbox CD
+
+on:
+  push:
+    branches: [ main ]
+
+concurrency: pages_deploy
+
+env:
+  PUBLIC_URL: ${{ vars.PUBLIC_URL }}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    environment: github-pages
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run load-versions
+    - run: npm run generator
+    - run: npm run build -w web -- --public-url $PUBLIC_URL # also needs PUBLIC_URL set globally
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: './web/dist/'
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
