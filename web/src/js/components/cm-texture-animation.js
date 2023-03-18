@@ -8,7 +8,7 @@ class CmTextureAnimation extends HTMLElement {
 
 	/**
 	 * The image element of the component.
-	 * @type {HTMLImageElement}
+	 * @type {HTMLElement}
 	 */
 	#imageEl;
 

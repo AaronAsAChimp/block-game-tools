@@ -8,15 +8,22 @@ import helvetikerFont from 'three/examples/fonts/droid/droid_sans_regular.typefa
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons/faQuestion';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo';
+import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 
 import { RGBColor } from 'shared/src/color.js';
 
 import {DATA_DIR} from './consts.js';
+import {Menu} from './menu.js';
+import {Dialog} from './dialog.js';
 
 import './components/cm-texture-image.js';
 import './components/cm-texture-animation.js';
 
-library.add(faQuestion, faCircleInfo);
+library.add(
+	faQuestion,
+	faCircleInfo,
+	faBars
+);
 dom.watch();
 
 /**
@@ -363,37 +370,6 @@ class SimilarBlocks {
 	}
 }
 
-class Dialog {
-	/**
-	 * Construct a new Dialog
-	 * @param  {HTMLDialogElement} dialogEl  The element of the dialog.
-	 */
-	constructor(dialogEl) {
-		/**
-		 * The dialog element.
-		 *
-		 * @type {HTMLDialogElement}
-		 */
-		this.dialogEl = dialogEl;
-
-		const closeButtons = this.dialogEl.querySelectorAll('.close');
-
-		for (const button of closeButtons) {
-			button.addEventListener('click', () => {
-				this.close();
-			});
-		}
-	}
-
-	open() {
-		this.dialogEl.show();
-	}
-
-	close() {
-		this.dialogEl.close();
-	}
-}
-
 
 class ContrastManager {
 	#rootEl;
@@ -452,9 +428,37 @@ let blockMap = {};
 
 const infoTooltip = new Tooltip(document.querySelector('.info-tooltip'));
 const similar = new SimilarBlocks();
-const aboutDialog = new Dialog(document.querySelector('.about-dialog'));
-const helpDialog = new Dialog(document.querySelector('.help-dialog'));
+const menuDialog = new Dialog(document.querySelector('.menu-dialog'));
 const constrastMgr = new ContrastManager(document.body);
+const appMenu = new Menu();
+
+document.body.append(appMenu.getRootElement());
+
+appMenu.setMenuItems([
+	{
+		text: 'Help',
+		href: '',
+		icon: faQuestion,
+		onClick: async () => {
+			const content = await import('../md/help.md');
+
+			menuDialog.setHtml(content.default);
+			// menuDialog.setHtml(helpText);
+			menuDialog.open();
+		}
+	}, {
+		text: 'About',
+		href: '',
+		icon: faCircleInfo,
+		onClick: async () => {
+			const content = await import('../md/about.md');
+
+			menuDialog.setHtml(content.default);
+			// menuDialog.setHtml(aboutText);
+			menuDialog.open();
+		}
+	}
+]);
 
 similar.setPaletteEntry(paletteEntry);
 
@@ -463,8 +467,7 @@ const selectedBlockNameEl = document.querySelector('.selected-block .name');
 const controlsPaletteSelectEl = document.querySelector('.controls .pallette-select');
 const controlBlockSearchEl = document.querySelector('.controls .block-search');
 const controlBlockListEl = document.querySelector('.controls #block-list');
-const controlAboutButtonEl = document.querySelector('.controls .about');
-const controlHelpButtonEl = document.querySelector('.controls .help');
+const controlMenuButtonEl = document.querySelector('.controls .menu');
 
 
 const scene = new THREE.Scene();
@@ -751,12 +754,8 @@ controlBlockSearchEl.addEventListener('input', (e) => {
 	}
 });
 
-controlHelpButtonEl.addEventListener('click', (e) => {
-	helpDialog.open();
-})
-
-controlAboutButtonEl.addEventListener('click', (e) => {
-	aboutDialog.open();
+controlMenuButtonEl.addEventListener('click', (e) => {
+	appMenu.open();
 });
 
 window.addEventListener('resize', (e) => {

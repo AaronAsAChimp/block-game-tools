@@ -1,0 +1,7 @@
+ { 
+   "marked": { 
+     "gfm": true, 
+     "sanitize": false, 
+     "smartypants": true, 
+   } 
+ }

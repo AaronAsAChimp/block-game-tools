@@ -40,104 +40,12 @@
 				<option value="mostCommon" selected>Most Common</option>
 			</select>
 		</label>
-		<button class="help" title="Help"><i class="fa-solid fa-question"></i></button>
-		<button class="about" title="About"><i class="fa-solid fa-circle-info"></i></button>
+		<button class="menu" title="About"><i class="fa-solid fa-bars"></i></button>
 	</div>
 	<div class="info-tooltip">
 		<div class="name"></div>
 	</div>
-	<dialog class="help-dialog dialog">
-		<h3>Help</h3>
-		<h4>Controls</h4>
-		<dl>
-			<dt>Rotate view</dt>
-			<dd>Click and drag</dd>
-
-			<dt>Pan</dt>
-			<dd>Shift + Click and drag</dd>
-
-			<dt>Zoom</dt>
-			<dd>Scroll</dd>
-
-			<dt>Inspect Block</dt>
-			<dd>In the 3D view, click on the block you want to inspect.</dd>
-		</dl>
-
-		<h4>Search</h4>
-		<p>
-			Search for textures by name or by CSS hex code (such as #ffcc00). A
-			list of texture names will appear as you type that you can select
-			from.
-		</p>
-
-		<h4>Color Extraction Method</h4>
-		<p>
-			The color extraction method selection allows you to choose how the
-			colors are extracted from the block's texture.
-		</p>
-
-		<dl>
-			<dt>Average</dt>
-			<dd>
-				This method averages the colors of the texture. This method is
-				best for builds that will be viewed at a distance.
-			</dd>
-			<dt>Most Common</dt>
-			<dd>
-				This method groups the colors by similarity and then choses a
-				representative color from the largest group. This method is best
-				for builds that will be viewed at a medium distance.
-			</dd>
-			<dt>Most Saturated</dt>
-			<dd>
-				This method chooses the most saturated color. This method is
-				best for builds that will be viewed up close.
-			</dd>
-		</dl>
-
-		<h4>Similar Blocks</h4>
-		<p>
-			This section will be populated when inspecting a block. It shows the
-			textures that are the most similar in color. If there is a lot of
-			blocks that are similar, you can "More..." to see any additional
-			blocks.
-		</p>
-		<button class="close">Close</button>
-	</dialog>
-	<dialog class="about-dialog dialog">
-		<h3>About</h3>
-		<p>
-			Block Game Color Map allows you to find blocks that are similar in
-			color to other blocks.
-		</p>
-		<p>
-			NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.
-		</p>
-		<h4>License</h4>
-		<pre>
-MIT License
-
-Copyright (c) 2022 Aaron Spaulding
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-		</pre>
-		<button class="close">Close</button>
+	<dialog class="menu-dialog dialog">
 	</dialog>
 	<script src="./src/js/index.js" type="module"></script>
 </body>
