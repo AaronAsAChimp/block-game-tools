@@ -6,7 +6,7 @@
 .texture-image,
 .texture-animation {
 	height: 64px;
-	image-rendering: crisp-edges;
+	image-rendering: pixelated;
 }
 
 .texture-animation {
