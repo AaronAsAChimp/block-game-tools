@@ -1,0 +1,9 @@
+.info-tooltip {
+	pointer-events: none;
+	position: absolute;
+	color: white;
+	background: #48484875;
+	transform: translateX(1em);
+	padding: 0.4em 0.8em;
+	border-radius: 0.4em;
+}

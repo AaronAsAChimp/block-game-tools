@@ -28,3 +28,14 @@ test('an RGBA color from an integer', t => {
 	t.is(color.b, 0x56, 'check that the blue component is correct.');
 	t.is(color.a, 0x78, 'check that the alpha component is correct.');
 });
+
+test('an RGB color to CSS when components have fractional parts', t => {
+	// Arrange
+	const color = new RGBColor(33.333, 33.333, 33.333);
+
+	// Act
+	const css = color.toCSS();
+
+	// Assert
+	t.is(css, '#212121', 'check that the CSS output is correct.');
+});

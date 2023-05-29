@@ -7,46 +7,10 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
-
-	<link rel="stylesheet" type="text/css" href="src/css/index.css">
 	<link rel="stylesheet" type="text/css" href="data/1.19/texture-animations.css">
 </head>
 <body>
-	<div class="selected-block">
-		<div class="name"></div>
-
-		<h3>Similar Blocks</h3>
-		<div class="similar-best"></div>
-		<div>
-			<a class="similar-toggle">More...</a>
-			<div class="similar-second"></div>
-		</div>
-	</div>
-	<div class="controls">
-		<div class="app-title">
-			Block Game Color Map
-		</div>
-		<span>
-			<input list="block-list" class="block-search" type="search" placeholder="Search texture or hex code" value="" />
-			<datalist id="block-list">
-			</datalist>
-		</span>
-		<label>
-			Color Extraction:
-			<select class="pallette-select">
-				<option value="average">Average</option>
-				<!-- <option value="vibrant">Most Vibrant</option> -->
-				<option value="mostSaturated">Most Saturated</option>
-				<option value="mostCommon" selected>Most Common</option>
-			</select>
-		</label>
-		<button class="menu" title="About"><i class="fa-solid fa-bars"></i></button>
-	</div>
-	<div class="info-tooltip">
-		<div class="name"></div>
-	</div>
-	<dialog class="menu-dialog dialog">
-	</dialog>
-	<script src="./src/js/index.js" type="module"></script>
+	<div id="root"></div>
+	<script src="./src/jsx/index.jsx" type="module"></script>
 </body>
 </html>

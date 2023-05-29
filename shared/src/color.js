@@ -94,8 +94,11 @@ export class Color {
 	 */
 	toCSS() {
 		const rgb = this.toRGBColor();
+		const r = Math.round(rgb.r).toString(16).padStart(2, '0');
+		const g = Math.round(rgb.g).toString(16).padStart(2, '0');
+		const b = Math.round(rgb.b).toString(16).padStart(2, '0');
 
-		return `#${rgb.r.toString(16).padStart(2, '0')}${rgb.g.toString(16).padStart(2, '0')}${rgb.b.toString(16).padStart(2, '0')}`;
+		return `#${ r }${ g }${ b }`;
 	}
 }
 

@@ -1,0 +1,18 @@
+.app-title-bar {
+	display: flex;
+	position: absolute;
+	top: 0;
+	right: 0;
+	gap: 0.5em;
+}
+
+.app-title {
+	display: inline-block;
+	font-weight: bold;
+	margin-right: 0.5em;
+}
+
+.app-title-tool-specific {
+	display: flex;
+	gap: 0.5em;
+}

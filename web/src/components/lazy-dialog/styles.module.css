@@ -1,0 +1,12 @@
+.lazy-dialog {
+	max-width: 30em;
+	max-height: 100vh;
+	overflow: auto;
+	box-sizing: border-box;
+}
+
+@media only screen and (max-width: 600px) {
+	.lazy-dialog {
+		max-width: 100vw;
+	}
+}

@@ -1,0 +1,81 @@
+.menu {
+	position: fixed;
+	top: 0;
+	display: block;
+	margin: 0;
+	height: 100%;
+	max-height: 100%;
+	box-sizing: border-box;
+	width: 30vw;
+	min-width: 20em;
+	transition: transform 0.5s;
+	transform: translateX(-100%);
+	color: #3c3c3c;
+	background: white;
+	padding: 1em;
+	box-shadow: 0 0 60px #0000009c;
+}
+
+.menu.open {
+	transform: translateX(0);
+}
+
+.menu .close {
+	padding: 0 0.3em;
+	font-size: 3em;
+	color: inherit;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+}
+
+.menu .close:hover {
+	color: #3c3c3c;
+}
+
+.menu-items {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.menu-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0.5em 0;
+	padding: 0.5em 0.8em;
+	background: #eaeaea;
+	cursor: pointer;
+	border-radius: 0.5em;
+	transition: background-color 0.5s;
+
+	/** When its a menu item with an href */
+	text-decoration: none;
+	color: inherit;
+}
+
+.menu-item:hover {
+	color: #3c3c3c;
+	background: white;
+}
+
+@media (prefers-color-scheme: dark) {
+	.menu {
+		color: #d7d7d7;
+		background: #171717;
+	}
+
+	.menu .close:hover {
+		color: white;
+	}
+
+	.menu-item {
+		background: #282828;
+	}
+
+	.menu-item:hover {
+		color: white;
+		background: #515151;
+	}
+}

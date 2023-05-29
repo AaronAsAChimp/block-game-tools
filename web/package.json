@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "test": "ava"
   },
   "keywords": [],
   "type": "module",
@@ -23,6 +24,13 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@react-spring/three": "^9.7.2",
+    "@react-three/drei": "^9.66.3",
+    "@react-three/fiber": "^8.13.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.1",
     "three": "^0.146.0"
   }
 }
