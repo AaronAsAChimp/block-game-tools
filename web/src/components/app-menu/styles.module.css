@@ -1,3 +1,5 @@
+@import '../../css/variables.css';
+
 .menu {
 	position: fixed;
 	top: 0;
@@ -10,14 +12,13 @@
 	min-width: 20em;
 	transition: transform 0.5s;
 	transform: translateX(-100%);
-	color: #3c3c3c;
-	background: white;
-	padding: 1em;
-	box-shadow: 0 0 60px #0000009c;
-}
+	background: var(--layer1-color);
+	color: var(--layer1-contrast-color);
+	padding: 1em;}
 
 .menu.open {
 	transform: translateX(0);
+	box-shadow: 0 0 60px #0000009c;
 }
 
 .menu .close {
@@ -30,7 +31,7 @@
 }
 
 .menu .close:hover {
-	color: #3c3c3c;
+	color: var(--layer1-contrast-hover);
 }
 
 .menu-items {
@@ -45,7 +46,7 @@
 	align-items: center;
 	margin: 0.5em 0;
 	padding: 0.5em 0.8em;
-	background: #eaeaea;
+	background: var(--layer2-color);
 	cursor: pointer;
 	border-radius: 0.5em;
 	transition: background-color 0.5s;
@@ -56,26 +57,6 @@
 }
 
 .menu-item:hover {
-	color: #3c3c3c;
-	background: white;
-}
-
-@media (prefers-color-scheme: dark) {
-	.menu {
-		color: #d7d7d7;
-		background: #171717;
-	}
-
-	.menu .close:hover {
-		color: white;
-	}
-
-	.menu-item {
-		background: #282828;
-	}
-
-	.menu-item:hover {
-		color: white;
-		background: #515151;
-	}
+	background: var(--layer2-hover);
+	color: var(--layer2-contrast-hover);
 }

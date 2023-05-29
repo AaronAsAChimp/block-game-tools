@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html",
+    "start": "parcel index.html 404.html",
+    "build": "parcel build index.html 404.html",
     "test": "ava"
   },
   "keywords": [],
@@ -19,7 +19,9 @@
     "parcel": "^2.8.0",
     "parcel-reporter-static-files-copy": "^1.4.0",
     "parcel-transformer-google-fonts": "^0.1.4",
-    "parcel-transformer-markdown": "^2.1.1"
+    "parcel-transformer-markdown": "^2.1.1",
+    "buffer": "^5.7.1",
+    "process": "^0.11.10"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
@@ -31,6 +33,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1",
-    "three": "^0.146.0"
+    "three": "^0.146.0",
+    "ghspa": "^1.0.0"
   }
 }

@@ -1,0 +1,40 @@
+@import '../../css/variables.css';
+
+.tiles {
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(4, 6em);
+}
+
+.tiles li {
+	list-style: none;
+}
+
+.tiles-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-decoration: none;
+	padding: 1em;
+	border-radius: 1em;
+	background: var(--layer1-color);
+	color: var(--layer1-contrast-color);
+	transition: 0.5s;
+}
+
+.tiles-item:hover {
+	background: var(--layer1-hover);
+	color: var(--layer1-contrast-hover);
+}
+
+.tiles-icon {
+	width: 1em;
+	aspect-ratio: 1;
+	font-size: 4em;
+}
+
+.tiles-title {
+	font-size: 1.5em;
+	text-align: center;
+}

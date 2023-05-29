@@ -1,22 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faCubes, faHouse, faXmark, faCircleInfo } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faCubes, faHouse, faXmark, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { createPortal } from "react-dom";
-import { lazy, useState } from "react";
+import { useState } from "react";
 
 import * as styles from './styles.module.css';
 import { LazyDialog } from "../lazy-dialog";
+import { AboutContent } from "../content";
 
-const AboutContent = lazy(async () => {
-	const markdownContent = await import('../../md/about.md');
-
-	return {
-		default: function () {
-			return <div dangerouslySetInnerHTML={{
-				__html: markdownContent.default
-			}}></div>
-		}
-	}
-});
 
 function AppMenuLink({children, href}) {
 	return <li><a className={styles['menu-item']} href={href}>{ children }</a></li>
@@ -52,7 +42,7 @@ export function AppMenu() {
 		{ createPortal(
 			<AppMenuSlideout open={open} onClose={() => setOpen(false)}>
 				<AppMenuLink href="/">Home <FontAwesomeIcon icon={faHouse} /></AppMenuLink>
-				<AppMenuLink href="/map/">Map <FontAwesomeIcon icon={faCubes} /></AppMenuLink>
+				<AppMenuLink href="/map/">Color Map <FontAwesomeIcon icon={faCubes} /></AppMenuLink>
 				<AppMenuButton onClick={openAboutDialog}>About <FontAwesomeIcon icon={faCircleInfo} /></AppMenuButton>
 			</AppMenuSlideout>,
 			document.body
