@@ -1,15 +1,16 @@
+import { faBars, faCircleInfo, faCubes, faHouse, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faCubes, faHouse, faXmark, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
-import { createPortal } from "react-dom";
 import { useState } from "react";
+import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
+import { AboutContent } from "../content";
+import { LazyDialog } from "../lazy-dialog";
 
 import * as styles from './styles.module.css';
-import { LazyDialog } from "../lazy-dialog";
-import { AboutContent } from "../content";
 
 
 function AppMenuLink({children, href}) {
-	return <li><a className={styles['menu-item']} href={href}>{ children }</a></li>
+	return <li><Link className={styles['menu-item']} to={href}>{ children }</Link></li>
 }
 
 function AppMenuButton({children, onClick}) {

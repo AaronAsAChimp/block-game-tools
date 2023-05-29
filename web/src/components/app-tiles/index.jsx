@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCubes } from '@fortawesome/free-solid-svg-icons'
 import * as styles from './styles.module.css';
+import { Link } from "react-router-dom";
 
 function AppTileLink({children, href, title}) {
-	return <li><a className={styles['tiles-item']} href={href}>
+	return <li><Link className={styles['tiles-item']} to={href}>
 		<div className={styles['tiles-icon']}>{ children }</div>
 		<div className={styles['tiles-title']}>{ title }</div>
-	</a></li>
+	</Link></li>
 }
 
 export function AppTiles() {
