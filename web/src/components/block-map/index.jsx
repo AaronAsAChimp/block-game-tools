@@ -29,31 +29,6 @@ const SPRING_CONFIG = {
 	clamp: true
 };
 
-/**
- * Reposition the labels relative to the bounds.
- *
- * @param  {THREE.Group} boundsObj The bounds
- * @param  {THREE.Group} uiGroup  The containing the labels.
- */
-function repositionLabels(boundsObj, uiGroup) {
-	const boundsCenter = new THREE.Vector3();
-	const boundsBoundingBox = new THREE.Box3();
-
-	boundsBoundingBox.setFromObject(boundsObj);
-	boundsBoundingBox.getCenter(boundsCenter);
-
-	if (uiGroup.children.length > 1) {
-
-		for (const obj of uiGroup.children) {
-			if (obj !== boundsObj) {
-				// console.log(obj);
-				const axis = obj.position.clone().sub(boundsCenter).normalize();
-
-				obj.translateOnAxis(axis, 2);
-			}
-		}
-	}
-}
 
 /**
  * Position the camer so that the whole bounds object is visible.
@@ -220,9 +195,9 @@ function Labels({labels}) {
 	return <group>
 		{ labels.map((label) => {
 			return <Text3D key={label.name} font={droidSansRegular} size={2.5} height={1} position={[
-					label.lab.a,
-					label.lab.l,
-					label.lab.b,
+					label.pos.a,
+					label.pos.l,
+					label.pos.b,
 				]}>
 				{label.name}
 				<meshStandardMaterial color={[

@@ -27,6 +27,7 @@ type Label = {
 	name: string,
 	rgb: RGBColor,
 	lab: LabColor,
+	pos: LabColor,
 }
 
 export type Block = {

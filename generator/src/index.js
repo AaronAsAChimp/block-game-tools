@@ -10,6 +10,7 @@ import {BasicColorExtractor, SaturatedColorExtractor, QuantizerColorExtractor} f
 import {OBJFile} from './objfile.js';
 import {RGBColor, LabColor, XYZColor, Color} from "shared/src/color.js";
 import {buildTintMap, tintTexture} from './color-shift.js';
+import { BoundingBox } from "./bounding-box.js";
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
@@ -145,19 +146,39 @@ function buildPaletteEntry(color) {
  * @property {string} name The text of the label
  * @property {RGBColor} rgb The RGB color of the label
  * @property {LabColor} lab The Lab color of the label
+ * @property {LabColor} pos The position of the label in Lab space.
  */
 
 /**
  * Build a label to display in the UI
  * @param  {string} name  The text of the label
  * @param  {Color} color The color of the label
+ * @param  {BoundingBox} bounds The bounding box of the colors to position the labels outside of.
  * @return {ColorLabel}       [description]
  */
-function buildLabel(name, color) {
+function buildLabel(name, color, bounds) {
+	const labColor = color.toLabColor();
+	const center = bounds.centroid();
+	let axisL = center.l - labColor.l;
+	let axisA = center.a - labColor.a;
+	let axisB = center.b - labColor.b;
+	const magnitude = Math.sqrt(axisL * axisL + axisA * axisA + axisB * axisB);
+
+	axisL /= magnitude;
+	axisA /= magnitude;
+	axisB /= magnitude;
+
 	return {
-			name,
-			rgb: color.toRGBColor(), 
-			lab: color.toLabColor()
+		name,
+		rgb: color.toRGBColor(), 
+		lab: labColor,
+
+		// Move the label outside of the bounds so that it is legible.
+		pos: new LabColor(
+			labColor.l + (axisL * -3),
+			labColor.a + (axisA * -3),
+			labColor.b + (axisB * -3)
+		)
 	};
 }
 
@@ -175,7 +196,18 @@ const green = RGBColor.fromInteger(0x00FF00);
 const cyan = RGBColor.fromInteger(0x00FFFF);
 
 const blue = RGBColor.fromInteger(0x0000FF);
-const magenta = RGBColor.fromInteger(0xFF00FF)
+const magenta = RGBColor.fromInteger(0xFF00FF);
+
+const bounds = new BoundingBox();
+
+bounds.add(black);
+bounds.add(white);
+bounds.add(red);
+bounds.add(yellow);
+bounds.add(green);
+bounds.add(cyan);
+bounds.add(blue);
+bounds.add(magenta);
 
 
 const version = '1.19';
@@ -184,14 +216,14 @@ const extractPath = `./web/data/${ version }/`;
 const extractedTexturesPath = path.join(extractPath, 'textures');
 const json = [];
 const labels = [
-	buildLabel('R', red),
-	buildLabel('G', green),
-	buildLabel('B', blue),
-	buildLabel('C', cyan),
-	buildLabel('M', magenta),
-	buildLabel('Y', yellow),
-	buildLabel('K', black),
-	buildLabel('W', white)
+	buildLabel('R', red, bounds),
+	buildLabel('G', green, bounds),
+	buildLabel('B', blue, bounds),
+	buildLabel('C', cyan, bounds),
+	buildLabel('M', magenta, bounds),
+	buildLabel('Y', yellow, bounds),
+	buildLabel('K', black, bounds),
+	buildLabel('W', white, bounds)
 ];
 const excludes = buildExcludes(colorBlocks, blockTextures);
 const averageExtractor = new BasicColorExtractor();
