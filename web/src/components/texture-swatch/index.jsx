@@ -53,10 +53,10 @@ export function TextureImage({block}) {
 export function TextureAnimation({block}) {
 	const palette = useContext(PaletteContext);
 
-	return <div className={styles['texture']}>
+	return <TooltipWrapper className={styles['texture']} title={block.name}>
 		<div className={styles['texture-animation'] + ' texture-' + block.name}></div>
 		<div className={styles['texture-image-swatch']} style={{ backgroundColor: cssColor(block, palette) }}></div>
-	</div>
+	</TooltipWrapper>
 }
 
 /**
