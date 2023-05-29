@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Suspense, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
@@ -21,7 +23,7 @@ export function LazyDialog({open=false, onClose, children}) {
 	return <>
 		{ createPortal(
 			<dialog className={styles['lazy-dialog']} ref={dialogRef}>
-				<button onClick={onClose}>Close</button>
+				<button className={styles['close']} onClick={onClose}><FontAwesomeIcon icon={faXmark} /></button>
 				<Suspense fallback={<div>Loading...</div>}>
 					{ open ? children : null }
 				</Suspense>
