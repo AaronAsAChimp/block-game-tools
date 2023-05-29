@@ -17,7 +17,9 @@ const router = createBrowserRouter([
       return fetch(DATA_DIR + 'blocks.json');
     }
   }
-]);
+], {
+  basename: process.env.PUBLIC_URL ?? '/'
+});
 
 const root = createRoot(document.getElementById("root"));
 root.render(
