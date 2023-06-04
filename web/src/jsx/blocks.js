@@ -3,6 +3,8 @@
  * @typedef {import('./server.d.ts').Block} Block
  */
 
+import { Color } from 'shared/src/color.js';
+
 function distanceSquared(pos1, pos2) {
 	const delta = {
 		l: pos2.l - pos1.l,
@@ -64,4 +66,53 @@ export function findNearest(blocks, paletteEntry, pos) {
 	}
 
 	return nearest;
+}
+
+
+export class BlockLookup {
+	/** @type {{[key: string]: Block[]}} The blocks organized for fast look up based on RGB */
+	#cache = {};
+
+	/** @type {Block[]} The unprocessed blocks */
+	#blocks = [];
+
+	/**
+	 * Construct a new BlockLookup
+	 *
+	 * @param  {Block[]} blocks The initial set of blocks.
+	 */
+	constructor(blocks) {
+		this.#blocks = blocks;
+	}
+
+	#findBlock(color, palette) {
+		const lab = color.toLabColor();
+
+		return findNearest(this.#blocks, palette, lab);
+	}
+
+	/**
+	 * Find the closest block for the given color.
+	 * @param  {Color} color The color.
+	 * @param  {string} palette The palette for the chose block.
+	 * @return {Block}       The block.
+	 */
+	find(color, palette) {
+		const rgb = color.toRGBColor();
+		const colorInt = rgb.toInteger();
+
+		if (!this.#cache[palette]) {
+			this.#cache[palette] = [];
+		}
+
+		let block = this.#cache[palette][colorInt];
+
+
+		if (!block) {
+			block = this.#findBlock(color, palette);
+			this.#cache[palette][colorInt] = block;
+		}
+
+		return block;
+	}
 }

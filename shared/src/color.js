@@ -2,6 +2,42 @@
 // "D65" is a standard 6500K Daylight light source.
 // https://en.wikipedia.org/wiki/Illuminant_D65
 const D65 = [95.047, 100, 108.883];
+const GAMMA = 2.4;
+const GAMMA_INV = 1 / GAMMA;
+
+function lerp(val1, val2, frac) {
+	return val1 * (1 - frac) + val2 * frac;
+}
+
+/**
+ * The RGB transfer function. This converts from linear RGB to
+ * gamma-corrected RGB.
+ * 
+ * @param  {number} c The component to convert.
+ * @return {number}   The converted component.
+ */
+function transfer(c) {
+	if (c <= 0.0031308) {
+		return c * 12.92;
+	} else {
+		return (1.055 * Math.pow(c, GAMMA_INV)) - 0.055;
+	}
+}
+
+/**
+ * The inverse RGB transfer function. This converts from gamma-corrected RGB
+ * to linear RGB.
+ * 
+ * @param  {number} c The component to convert.
+ * @return {number}   The converted component.
+ */
+function transferInv(c) {
+	if(c <= 0.04045) {
+		return c / 12.92;
+	} else {
+		return Math.pow((c + 0.055)/1.055, GAMMA);
+	}
+}
 
 export class Color {
 
@@ -23,6 +59,21 @@ export class Color {
 	 */
 	toXYZColor() {
 		throw new Error('Not Implemented');
+	}
+
+	/**
+	 * Convert this color to Linear RGB.
+	 * 
+	 * @return {LinearRGBColor} The color.
+	 */
+	toLinearRGBColor() {
+		const rgb = this.toRGBColor();
+
+		var rLinear = transferInv(rgb.r / 255);
+		var gLinear = transferInv(rgb.g / 255);
+		var bLinear = transferInv(rgb.b / 255);
+
+		return new LinearRGBColor(rLinear, gLinear, bLinear);
 	}
 
 	/**
@@ -100,6 +151,44 @@ export class Color {
 
 		return `#${ r }${ g }${ b }`;
 	}
+
+	/**
+	 * Create a gradient with the specified number of steps.
+	 * 
+	 * @param  {Color} start  The starting color
+	 * @param  {Color} end    The ending color
+	 * @param  {number} steps The number of steps.
+	 * @return {Color[]}      The graident
+	 */
+	static gradient(start, end, steps) {
+		const colors = [];
+		const startLinear = start.toLinearRGBColor();
+		const endLinear = end.toLinearRGBColor();
+
+		const startBrightness = startLinear.perceptualBrightness();
+		const endBrightness = endLinear.perceptualBrightness();
+		const color = new LinearRGBColor(0, 0, 0);
+
+		for (let i = 0; i < steps; i++) {
+			const percent = i / (steps - 1);
+			const intensity = Math.pow(lerp(startBrightness, endBrightness, percent), GAMMA);
+
+			color.r = lerp(startLinear.r, endLinear.r, percent);
+			color.g = lerp(startLinear.g, endLinear.g, percent);
+			color.b = lerp(startLinear.b, endLinear.b, percent);
+			const total = color.r + color.g + color.b;
+
+			if (total !== 0) {
+				color.r = color.r * intensity / total;
+				color.g = color.g * intensity / total;
+				color.b = color.b * intensity / total;
+			}
+
+			colors.push(color.toRGBColor());
+		}
+
+		return colors;
+	}
 }
 
 export class RGBColor extends Color {
@@ -133,23 +222,17 @@ export class RGBColor extends Color {
 	 * from https://gist.github.com/mnito/da28c930d270f280f0989b9a707d71b5
 	 */
 	toXYZColor() {
-		var sxm = [
+		const sxm = [
 			[0.4124564, 0.3575761, 0.1804375],
 			[0.2126729, 0.7151522, 0.0721750],
 			[0.0193339, 0.1191920, 0.9503041]
 		];
 
-		var inverted_transfer = function (c) {
-			if(c <= 0.04045) {
-				return c / 12.92;
-			} else {
-				return Math.pow((c + 0.055)/1.055, 2.4);
-			}
-		};
+		const linear = this.toLinearRGBColor();
 
-		var rLinear = inverted_transfer(this.r / 255);
-		var gLinear = inverted_transfer(this.g / 255);
-		var bLinear = inverted_transfer(this.b / 255);
+		const rLinear = linear.r;
+		const gLinear = linear.g;
+		const bLinear = linear.b;
 
 		return new XYZColor(
 			(rLinear * sxm[0][0] + gLinear * sxm[0][1] + bLinear * sxm[0][2]) * 100,
@@ -159,7 +242,19 @@ export class RGBColor extends Color {
 	}
 
 	/**
-	 * Create a new RGBColor from an integer (e.g.  0xFFFFFF).
+	 * Create an integer representation of this color (e.g. 0xFFFFFF).
+	 * @return {number}
+	 */
+	toInteger() {
+		let value = this.b;
+		value |= this.g << 8;
+		value |= this.r << 16;
+
+		return value;
+	}
+
+	/**
+	 * Create a new RGBColor from an integer (e.g. 0xFFFFFF).
 	 *
 	 * @param {number} value The RGB color as an integer.
 	 * @return {RGBColor} The new color
@@ -222,6 +317,38 @@ export class RGBAColor extends RGBColor {
 		const r = (value >> 24) & 0xFF;
 
 		return new RGBAColor(r, g, b, a);
+	}
+}
+
+
+/**
+ * An RGB color space where the values are linear
+ */
+export class LinearRGBColor extends Color {
+	/**
+	 * Construct a new LinearRGBColor
+	 * @param  {number} r The red component, 0 - 1
+	 * @param  {number} g The green component, 0 - 1
+	 * @param  {number} b The blue component, 0 - 1
+	 */
+	constructor(r, g, b) {
+		super();
+
+		this.r = r;
+		this.g = g;
+		this.b = b;
+	}
+
+	toRGBColor() {
+		const r = transfer(this.r);
+		const g = transfer(this.g);
+		const b = transfer(this.b);
+
+		return new RGBColor(Math.floor(r * 255), Math.floor(g * 255), Math.floor(b * 255));
+	}
+
+	perceptualBrightness() {
+		return Math.pow(this.r + this.g + this.b, GAMMA_INV);
 	}
 }
 

@@ -16,9 +16,6 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { LazyDialog } from "../../../components/lazy-dialog/index.jsx";
 import { MapHelpContent } from "../../../components/content/index.jsx";
 
-/**
- * @typedef {import('../../server.d.ts').BlocksResponse} BlocksResponse
- */
 
 export function Component() {
 	const [searchTerm, setSearchTerm] = useState('');
@@ -45,7 +42,7 @@ export function Component() {
 	}, [rootRef.current]);
 	const [colors, setColors] = useState(null);
 
-	/** @type {BlocksResponse} */
+	/** @type {import('../../server.d.ts').BlocksResponse} */
 	const blocks = useLoaderData();
 
 	const blockNameMap = useMemo(() => {

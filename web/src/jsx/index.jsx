@@ -16,6 +16,12 @@ const router = createBrowserRouter([
     loader: () => {
       return fetch(DATA_DIR + 'blocks.json');
     }
+  }, {
+    path: '/gradient/',
+    lazy: () => import('./pages/gradient/index.jsx'),
+    loader: () => {
+      return fetch(DATA_DIR + 'blocks.json');
+    }
   }
 ], {
   basename: process.env.PUBLIC_URL ?? '/'

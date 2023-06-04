@@ -4,11 +4,8 @@
 	margin: 0;
 	padding: 0;
 	display: grid;
-	grid-template-columns: repeat(4, 6em);
-}
-
-.tiles li {
-	list-style: none;
+	grid-template-columns: repeat(5, minmax(auto, 10em));
+	gap: 1em;
 }
 
 .tiles-item {
@@ -29,8 +26,6 @@
 }
 
 .tiles-icon {
-	width: 1em;
-	aspect-ratio: 1;
 	font-size: 4em;
 }
 
