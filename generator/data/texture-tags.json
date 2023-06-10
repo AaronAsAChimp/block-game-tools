@@ -58,7 +58,7 @@
         "model:block"
     ],
     "ancient_debris_top": [
-        "direction:any",
+        "direction:top",
         "model:block"
     ],
     "andesite": [
@@ -2163,24 +2163,29 @@
     ],
     "piston_bottom": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "redstone"
     ],
     "piston_inner": [
         "direction:any",
-        "model:other"
+        "model:other",
+        "redstone"
     ],
     "piston_side": [
         "direction:any",
         "redstone",
-        "model:block"
+        "model:block",
+        "redstone"
     ],
     "piston_top": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "redstone"
     ],
     "piston_top_sticky": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "redstone"
     ],
     "podzol_side": [
         "direction:side",

@@ -324,7 +324,7 @@ writeBlockSet(version, json, path.join(extractPath, `blocks.json`));
 writeBlockSet(version, json, path.join(extractPath, `gradient-blocks.json`), (block) => {
 	return block.tags.includes('model:block') && block.tags.includes('direction:any')
 		&& !block.tags.includes('unobtainable') && !block.tags.includes('transparent')
-		&& !block.tags.includes('ore');
+		&& !block.tags.includes('ore') && !block.tags.includes('redstone');
 });
 
 
