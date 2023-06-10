@@ -154,6 +154,8 @@ export class Color {
 
 	/**
 	 * Create a gradient with the specified number of steps.
+	 *
+	 * https://stackoverflow.com/questions/22607043/color-gradient-algorithm
 	 * 
 	 * @param  {Color} start  The starting color
 	 * @param  {Color} end    The ending color

@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "A collection of block descriptions.",
+  "type": "object",
+  "additionalProperties": {
+    "type": "array",
+    "items": {
+      "type": "string",
+      "enum": [
+        "transparent",
+        "redstone",
+        "model:other",
+        "model:pane",
+        "model:crops",
+        "model:block",
+        "model:slab",
+        "model:flower",
+        "model:on-ground",
+        "model:door",
+        "model:trapdoor",
+        "model:farmland",
+        "model:candle",
+        "direction:any",
+        "direction:top",
+        "direction:bottom",
+        "direction:north",
+        "direction:south",
+        "direction:east",
+        "direction:west",
+        "direction:side",
+      ]
+    }
+  }
+}

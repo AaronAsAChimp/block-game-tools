@@ -4,6 +4,7 @@ import {PNG} from 'pngjs';
 
 import blockTextures from '../data/block-textures.json' assert {type: "json"};
 import colorBlocks from '../data/color-blocks.json' assert {type: "json"};
+import textureTags from '../data/texture-tags.json' assert {type: "json"};
 
 import {Animation} from './animation.js';
 import {BasicColorExtractor, SaturatedColorExtractor, QuantizerColorExtractor} from './color-extractor.js';
@@ -182,6 +183,22 @@ function buildLabel(name, color, bounds) {
 	};
 }
 
+function writeBlockSet(version, blocks, path, filter) {
+	const jsonOutput = fs.createWriteStream(path);
+
+	if (filter) {
+		blocks = blocks.filter(filter);
+	}
+
+	jsonOutput.write(JSON.stringify({
+		minecraft_version: version,
+		labels,
+		blocks,
+	}, null, '    '));
+
+	jsonOutput.close();
+}
+
 //
 // Primaries
 // 
@@ -290,9 +307,9 @@ for await (const filename of walk(dirPath)) {
 		json.push({
 			name,
 			animated: hasMcmeta,
+			tags: textureTags[name] ?? null,
 			palette: {
 				average: buildPaletteEntry(palette.average),
-				vibrant: buildPaletteEntry(palette.vibrant),
 				mostCommon: buildPaletteEntry(palette.mostCommon),
 				mostSaturated: buildPaletteEntry(palette.mostSaturated),
 			}
@@ -303,14 +320,13 @@ for await (const filename of walk(dirPath)) {
 	}
 }
 
-const jsonOutput = fs.createWriteStream(path.join(extractPath, `blocks.json`));
+writeBlockSet(version, json, path.join(extractPath, `blocks.json`));
+writeBlockSet(version, json, path.join(extractPath, `gradient-blocks.json`), (block) => {
+	return block.tags.includes('model:block') && block.tags.includes('direction:any')
+		&& !block.tags.includes('unobtainable') && !block.tags.includes('transparent')
+		&& !block.tags.includes('ore');
+});
 
-jsonOutput.write(JSON.stringify({
-	minecraft_version: version,
-	labels,
-	blocks: json
-}, null, '    '));
-jsonOutput.close();
 
 // Build the bounds geometry.
 

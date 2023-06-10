@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../../jsx/server.d.ts').Block} Block
+ * @typedef {import('../../jsx/server.d').Block} Block
  */
 
 import { memo } from 'react';

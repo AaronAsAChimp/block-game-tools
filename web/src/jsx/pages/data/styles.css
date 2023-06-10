@@ -1,0 +1,49 @@
+@import '../../../css/variables.css';
+
+body {
+	margin: 0;
+	font-family: 'PT Sans', sans-serif;
+	background: var(--base-color);
+	color: var(--base-contrast-color);
+}
+
+.page-container {
+	display: grid;
+	grid-template-areas: 'queue a'
+		'queue tags'
+		'queue output';
+	grid-template-columns: 15em auto;
+	height: 100vh;
+}
+
+.texture-queue {
+	grid-area: queue;
+	overflow: auto;
+	padding: 0.5em;
+}
+
+.textures-left {
+	font-weight: bold;
+	padding-bottom: 0.5em;
+}
+
+.tags-editor {
+	grid-area: tags;
+}
+
+.tags-choices {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(5em, auto));
+	gap: 0.5em;
+}
+
+.tags-choice {
+	padding: 0.5em;
+	border-radius: 0.5em;
+	background: var(--layer1-color);
+	color: var(--layer1-contrast-color);
+}
+
+.file-output {
+	grid-area: output;
+}
