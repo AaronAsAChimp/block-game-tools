@@ -7,11 +7,12 @@ import { PaletteContext } from "../../../context/palette-context";
 import { BlockLookup } from "../../blocks";
 import './styles.css';
 import { BlockSearch } from "../../../components/block-search";
+import { GradientKnob } from "../../../components/gradient-knob";
 
 
 
 export function Component() {
-	const [palette, setPalette] = useState('mostCommon');
+	const [palette, setPalette] = useState('average');
 	const [startColor, setStartColor] = useState('#000000');
 	const [endColor, setEndColor] = useState('#ffffff');
 	const [steps, setSteps] = useState(5);
@@ -45,15 +46,21 @@ export function Component() {
 				</label>
 			</AppTitleBar>
 
-			<input type="color" onInput={(e) => setStartColor(e.target.value)} value={startColor} />
-			<input type="color" onInput={(e) => setEndColor(e.target.value)} value={endColor} />
-			<input type="number" min="2" onInput={(e) => setSteps(+e.target.value)} value={steps} />
+			<label>
+				Number of blocks:
+				<input type="number" min="2" onInput={(e) => setSteps(+e.target.value)} value={steps} />
+			</label>
 
-			<div>
+			<div className="gradient-display-container">
+				<div className="gradient-display" style={{background: `linear-gradient(to right, ${startColor}, ${endColor})`}}>
+				</div>
+				<GradientKnob value={startColor} offseet={0} onChange={e => {setStartColor(e.target.value)} }></GradientKnob>
+				<GradientKnob value={endColor} offset={1} onChange={e => {setEndColor(e.target.value)} }></GradientKnob>
+			</div>
+
+			<div className="gradient-swatches">
 				{ gradient.map((color, idx) => {
-					const cssColor = color.toCSS();
-
-					return <div key={idx} style={{background: cssColor}}>{cssColor} <TextureSwatch block={blockLookup.find(color, palette)} /></div>
+					return <div className="gradient-swatch-container" key={idx}><TextureSwatch block={blockLookup.find(color, palette)} /></div>
 				}) }
 			</div>
 		</PaletteContext.Provider>

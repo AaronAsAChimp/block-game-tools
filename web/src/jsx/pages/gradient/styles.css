@@ -6,3 +6,24 @@ body {
 	background: var(--base-color);
 	color: var(--base-contrast-color);
 }
+
+.gradient-display-container {
+	position: relative;
+	height: 64px;
+	width: calc(100vw - 40px);
+	margin: 20px auto;
+}
+
+.gradient-display {
+	height: 32px;
+	border-radius: 0.3em;
+}
+
+.gradient-swatches {
+	width: calc(100vw - 128px);
+	margin: auto;
+}
+
+.gradient-swatch-container {
+	display: inline-block;
+}

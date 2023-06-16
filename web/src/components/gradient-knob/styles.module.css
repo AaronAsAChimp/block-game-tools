@@ -1,0 +1,16 @@
+.gradient-knob {
+	position: absolute;
+	display: block;
+	transform: translate(-50%);
+	left: 0%;
+	bottom: 0;
+}
+
+.gradient-color-geom {
+	stroke: currentColor;
+	stroke-width: 0.5px;
+}
+
+.gradient-color-input {
+	display: none;
+}
