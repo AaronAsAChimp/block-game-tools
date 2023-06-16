@@ -47,13 +47,13 @@ export function Component() {
 
 			<input type="color" onInput={(e) => setStartColor(e.target.value)} value={startColor} />
 			<input type="color" onInput={(e) => setEndColor(e.target.value)} value={endColor} />
-			<input type="number" onInput={(e) => setSteps(+e.target.value)} value={steps} />
+			<input type="number" min="2" onInput={(e) => setSteps(+e.target.value)} value={steps} />
 
 			<div>
-				{ gradient.map((color) => {
+				{ gradient.map((color, idx) => {
 					const cssColor = color.toCSS();
 
-					return <div key={cssColor} style={{background: cssColor}}>{cssColor} <TextureSwatch block={blockLookup.find(color, palette)} /></div>
+					return <div key={idx} style={{background: cssColor}}>{cssColor} <TextureSwatch block={blockLookup.find(color, palette)} /></div>
 				}) }
 			</div>
 		</PaletteContext.Provider>

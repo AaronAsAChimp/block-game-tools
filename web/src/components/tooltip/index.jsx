@@ -9,7 +9,7 @@ export function TooltipWrapper({title, className='', children}) {
 	const wrapperRef = useRef();
 
 	function updateXy(e) {
-		setXy({x: e.clientX, y: e.clientY});
+		setXy({x: e.pageX, y: e.pageY});
 	}
 
 	function showTooltip() {
