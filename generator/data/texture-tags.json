@@ -2496,7 +2496,8 @@
     ],
     "red_stained_glass_pane_top": [
         "model:pane",
-        "direction:top"
+        "direction:top",
+        "transparent"
     ],
     "red_terracotta": [
         "direction:any",
@@ -3297,7 +3298,8 @@
     ],
     "yellow_stained_glass": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "transparent"
     ],
     "yellow_stained_glass_pane_top": [
         "direction:top",
