@@ -3,6 +3,7 @@ import fs, { read } from 'fs';
 import path from 'path';
 import sanitize from 'sanitize-filename';
 import Zip from 'adm-zip';
+import {MC_VERSION} from 'shared';
 
 const VERSION_MANIFEST_ENDPOINT = 'https://piston-meta.mojang.com/mc/game/version_manifest_v2.json';
 
@@ -120,7 +121,7 @@ class VersionManifest {
 }
 
 const manifest = new MinecraftManifest();
-const versions = new Set(['1.19']);
+const versions = new Set([MC_VERSION]);
 const releases = await manifest.getSpecificVersions(versions);
 const root = './jars';
 

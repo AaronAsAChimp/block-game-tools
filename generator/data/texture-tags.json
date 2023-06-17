@@ -101,9 +101,46 @@
         "direction:side",
         "model:flower"
     ],
+    "bamboo_block": [
+        "direction:any",
+        "model:block"
+    ],
+    "bamboo_block_top": [
+        "direction:any",
+        "model:block"
+    ],
+    "bamboo_door_bottom": [
+        "direction:side",
+        "model:door"
+    ],
+    "bamboo_door_top": [
+        "direction:side",
+        "model:door"
+    ],
+    "bamboo_fence": [
+        "model:other"
+    ],
+    "bamboo_fence_gate": [
+        "model:other"
+    ],
+    "bamboo_fence_gate_particle": [
+        "model:other"
+    ],
+    "bamboo_fence_particle": [
+        "model:other"
+    ],
     "bamboo_large_leaves": [
         "model:other",
         "direction:side"
+    ],
+    "bamboo_mosaic": [
+        "direction:any",
+        "model:block",
+        "model:slab"
+    ],
+    "bamboo_planks": [
+        "direction:any",
+        "model:block"
     ],
     "bamboo_singleleaf": [
         "direction:side",
@@ -119,6 +156,10 @@
     ],
     "bamboo_stalk": [
         "model:other"
+    ],
+    "bamboo_trapdoor": [
+        "direction:top",
+        "model:trapdoor"
     ],
     "barrel_bottom": [
         "model:block",
@@ -513,6 +554,20 @@
         "direction:any",
         "model:block"
     ],
+    "calibrated_sculk_sensor_amethyst": [
+        "direction:side",
+        "model:other"
+    ],
+    "calibrated_sculk_sensor_input_side": [
+        "direction:side",
+        "model:other",
+        "redstone"
+    ],
+    "calibrated_sculk_sensor_top": [
+        "direction:top",
+        "model:other",
+        "redstone"
+    ],
     "campfire_fire": [
         "model:other"
     ],
@@ -600,9 +655,59 @@
         "model:other",
         "direction:any"
     ],
+    "cherry_door_bottom": [
+        "direction:side",
+        "model:block"
+    ],
+    "cherry_door_top": [
+        "direction:side",
+        "model:door"
+    ],
+    "cherry_leaves": [
+        "direction:any",
+        "model:door",
+        "transparent"
+    ],
+    "cherry_log": [
+        "direction:any",
+        "model:block"
+    ],
+    "cherry_log_top": [
+        "direction:any",
+        "model:block"
+    ],
+    "cherry_planks": [
+        "direction:any",
+        "model:block",
+        "model:slab"
+    ],
+    "cherry_sapling": [
+        "direction:side",
+        "model:flower"
+    ],
+    "cherry_trapdoor": [
+        "direction:top",
+        "model:trapdoor"
+    ],
     "chipped_anvil_top": [
         "direction:top",
         "model:other"
+    ],
+    "chiseled_bookshelf_empty": [
+        "direction:side",
+        "model:block"
+    ],
+    "chiseled_bookshelf_occupied": [
+        "direction:side",
+        "model:block"
+    ],
+    "chiseled_bookshelf_side": [
+        "direction:side",
+        "model:block"
+    ],
+    "chiseled_bookshelf_top": [
+        "direction:top",
+        "model:block"
     ],
     "chiseled_deepslate": [
         "direction:any",
@@ -2135,6 +2240,14 @@
         "direction:any",
         "model:block"
     ],
+    "pink_petals": [
+        "direction:top",
+        "model:on-ground"
+    ],
+    "pink_petals_stem": [
+        "direction:top",
+        "model:on-ground"
+    ],
     "pink_shulker_box": [
         "direction:any",
         "model:block"
@@ -2186,6 +2299,42 @@
         "direction:any",
         "model:block",
         "redstone"
+    ],
+    "pitcher_crop_bottom": [
+        "direction:side",
+        "model:other"
+    ],
+    "pitcher_crop_bottom_stage_1": [
+        "direction:side",
+        "model:flower"
+    ],
+    "pitcher_crop_bottom_stage_2": [
+        "direction:side",
+        "model:flower"
+    ],
+    "pitcher_crop_bottom_stage_3": [
+        "direction:side",
+        "model:flower"
+    ],
+    "pitcher_crop_bottom_stage_4": [
+        "direction:side",
+        "model:flower"
+    ],
+    "pitcher_crop_side": [
+        "direction:side",
+        "model:other"
+    ],
+    "pitcher_crop_top": [
+        "direction:top",
+        "model:other"
+    ],
+    "pitcher_crop_top_stage_3": [
+        "direction:side",
+        "model:flower"
+    ],
+    "pitcher_crop_top_stage_4": [
+        "direction:side",
+        "model:flower"
     ],
     "podzol_side": [
         "direction:side",
@@ -2797,6 +2946,78 @@
         "direction:side",
         "model:slab"
     ],
+    "sniffer_egg_not_cracked_bottom": [
+        "direction:bottom",
+        "model:other"
+    ],
+    "sniffer_egg_not_cracked_east": [
+        "direction:side",
+        "model:other"
+    ],
+    "sniffer_egg_not_cracked_north": [
+        "direction:side",
+        "model:other"
+    ],
+    "sniffer_egg_not_cracked_south": [
+        "direction:side",
+        "model:other"
+    ],
+    "sniffer_egg_not_cracked_top": [
+        "direction:top",
+        "model:other"
+    ],
+    "sniffer_egg_not_cracked_west": [
+        "direction:side",
+        "model:other"
+    ],
+    "sniffer_egg_slightly_cracked_bottom": [
+        "direction:bottom",
+        "model:other"
+    ],
+    "sniffer_egg_slightly_cracked_east": [
+        "direction:side",
+        "model:other"
+    ],
+    "sniffer_egg_slightly_cracked_north": [
+        "direction:side",
+        "model:other"
+    ],
+    "sniffer_egg_slightly_cracked_south": [
+        "direction:side",
+        "model:other"
+    ],
+    "sniffer_egg_slightly_cracked_top": [
+        "direction:top",
+        "model:other"
+    ],
+    "sniffer_egg_slightly_cracked_west": [
+        "direction:side",
+        "model:other"
+    ],
+    "sniffer_egg_very_cracked_bottom": [
+        "direction:bottom",
+        "model:other"
+    ],
+    "sniffer_egg_very_cracked_east": [
+        "direction:side",
+        "model:other"
+    ],
+    "sniffer_egg_very_cracked_north": [
+        "direction:side",
+        "model:other"
+    ],
+    "sniffer_egg_very_cracked_south": [
+        "direction:side",
+        "model:other"
+    ],
+    "sniffer_egg_very_cracked_top": [
+        "direction:top",
+        "model:other"
+    ],
+    "sniffer_egg_very_cracked_west": [
+        "direction:side",
+        "model:other"
+    ],
     "snow": [
         "direction:any",
         "model:block"
@@ -2914,11 +3135,27 @@
         "model:block",
         "direction:any"
     ],
+    "stripped_bamboo_block": [
+        "direction:any",
+        "model:block"
+    ],
+    "stripped_bamboo_block_top": [
+        "direction:any",
+        "model:block"
+    ],
     "stripped_birch_log": [
         "model:block",
         "direction:any"
     ],
     "stripped_birch_log_top": [
+        "direction:any",
+        "model:block"
+    ],
+    "stripped_cherry_log": [
+        "direction:any",
+        "model:crops"
+    ],
+    "stripped_cherry_log_top": [
         "direction:any",
         "model:block"
     ],
@@ -2998,6 +3235,38 @@
         "direction:side",
         "model:other"
     ],
+    "suspicious_gravel_0": [
+        "direction:any",
+        "model:block"
+    ],
+    "suspicious_gravel_1": [
+        "direction:any",
+        "model:block"
+    ],
+    "suspicious_gravel_2": [
+        "direction:any",
+        "model:block"
+    ],
+    "suspicious_gravel_3": [
+        "direction:any",
+        "model:block"
+    ],
+    "suspicious_sand_0": [
+        "direction:any",
+        "model:block"
+    ],
+    "suspicious_sand_1": [
+        "direction:any",
+        "model:block"
+    ],
+    "suspicious_sand_2": [
+        "direction:any",
+        "model:block"
+    ],
+    "suspicious_sand_3": [
+        "direction:any",
+        "model:block"
+    ],
     "sweet_berry_bush_stage0": [
         "direction:side",
         "model:flower"
@@ -3062,6 +3331,18 @@
     "torch": [
         "model:other",
         "direction:side"
+    ],
+    "torchflower": [
+        "direction:side",
+        "model:flower"
+    ],
+    "torchflower_crop_stage0": [
+        "direction:side",
+        "model:flower"
+    ],
+    "torchflower_crop_stage1": [
+        "direction:side",
+        "model:flower"
     ],
     "tripwire": [
         "direction:side",

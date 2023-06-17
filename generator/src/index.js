@@ -1,17 +1,18 @@
 import fs from "fs";
 import path from 'path';
-import {PNG} from 'pngjs';
+import { PNG } from 'pngjs';
 
-import blockTextures from '../data/block-textures.json' assert {type: "json"};
-import colorBlocks from '../data/color-blocks.json' assert {type: "json"};
-import textureTags from '../data/texture-tags.json' assert {type: "json"};
+import blockTextures from '../data/block-textures.json' assert { type: "json" };
+import colorBlocks from '../data/color-blocks.json' assert { type: "json" };
+import textureTags from '../data/texture-tags.json' assert { type: "json" };
 
-import {Animation} from './animation.js';
-import {BasicColorExtractor, SaturatedColorExtractor, QuantizerColorExtractor} from './color-extractor.js';
-import {OBJFile} from './objfile.js';
-import {RGBColor, LabColor, XYZColor, Color} from "shared/src/color.js";
-import {buildTintMap, tintTexture} from './color-shift.js';
+import { MC_VERSION } from "shared";
+import { Color, LabColor, RGBColor, XYZColor } from "shared/src/color.js";
+import { Animation } from './animation.js';
 import { BoundingBox } from "./bounding-box.js";
+import { BasicColorExtractor, QuantizerColorExtractor, SaturatedColorExtractor } from './color-extractor.js';
+import { buildTintMap, tintTexture } from './color-shift.js';
+import { OBJFile } from './objfile.js';
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
@@ -227,9 +228,8 @@ bounds.add(blue);
 bounds.add(magenta);
 
 
-const version = '1.19';
-const dirPath = `./jars/${ version }/assets/minecraft/textures/block/`;
-const extractPath = `./web/data/${ version }/`;
+const dirPath = `./jars/${ MC_VERSION }/assets/minecraft/textures/block/`;
+const extractPath = `./web/data/${ MC_VERSION }/`;
 const extractedTexturesPath = path.join(extractPath, 'textures');
 const json = [];
 const labels = [
@@ -320,9 +320,9 @@ for await (const filename of walk(dirPath)) {
 	}
 }
 
-writeBlockSet(version, json, path.join(extractPath, `blocks.json`));
-writeBlockSet(version, json, path.join(extractPath, `gradient-blocks.json`), (block) => {
-	return block.tags.includes('model:block') && block.tags.includes('direction:any')
+writeBlockSet(MC_VERSION, json, path.join(extractPath, `blocks.json`));
+writeBlockSet(MC_VERSION, json, path.join(extractPath, `gradient-blocks.json`), (block) => {
+	return block?.tags && block.tags.includes('model:block') && block.tags.includes('direction:any')
 		&& !block.tags.includes('unobtainable') && !block.tags.includes('transparent')
 		&& !block.tags.includes('ore') && !block.tags.includes('redstone');
 });
