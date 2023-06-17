@@ -47,6 +47,8 @@ export function findNear(block, blocks, paletteEntry, radius) {
 /**
  * Like findNear but finds the one block that is the closest or null if there
  * are none.
+ *
+ * @returns {Block}
  */
 export function findNearest(blocks, paletteEntry, pos) {
 	let nearest = null;
@@ -68,9 +70,15 @@ export function findNearest(blocks, paletteEntry, pos) {
 	return nearest;
 }
 
+/**
+ * @typedef {Object} BlockMatch
+ * @property {number} magnitude How close is the match
+ * @property {Block} block The matched block
+ */
+
 
 export class BlockLookup {
-	/** @type {{[key: string]: Block[]}} The blocks organized for fast look up based on RGB */
+	/** @type {{[key: string]: BlockMatch[]}} The blocks organized for fast look up based on RGB */
 	#cache = {};
 
 	/** @type {Block[]} The unprocessed blocks */
@@ -87,15 +95,19 @@ export class BlockLookup {
 
 	#findBlock(color, palette) {
 		const lab = color.toLabColor();
+		const block = findNearest(this.#blocks, palette, lab);
 
-		return findNearest(this.#blocks, palette, lab);
+		return {
+			magnitude: distanceSquared(lab, block.palette[palette].lab),
+			block,
+		}
 	}
 
 	/**
 	 * Find the closest block for the given color.
 	 * @param  {Color} color The color.
 	 * @param  {string} palette The palette for the chose block.
-	 * @return {Block}       The block.
+	 * @return {BlockMatch}       The block.
 	 */
 	find(color, palette) {
 		const rgb = color.toRGBColor();

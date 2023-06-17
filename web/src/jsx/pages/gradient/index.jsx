@@ -60,7 +60,11 @@ export function Component() {
 
 			<div className="gradient-swatches">
 				{ gradient.map((color, idx) => {
-					return <div className="gradient-swatch-container" key={idx}><TextureSwatch block={blockLookup.find(color, palette)} /></div>
+					const blockMatch = blockLookup.find(color, palette);
+
+					return <div className="gradient-swatch-container" key={idx}>
+						<TextureSwatch block={blockMatch.block} title={Math.sqrt(blockMatch.magnitude) >= 10 ? 'Out of gamut' : null } />
+					</div>
 				}) }
 			</div>
 		</PaletteContext.Provider>

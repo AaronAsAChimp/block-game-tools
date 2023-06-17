@@ -26,16 +26,22 @@ function cssColor(block, palette) {
 /**
  * @typedef {Object} TextureImageProps
  * @property {Block} block The block to display.
+ * @property {string} title Additional information
  */
 
 /**
  * A component for displaying a texture image
  * @param {TextureImageProps} props
  */
-export function TextureImage({block}) {
+export function TextureImage({block, title}) {
 	const palette = useContext(PaletteContext);
+	let tooltip = block.name;
 
-	return <TooltipWrapper className={styles['texture']} title={block.name}>
+	if (title) {
+		tooltip += ' - ' + title;
+	}
+
+	return <TooltipWrapper className={styles['texture']} title={tooltip}>
 		<img className={styles['texture-image']} src={DATA_DIR + 'textures/' + block.name + '.png'} />
 		<div className={styles['texture-image-swatch']} style={{ backgroundColor: cssColor(block, palette) }}></div>
 	</TooltipWrapper>
@@ -44,16 +50,22 @@ export function TextureImage({block}) {
 /**
  * @typedef {Object} TextureAnimationProps
  * @property {Block} block The block to display.
+ * @property {string} title Additional information
  */
 
 /**
  * A component for displaying a texture image
  * @param {TextureAnimationProps} props
  */
-export function TextureAnimation({block}) {
+export function TextureAnimation({block, title}) {
 	const palette = useContext(PaletteContext);
+	let tooltip = block.name;
 
-	return <TooltipWrapper className={styles['texture']} title={block.name}>
+	if (title) {
+		tooltip += ' ' + title;
+	}
+
+	return <TooltipWrapper className={styles['texture']} title={tooltip}>
 		<div className={styles['texture-animation'] + ' texture-' + block.name}></div>
 		<div className={styles['texture-image-swatch']} style={{ backgroundColor: cssColor(block, palette) }}></div>
 	</TooltipWrapper>
@@ -62,16 +74,17 @@ export function TextureAnimation({block}) {
 /**
  * @typedef {Object} TextureSwatchProps
  * @property {Block} block The block to display.
+ * @property {string} title Additional information
  */
 
 /**
  * A component for displaying a texture image
  * @param {TextureAnimationProps} props
  */
-export function TextureSwatch({block}) {
+export function TextureSwatch({block, ...props}) {
 	if (block.animated) {
-		return <TextureAnimation block={block} />
+		return <TextureAnimation block={block} {...props} />
 	} else {
-		return <TextureImage block={block} />
+		return <TextureImage block={block} {...props} />
 	}
 }
