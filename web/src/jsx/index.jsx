@@ -23,6 +23,12 @@ const router = createBrowserRouter([
       return fetch(DATA_DIR + 'gradient-blocks.json');
     }
   }, {
+    path: '/gradient/:colors',
+    lazy: () => import('./pages/gradient/index.jsx'),
+    loader: () => {
+      return fetch(DATA_DIR + 'gradient-blocks.json');
+    }
+  }, {
     path: '/data/',
     lazy: () => import('./pages/data/index.jsx'),
     loader: () => {

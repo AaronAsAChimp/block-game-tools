@@ -1,20 +1,28 @@
-import { useMemo, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useLoaderData, useParams } from "react-router-dom";
 import { Color, RGBColor } from "shared/src/color";
 import { AppTitleBar } from "../../../components/app-title-bar";
+import { GradientKnob } from "../../../components/gradient-knob";
 import { TextureSwatch } from "../../../components/texture-swatch";
 import { PaletteContext } from "../../../context/palette-context";
 import { BlockLookup } from "../../blocks";
 import './styles.css';
-import { BlockSearch } from "../../../components/block-search";
-import { GradientKnob } from "../../../components/gradient-knob";
-
 
 
 export function Component() {
+	const {colors: colorsParam} = useParams();
+	const initialColors = useMemo(() => {
+		const colors = colorsParam ? colorsParam.split('-') : [];
+
+		return colors
+			.map((color) => {
+				return '#' + color;
+			});
+	}, [colorsParam]);
+
 	const [palette, setPalette] = useState('average');
-	const [startColor, setStartColor] = useState('#000000');
-	const [endColor, setEndColor] = useState('#ffffff');
+	const [startColor, setStartColor] = useState(initialColors.length > 0 ? initialColors[0] : '#000000');
+	const [endColor, setEndColor] = useState(initialColors.length > 1 ?  initialColors[1] : '#ffffff');
 	const [steps, setSteps] = useState(5);
 
 	/** @type {import("../../server").BlocksResponse} */
@@ -54,7 +62,7 @@ export function Component() {
 			<div className="gradient-display-container">
 				<div className="gradient-display" style={{background: `linear-gradient(to right, ${startColor}, ${endColor})`}}>
 				</div>
-				<GradientKnob value={startColor} offseet={0} onChange={e => {setStartColor(e.target.value)} }></GradientKnob>
+				<GradientKnob value={startColor} offset={0} onChange={e => {setStartColor(e.target.value)} }></GradientKnob>
 				<GradientKnob value={endColor} offset={1} onChange={e => {setEndColor(e.target.value)} }></GradientKnob>
 			</div>
 
