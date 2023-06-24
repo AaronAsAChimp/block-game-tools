@@ -175,7 +175,8 @@
     ],
     "barrel_top_open": [
         "model:block",
-        "direction:any"
+        "direction:any",
+        "unobtainable"
     ],
     "basalt_side": [
         "direction:any",
