@@ -758,7 +758,7 @@
         "direction:any"
     ],
     "coal_block": [
-        "direction:side",
+        "direction:any",
         "model:block"
     ],
     "coal_ore": [
@@ -1335,19 +1335,23 @@
     ],
     "frosted_ice_0": [
         "model:block",
-        "direction:any"
+        "direction:any",
+        "unobtainable"
     ],
     "frosted_ice_1": [
         "model:block",
-        "direction:any"
+        "direction:any",
+        "unobtainable"
     ],
     "frosted_ice_2": [
         "model:block",
-        "direction:any"
+        "direction:any",
+        "unobtainable"
     ],
     "frosted_ice_3": [
         "model:block",
-        "direction:any"
+        "direction:any",
+        "unobtainable"
     ],
     "furnace_front": [
         "direction:side",
