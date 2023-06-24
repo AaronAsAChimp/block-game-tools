@@ -1,20 +1,18 @@
-import { memo, useMemo, useRef, useState } from "react";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useMemo, useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-
+import { MC_VERSION, RGBColor } from "shared";
 import { AppTitleBar } from "../../../components/app-title-bar/index.jsx";
-import { BlockSearch } from "../../../components/block-search/index.jsx";
 import { BlockMap } from "../../../components/block-map/index.jsx";
+import { BlockSearch } from "../../../components/block-search/index.jsx";
+import { MapHelpContent } from "../../../components/content/index.jsx";
+import { LazyDialog } from "../../../components/lazy-dialog/index.jsx";
 import { SelectedBlock } from "../../../components/selected-block/index.jsx";
-import { PaletteContext } from "../../../context/palette-context.js";
 import { ContrastContext } from "../../../context/contrast-context.js";
 import { findNearest } from "../../blocks.js";
-import { RGBColor } from "shared/src/color.js";
-
+import { PaletteContext } from "../../../context/palette-context.js";
 import './styles.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestion } from "@fortawesome/free-solid-svg-icons";
-import { LazyDialog } from "../../../components/lazy-dialog/index.jsx";
-import { MapHelpContent } from "../../../components/content/index.jsx";
 
 
 export function Component() {
