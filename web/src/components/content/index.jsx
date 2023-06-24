@@ -13,7 +13,19 @@ export const AboutContent = lazy(async () => {
 });
 
 export const MapHelpContent = lazy(async () => {
-	const markdownContent = await import('../../md/help.md');
+	const markdownContent = await import('../../md/help/map.md');
+
+	return {
+		default: function () {
+			return <div dangerouslySetInnerHTML={{
+				__html: markdownContent.default
+			}}></div>
+		}
+	}
+});
+
+export const GradientHelpContent = lazy(async () => {
+	const markdownContent = await import('../../md/help/gradient.md');
 
 	return {
 		default: function () {

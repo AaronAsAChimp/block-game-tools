@@ -1,0 +1,16 @@
+@import '../../css/variables.css';
+
+.share-link {
+	display: inline-block;
+	color: currentColor;
+	margin: 0.2em;
+	padding: 0.3em 0.6em;
+	font-size: 1.4em;
+	background: var(--layer1-color);
+	border-radius: 0.3em;
+	transition: background-color 0.5s;
+}
+
+.share-link:hover {
+	background: var(--layer1-hover);
+}

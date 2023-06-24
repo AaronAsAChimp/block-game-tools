@@ -23,7 +23,7 @@ In the 3D view, click on the block you want to inspect.
 Search for textures by name or by CSS hex code (such as #ffcc00). A list of
 texture names will appear as you type that you can select from.
 
-## Color Extraction Method
+## Color Extraction
 
 The color extraction method selection allows you to choose how the colors are
 extracted from the block's texture.
