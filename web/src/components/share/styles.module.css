@@ -1,5 +1,24 @@
 @import '../../css/variables.css';
 
+.share {
+	container: share / inline-size;
+	text-align: center;
+}
+
+.share-label {
+	display: inline-block;
+	padding: 0.6em 1.2em;
+}
+
+.share-links {
+	display: inline-block;
+}
+
+
+.share-check {
+	display: none;
+}
+
 .share-link {
 	display: inline-block;
 	color: currentColor;
@@ -13,4 +32,19 @@
 
 .share-link:hover {
 	background: var(--layer1-hover);
+}
+
+@container share (width < 360px) {
+	.share-label {
+		border-radius: 0.3em;
+		background: var(--layer1-color);
+	}
+
+	.share-links {
+		display: none;
+	}
+
+	.share-check:checked ~ .share-links {
+		display: block;
+	}
 }

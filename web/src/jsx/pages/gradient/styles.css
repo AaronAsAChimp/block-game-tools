@@ -8,12 +8,18 @@ body {
 }
 
 .page-gradient {
+
+}
+
+.gradient-editor {
 	display: grid;
 	grid-template-areas:
 		"display display"
 		"controls share"
 		"swatches swatches";
+	grid-template-columns: 1fr 1fr;
 	width: calc(100vw - 40px);
+	max-width: 60em;
 	margin: 60px auto 20px;
 	gap: 0.8em;
 }
@@ -30,9 +36,10 @@ body {
 }
 
 .gradient-swatches {
+	display: grid;
 	grid-area: swatches;
-	width: calc(100vw - 128px);
-	margin: auto;
+	grid-template-columns: repeat(auto-fill, 64px);
+	justify-content: center;
 }
 
 .gradient-controls {
@@ -44,9 +51,7 @@ body {
 .gradient-share {
 	grid-area: share;
 	align-self: center;
-	justify-self: center;
 }
 
 .gradient-swatch-container {
-	display: inline-block;
 }

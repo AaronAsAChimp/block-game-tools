@@ -73,33 +73,34 @@ export function Component() {
 				</label>
 				<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>
 			</AppTitleBar>
-
-			<div className="gradient-display-container">
-				<div className="gradient-display" style={{background: `linear-gradient(to right, ${startColor}, ${endColor})`}}>
-				</div>
-				<GradientKnob value={startColor} offset={0} onChange={e => {setStartColor(e.target.value)} }></GradientKnob>
-				<GradientKnob value={endColor} offset={1} onChange={e => {setEndColor(e.target.value)} }></GradientKnob>
-			</div>
-
-			<div className="gradient-controls">
-				<label>
-					Number of blocks:
-					<input type="number" min="2" onInput={(e) => setSteps(+e.target.value)} value={steps} />
-				</label>
-			</div>
-
-			<div className="gradient-share">
-				<Share href={window.location} subject="Block Game Tools - Block Gradient" body="" />
-			</div>
-
-			<div className="gradient-swatches">
-				{ gradient.map((color, idx) => {
-					const blockMatch = blockLookup.find(color, palette);
-
-					return <div className="gradient-swatch-container" key={idx}>
-						<TextureSwatch block={blockMatch.block} title={Math.sqrt(blockMatch.magnitude) >= 10 ? 'Out of gamut' : null } />
+			<div className="gradient-editor">
+				<div className="gradient-display-container">
+					<div className="gradient-display" style={{background: `linear-gradient(to right, ${startColor}, ${endColor})`}}>
 					</div>
-				}) }
+					<GradientKnob value={startColor} offset={0} onChange={e => {setStartColor(e.target.value)} }></GradientKnob>
+					<GradientKnob value={endColor} offset={1} onChange={e => {setEndColor(e.target.value)} }></GradientKnob>
+				</div>
+
+				<div className="gradient-controls">
+					<label>
+						Number of blocks:
+						<input type="number" min="2" onInput={(e) => setSteps(+e.target.value)} value={steps} />
+					</label>
+				</div>
+
+				<div className="gradient-share">
+					<Share href={window.location} subject="Block Game Tools - Block Gradient" body="" />
+				</div>
+
+				<div className="gradient-swatches">
+					{ gradient.map((color, idx) => {
+						const blockMatch = blockLookup.find(color, palette);
+
+						return <div className="gradient-swatch-container" key={idx}>
+							<TextureSwatch block={blockMatch.block} title={Math.sqrt(blockMatch.magnitude) >= 10 ? 'Out of gamut' : null } />
+						</div>
+					}) }
+				</div>
 			</div>
 		</PaletteContext.Provider>
 		<LazyDialog open={helpOpen} onClose={() => setHelpOpen(false)}>
