@@ -1,9 +1,22 @@
 .gradient-knob {
+	display: grid;
 	position: absolute;
-	display: block;
 	transform: translate(-50%);
 	left: 0%;
 	bottom: 0;
+	grid-template-rows: 2em 1em;
+}
+
+.gradient-knob-grip {
+	display: block;
+}
+
+.gradient-knob-delete {
+	display: block;
+}
+
+.gradient-knob-svg {
+	display: block;
 }
 
 .gradient-color-geom {

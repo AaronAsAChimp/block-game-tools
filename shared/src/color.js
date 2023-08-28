@@ -2,7 +2,7 @@
 // "D65" is a standard 6500K Daylight light source.
 // https://en.wikipedia.org/wiki/Illuminant_D65
 const D65 = [95.047, 100, 108.883];
-const GAMMA = 2.4;
+export const GAMMA = 2.4;
 const GAMMA_INV = 1 / GAMMA;
 
 function lerp(val1, val2, frac) {
@@ -150,46 +150,6 @@ export class Color {
 		const b = Math.round(rgb.b).toString(16).padStart(2, '0');
 
 		return `#${ r }${ g }${ b }`;
-	}
-
-	/**
-	 * Create a gradient with the specified number of steps.
-	 *
-	 * https://stackoverflow.com/questions/22607043/color-gradient-algorithm
-	 * 
-	 * @param  {Color} start  The starting color
-	 * @param  {Color} end    The ending color
-	 * @param  {number} steps The number of steps.
-	 * @return {Color[]}      The graident
-	 */
-	static gradient(start, end, steps) {
-		const colors = [];
-		const startLinear = start.toLinearRGBColor();
-		const endLinear = end.toLinearRGBColor();
-
-		const startBrightness = startLinear.perceptualBrightness();
-		const endBrightness = endLinear.perceptualBrightness();
-		const color = new LinearRGBColor(0, 0, 0);
-
-		for (let i = 0; i < steps; i++) {
-			const percent = i / (steps - 1);
-			const intensity = Math.pow(lerp(startBrightness, endBrightness, percent), GAMMA);
-
-			color.r = lerp(startLinear.r, endLinear.r, percent);
-			color.g = lerp(startLinear.g, endLinear.g, percent);
-			color.b = lerp(startLinear.b, endLinear.b, percent);
-			const total = color.r + color.g + color.b;
-
-			if (total !== 0) {
-				color.r = color.r * intensity / total;
-				color.g = color.g * intensity / total;
-				color.b = color.b * intensity / total;
-			}
-
-			colors.push(color.toRGBColor());
-		}
-
-		return colors;
 	}
 }
 
