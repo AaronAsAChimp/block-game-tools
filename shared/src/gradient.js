@@ -211,6 +211,8 @@ export class Gradient {
 	toCSS() {
 		if (this.#stops.length === 0) {
 			return '';
+		} else if (this.#stops.length === 1) {
+			return this.#stops[0].color.toCSS();
 		}
 
 		let css = 'linear-gradient(to right, '

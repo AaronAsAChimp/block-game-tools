@@ -78,6 +78,7 @@ export function Component() {
 	const [gradientStops, setGradientStops] = useState([]);
 	const [numSteps, setNumSteps] = useState(initialSteps ?? DEFAULT_STEPS);
 	const [gradientSteps, setGradientSteps] = useState([]);
+	const [gradientBg, setGradientBg] = useState('');
 
 	function calculateOffset(ele, x) {
 		const rect = ele.getBoundingClientRect();
@@ -124,6 +125,8 @@ export function Component() {
 
 			const steps = gradient.getSteps(numSteps);
 
+			setGradientBg(gradient.toCSS());
+
 			setGradientSteps([
 				...steps
 			]);
@@ -156,6 +159,8 @@ export function Component() {
 		setGradientStops([
 			...gradient.getStops()
 		]);
+
+		setGradientBg(gradient.toCSS());
 
 		setGradientSteps([
 			...gradient.getSteps(numSteps)
@@ -201,7 +206,7 @@ export function Component() {
 			</AppTitleBar>
 			<div className="gradient-editor">
 				<div className="gradient-display-container">
-					<div className="gradient-display" ref={gradientDisplayRef} style={{ backgroundImage: gradient.toCSS() }} onDoubleClick={(e) => addStop(e.target, e.clientX)}>
+					<div className="gradient-display" ref={gradientDisplayRef} style={{ background: gradientBg }} onDoubleClick={(e) => addStop(e.target, e.clientX)}>
 					</div>
 					{
 						gradientStops.map((stop, idx) => {
@@ -231,7 +236,7 @@ export function Component() {
 
 				<div className="gradient-swatches">
 					{ gradientStops.length
-						? gradient.getSteps(numSteps).map((color, idx) => {
+						? gradientSteps.map((color, idx) => {
 							const blockMatch = blockLookup.find(color, palette);
 
 							return <div className="gradient-swatch-container" key={idx}>
