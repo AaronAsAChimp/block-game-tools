@@ -1,3 +1,20 @@
+@import '../../css/variables.css';
+
+@keyframes waggle {
+	0% {
+		transform: rotate(0deg);
+	}
+	25% {
+		transform: rotate(30deg) scale(1.25);
+	}
+	50% {
+		transform: rotate(0deg) scale(1.5);
+	}
+	75% {
+		transform: rotate(-30deg) scale(1.25);
+	}
+}
+
 .gradient-knob {
 	display: grid;
 	position: absolute;
@@ -13,6 +30,18 @@
 
 .gradient-knob-delete {
 	display: block;
+	color: var(--layer0-contrast-color);
+	background: transparent;
+	border: none;
+	padding: 0.4em;
+	cursor: pointer;
+	transform-origin: center 80%;
+}
+
+@media not (prefers-reduced-motion) {
+	.gradient-knob-delete:hover {
+		animation: 1s waggle infinite linear;
+	}
 }
 
 .gradient-knob-svg {

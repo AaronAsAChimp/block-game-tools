@@ -1,5 +1,6 @@
-import { useState } from 'react';
 import * as styles from './styles.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * @typedef {Object} GradientKnobProps
@@ -27,6 +28,6 @@ export function GradientKnob({value, offset, stopIdx, onPointerDown, onDelete, .
 			</svg>
 			<input className={styles['gradient-color-input']} type="color" value={value} {...rest} />
 		</label>
-		<button className={styles['gradient-knob-delete']} onClick={onDelete}>X</button>
+		<button className={styles['gradient-knob-delete']} onClick={onDelete}><FontAwesomeIcon icon={faTrash} /></button>
 	</div>
 }
