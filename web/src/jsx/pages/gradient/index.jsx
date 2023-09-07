@@ -15,70 +15,119 @@ import { BlockLookup } from "../../blocks";
 import './styles.css';
 
 const MIN_STEPS = 0;
+const DEFAULT_START = 0x000000;
+const DEFAULT_END = 0xFFFFFF;
 const DEFAULT_STEPS = 5;
 
+/**
+ * @typedef {[Gradient, number]} InitialGradient
+ */
+
+function parseSteps(steps) {
+	if (steps && steps.length) {
+		 return parseInt(steps, 10);
+	} else {
+		return DEFAULT_STEPS;
+	}
+}
 
 /**
- * A hook for projecting gradient objects to steps.
- * @param  {Gradient} gradient The gradient to project.
- * @param  {number} initialSteps      The number of steps in the gradient
- * @return {[Color[], (steps: number) => void]}
- *   The gradient interpolated to the number of steps and a method to set the number of steps
+ * Parse the gradient paraemter in the form of:
+ *
+ * FFFFFF-000000-12
+ * FFFFFF@20-000000@40-12
+ * 
+ * @param  {string} colorsParam 
+ * @returns {{steps: number, stops: [Color, number?][]}}
  */
-function useGradientSteps(gradient, initialSteps) {
-	const [steps, setSteps] = useState(initialSteps);
-	const gradientSteps = useMemo(() => {
-		if (gradient && gradient.getStops().length) {
-			return gradient.getSteps(steps);
-		} else {
-			return [];
-		}
-	}, [gradient, steps]);
+function parseGradientParam(colorsParam) {
+	if (!colorsParam) {
+		colorsParam = '';
+	}
 
-	return [
-		gradientSteps,
-		setSteps
-	];
+	const colorParts = colorsParam.split('-');
+	const steps = parseSteps(colorParts.pop());
+	/** @type {[Color, number?][]} */
+	const stops = [];
+
+	for (const part of colorParts) {
+		const [color, percent] = part.split('@');
+
+		stops.push([RGBColor.parseCSSHex('#' + color), parseFloat(percent) / 100 ])
+	}
+
+	if (stops.length === 0) {
+		stops.push([RGBColor.fromInteger(DEFAULT_START), 0]);
+		stops.push([RGBColor.fromInteger(DEFAULT_END), 1]);
+	}
+
+	if (stops[0].length === 1) {
+		stops[0][1] = 0;
+	}
+
+	if (stops[stops.length - 1].length === 1) {
+		stops[stops.length - 1][1] = 1;
+	}
+
+	return {
+		steps,
+		stops
+	}
 }
+
+/**
+ * Build the gradient parameter in the form of:
+ *
+ * FFFFFF@20-000000@40-12
+ *  
+ * @param  {Gradient} gradient
+ * @param  {number} numSteps
+ * @return  {string} The color param
+ */
+function buildGradientParam(gradient, numSteps) {
+	const stops = gradient.getStops();
+	let url = '';
+
+	for (const stop of stops) {
+		url += stop.color.toCSS().substring(1) + '@' + (Math.floor(stop.offset * 10000) / 100) + '-';
+	}
+
+	return url + numSteps;
+}
+
 
 export function Component() {
 	const {colors: colorsParam} = useParams();
-	const [initialStart, initialEnd, initialSteps] = useMemo(() => {
-		const colors = colorsParam ? colorsParam.split('-') : [];
-		const initialStart = colors.length > 0 ? '#' + colors[0] : null;
-		const initialEnd = colors.length > 1 ? '#' + colors[1] : null;
-		let initialSteps = DEFAULT_STEPS;
-
-		if (colors.length > 2) {
-			const steps = parseInt(colors[2], 10);
-
-			if (steps > MIN_STEPS) {
-				initialSteps = steps;
-			}
-		}
-
-		return [
-			initialStart,
-			initialEnd,
-			initialSteps
-		];
-	}, [colorsParam]);
 
 	const gradientRef = useRef(new Gradient());
 	const gradient = gradientRef.current;
 
-	useEffect(() => {
-		gradient.clear(); // In case of re-renders
-		gradient.addStop(0, RGBColor.parseCSSHex(initialStart ?? '#000000'));
-		gradient.addStop(1, RGBColor.parseCSSHex(initialEnd ?? '#ffffff'));
-
-		rerender()
-	}, [initialStart, initialEnd]);
-
+	const [numSteps, setNumSteps] = useState(DEFAULT_STEPS);
 	const [gradientStops, setGradientStops] = useState([]);
-	const [numSteps, setNumSteps] = useState(initialSteps ?? DEFAULT_STEPS);
 	const [gradientSteps, setGradientSteps] = useState([]);
 	const [gradientBg, setGradientBg] = useState('');
+
+	useEffect(() => {
+		gradient.clear(); // In case of re-renders
+
+		const {steps, stops} = parseGradientParam(colorsParam);
+
+		for (const [color, offset] of stops) {
+			gradient.addStop(offset, color)
+		}
+
+		setGradientStops([
+			...gradient.getStops()
+		]);
+
+		setGradientBg(gradient.toCSS());
+
+		setNumSteps(steps);
+
+		setGradientSteps([
+			...gradient.getSteps(steps)
+		]);
+	}, []);
 
 	function calculateOffset(ele, x) {
 		const rect = ele.getBoundingClientRect();
@@ -162,6 +211,8 @@ export function Component() {
 
 		setGradientBg(gradient.toCSS());
 
+		console.log('rerender', numSteps);
+
 		setGradientSteps([
 			...gradient.getSteps(numSteps)
 		]);
@@ -180,11 +231,11 @@ export function Component() {
 		return new BlockLookup(blocks.blocks);
 	}, [blocks]);
 
-	// useEffect(() => {
-	// 	navigate(`/gradient/${ startColor.substring(1) }-${ endColor.substring(1) }-${ steps }`, {
-	// 		replace: true
-	// 	});
-	// }, [startColor, endColor, steps]);
+	useEffect(() => {
+		navigate(`/gradient/${ buildGradientParam(gradient, numSteps) }`, {
+			replace: true
+		});
+	}, [numSteps, gradientStops, isDragging]);
 
 	function paletteChange(e) {
 		const select = e.target;
