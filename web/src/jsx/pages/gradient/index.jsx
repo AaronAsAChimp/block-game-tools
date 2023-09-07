@@ -53,7 +53,7 @@ function parseGradientParam(colorsParam) {
 	for (const part of colorParts) {
 		const [color, percent] = part.split('@');
 
-		stops.push([RGBColor.parseCSSHex('#' + color), parseFloat(percent) / 100 ])
+		stops.push([RGBColor.parseCSSHex('#' + color), percent ? parseFloat(percent) / 100 : null])
 	}
 
 	if (stops.length === 0) {
@@ -61,11 +61,11 @@ function parseGradientParam(colorsParam) {
 		stops.push([RGBColor.fromInteger(DEFAULT_END), 1]);
 	}
 
-	if (stops[0].length === 1) {
+	if (!stops[0][1]) {
 		stops[0][1] = 0;
 	}
 
-	if (stops[stops.length - 1].length === 1) {
+	if (!stops[stops.length - 1][1]) {
 		stops[stops.length - 1][1] = 1;
 	}
 
