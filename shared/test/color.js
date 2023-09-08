@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import {RGBColor, RGBAColor, transferInv, transfer} from '../src/color.js';
+import {RGBColor, RGBAColor} from '../src/color.js';
 
 test('an RGB color from an integer', t => {
 	// Arrange
