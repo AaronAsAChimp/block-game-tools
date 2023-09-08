@@ -96,6 +96,6 @@ test('a gradient with stops that don\'t reach the end', t => {
 	const color = gradient.interpolate(1);
 
 	// Assert
-	t.is(color.toCSS(), '#0000FF', 'check that the CSS conversion is correct.');
+	t.is(color.toCSS(), '#0000ff', 'check that the CSS conversion is correct.');
 });
 

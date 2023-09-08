@@ -1,9 +1,10 @@
-import {Color, GAMMA, LinearRGBColor} from './color.js';
+import {Color, GAMMA, RGBColor, LinearRGBColor} from './color.js';
 
 /**
  * @typedef {Object} GradientStop
  * @property {number} offset
- * @property {LinearRGBColor} color
+ * @property {Color} color
+ * @property {LinearRGBColor} linearColor
  */
 
 function clamp(val) {
@@ -92,19 +93,22 @@ export class Gradient {
 		if (!stopsLength || offset >= this.#stops[stopsLength - 1].offset) {
 			this.#stops.push({
 				offset,
-				color: linearColor
+				color,
+				linearColor
 			});
 		} else if (offset <= this.#stops[0].offset) {
 			this.#stops.unshift({
 				offset,
-				color: linearColor
+				color,
+				linearColor
 			})
 		} else {
 			const idx = this.findStop(offset);
 
 			this.#stops.splice(idx + 1, 0, {
 				offset,
-				color: linearColor
+				color,
+				linearColor
 			})
 		}
 	}
@@ -168,7 +172,7 @@ export class Gradient {
 			throw new Error('Can not interpolate, need at least one stop.');
 		} else if (stops.length === 1){
 			// If there is only one stop the gradient is a solid color.
-			return stops[0].color.toRGBColor();
+			return stops[0].linearColor.toRGBColor();
 		}
 
 		if (offset < stops[0].offset) {
@@ -185,8 +189,8 @@ export class Gradient {
 		const endOffset = stops[endIdx].offset;
 		const deltaOffset = endOffset - startOffset;
 
-		const startLinear = stops[startIdx].color;
-		const endLinear = stops[endIdx].color;
+		const startLinear = stops[startIdx].linearColor;
+		const endLinear = stops[endIdx].linearColor;
 
 		const startBrightness = startLinear.perceptualBrightness();
 		const endBrightness = endLinear.perceptualBrightness();

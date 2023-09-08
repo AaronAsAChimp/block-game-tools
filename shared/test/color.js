@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import {RGBColor, RGBAColor} from '../src/color.js';
+import {RGBColor, RGBAColor, transferInv, transfer} from '../src/color.js';
 
 test('an RGB color from an integer', t => {
 	// Arrange
@@ -39,3 +39,4 @@ test('an RGB color to CSS when components have fractional parts', t => {
 	// Assert
 	t.is(css, '#212121', 'check that the CSS output is correct.');
 });
+
