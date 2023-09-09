@@ -118,7 +118,8 @@ export class Gradient {
 	}
 
 	setStopColor(idx, color) {
-		this.#stops[idx].color = color.toLinearRGBColor();
+		this.#stops[idx].color = color;
+		this.#stops[idx].linearColor = color.toLinearRGBColor();
 	}
 
 	setStopOffset(oldIdx, offset) {
