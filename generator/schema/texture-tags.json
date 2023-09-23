@@ -9,6 +9,7 @@
       "enum": [
         "transparent",
         "redstone",
+        "unobtainable",
         "model:other",
         "model:pane",
         "model:crops",
