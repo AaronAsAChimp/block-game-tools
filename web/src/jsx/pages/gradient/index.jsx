@@ -1,23 +1,26 @@
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { Color, RGBColor } from "shared/src/color";
-import { Gradient } from "shared/src/gradient";
+import { Gradient } from "shared/src/gradient.js";
 import { AppTitleBar } from "../../../components/app-title-bar";
 import { GradientHelpContent } from "../../../components/content";
-import { GradientKnob } from "../../../components/gradient-knob";
 import { LazyDialog } from "../../../components/lazy-dialog";
 import { Share } from "../../../components/share";
 import { TextureSwatch } from "../../../components/texture-swatch";
 import { PaletteContext } from "../../../context/palette-context";
 import { BlockLookup } from "../../blocks";
 import './styles.css';
+import { GradientDisplay } from "../../../components/gradient-display";
 
 const MIN_STEPS = 0;
 const DEFAULT_START = 0x000000;
 const DEFAULT_END = 0xFFFFFF;
 const DEFAULT_STEPS = 5;
+
+const ShareMemo = memo(Share);
+const TextureSwatchMemo = memo(TextureSwatch);
 
 /**
  * @typedef {[Gradient, number]} InitialGradient
@@ -38,7 +41,7 @@ function parseSteps(steps) {
  * FFFFFF@20-000000@40-12
  * 
  * @param  {string} colorsParam 
- * @returns {{steps: number, stops: [Color, number?][]}}
+ * @returns {{steps: number, stops: import("../../../components/gradient-display").GradientStop[]}}
  */
 function parseGradientParam(colorsParam) {
 	if (!colorsParam) {
@@ -99,130 +102,38 @@ function buildGradientParam(gradient, numSteps) {
 export function Component() {
 	const {colors: colorsParam} = useParams();
 
-	const gradientRef = useRef(new Gradient());
-	const gradient = gradientRef.current;
+	const gradientRef = useRef(null);
 
 	const [numSteps, setNumSteps] = useState(DEFAULT_STEPS);
-	const [gradientStops, setGradientStops] = useState([]);
 	const [gradientSteps, setGradientSteps] = useState([]);
-	const [gradientBg, setGradientBg] = useState('');
+	const [initialStops, setInitialStops] = useState([]);
 
 	useEffect(() => {
-		gradient.clear(); // In case of re-renders
-
 		const {steps, stops} = parseGradientParam(colorsParam);
 
-		for (const [color, offset] of stops) {
-			gradient.addStop(offset, color)
-		}
-
-		setGradientStops([
-			...gradient.getStops()
-		]);
-
-		setGradientBg(gradient.toCSS());
+		setInitialStops(stops);
 
 		setNumSteps(steps);
-
-		setGradientSteps([
-			...gradient.getSteps(steps)
-		]);
 	}, []);
-
-	function calculateOffset(ele, x) {
-		const rect = ele.getBoundingClientRect();
-
-		return (x - rect.left) / rect.width;
-	}
-
-	/**
-	 * Add a stop to the gradient
-	 * @param {HTMLElement} target The gradient display
-	 * @param {number} x
-	 */
-	function addStop(target, x) {
-		const offset = calculateOffset(target, x);
-
-		gradient.addStop(offset, gradient.interpolate(offset));
-
-		rerender()
-	}
-
-	function deleteStop(idx) {
-		gradient.removeStop(idx);
-
-		rerender();
-	}
-
-	function setStopColor(idx, color) {
-		gradient.setStopColor(idx, RGBColor.parseCSSHex(color));
-
-		rerender()
-	}
-
-
-	const [isDragging, setIsDragging] = useState(false);
-	const gradientDisplayRef = useRef(null);
-
-	function onKnobDown(e) {
-		const idx = +e.currentTarget.dataset.stopIdx;
-
-		setIsDragging(true);
-	
-		function pointerMove(e) {
-			gradient.setStopOffset(idx, calculateOffset(gradientDisplayRef.current, e.clientX));
-
-			const steps = gradient.getSteps(numSteps);
-
-			setGradientBg(gradient.toCSS());
-
-			setGradientSteps([
-				...steps
-			]);
-		}
-
-		function pointerUp() {
-			setIsDragging(false);
-
-			document.removeEventListener('pointermove', pointerMove);
-			document.removeEventListener('pointerup', pointerUp);
-		}
-
-		document.addEventListener('pointermove', pointerMove);
-		document.addEventListener('pointerup', pointerUp);
-	}
-
 
 	function stepsChange(e) {
 		const num = +e.target.value;
 
 		if (num >= MIN_STEPS) {
 			setNumSteps(num);
-			setGradientSteps([
-				...gradient.getSteps(num)
-			]);
+
+			if (gradientRef.current) {
+				setGradientSteps([
+					...gradientRef.current.getSteps(num)
+				]);
+			}
 		}
-	}
-
-	function rerender() {
-		setGradientStops([
-			...gradient.getStops()
-		]);
-
-		setGradientBg(gradient.toCSS());
-
-		console.log('rerender', numSteps);
-
-		setGradientSteps([
-			...gradient.getSteps(numSteps)
-		]);
 	}
 
 	const navigate = useNavigate();
 
 	const [palette, setPalette] = useState('average');
 	const [helpOpen, setHelpOpen] = useState(false);
-	// const [steps, setSteps] = useState(initialSteps ?? DEFAULT_STEPS);
 
 	/** @type {import("../../server").BlocksResponse} */
 	const blocks = useLoaderData();
@@ -231,15 +142,25 @@ export function Component() {
 		return new BlockLookup(blocks.blocks);
 	}, [blocks]);
 
-	useEffect(() => {
-		navigate(`/gradient/${ buildGradientParam(gradient, numSteps) }`, {
-			replace: true
-		});
-	}, [numSteps, gradientStops, isDragging]);
-
 	function paletteChange(e) {
 		const select = e.target;
 		setPalette(select.options[select.selectedIndex].value);
+	}
+
+	useEffect(() => {
+		navigate(`/gradient/${ buildGradientParam(gradientRef.current, numSteps) }`, {
+			replace: true
+		});
+	}, [gradientSteps])
+
+	function gradientChange(gradient) {
+		gradientRef.current = gradient;
+
+		if (gradientRef.current !== null && gradientRef.current.getStops().length) {
+			setGradientSteps([
+				...gradient.getSteps(numSteps)
+			]);
+		}
 	}
 
 	return <div className="page-gradient">
@@ -256,23 +177,7 @@ export function Component() {
 				<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>
 			</AppTitleBar>
 			<div className="gradient-editor">
-				<div className="gradient-display-container">
-					<div className="gradient-display" ref={gradientDisplayRef} style={{ background: gradientBg }} onDoubleClick={(e) => addStop(e.target, e.clientX)}>
-					</div>
-					{
-						gradientStops.map((stop, idx) => {
-							return <GradientKnob
-								value={stop.color.toCSS()}
-								offset={stop.offset}
-								key={idx}
-								stopIdx={idx}
-								onChange={e => {setStopColor(idx, e.target.value)}}
-								onDelete={e => deleteStop(idx)}
-								onPointerDown={onKnobDown}
-							/>
-						})
-					}
-				</div>
+				<GradientDisplay onGradientChange={gradientChange} initialGradientStops={initialStops} />
 
 				<div className="gradient-controls">
 					<label>
@@ -286,12 +191,12 @@ export function Component() {
 				</div>
 
 				<div className="gradient-swatches">
-					{ gradientStops.length
+					{ gradientSteps.length
 						? gradientSteps.map((color, idx) => {
 							const blockMatch = blockLookup.find(color, palette);
 
 							return <div className="gradient-swatch-container" key={idx}>
-								<TextureSwatch block={blockMatch.block} title={Math.sqrt(blockMatch.magnitude) >= 10 ? 'Out of gamut' : null } />
+								<TextureSwatchMemo block={blockMatch.block} title={Math.sqrt(blockMatch.magnitude) >= 10 ? 'Out of gamut' : null } />
 							</div>
 						})
 						: null
