@@ -15,26 +15,27 @@
     "@types/pngjs": "^6.0.1",
     "@types/three": "^0.146.0",
     "ava": "^4.3.1",
+    "buffer": "^5.7.1",
     "chalk": "^5.0.1",
     "parcel": "^2.8.0",
     "parcel-reporter-static-files-copy": "^1.4.0",
     "parcel-transformer-google-fonts": "^0.1.4",
     "parcel-transformer-markdown": "^2.1.1",
-    "buffer": "^5.7.1",
     "process": "^0.11.10"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-spring/three": "^9.7.2",
     "@react-three/drei": "^9.66.3",
     "@react-three/fiber": "^8.13.0",
+    "ghspa": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1",
-    "three": "^0.146.0",
-    "ghspa": "^1.0.0"
+    "simplex-noise": "^4.0.1",
+    "three": "^0.146.0"
   }
 }

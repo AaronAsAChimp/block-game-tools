@@ -2,7 +2,7 @@ import { AppMenu } from '../app-menu';
 import * as styles from './styles.module.css';
 
 /**
- * @typedef {import('react').PropsWithChildren} PropsWithChildren<T>
+ * @typedef {import('react').PropsWithChildren<T>} PropsWithChildren<T>
  * @template T
  */
 

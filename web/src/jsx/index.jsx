@@ -29,6 +29,12 @@ const router = createBrowserRouter([
       return fetch(DATA_DIR + 'gradient-blocks.json');
     }
   }, {
+    path: '/texturizer',
+    lazy: () => import('./pages/texturizer/index.jsx'),
+    loader: () => {
+      return fetch(DATA_DIR + 'gradient-blocks.json');
+    }
+  }, {
     path: '/data/',
     lazy: () => import('./pages/data/index.jsx'),
     loader: () => {

@@ -1,4 +1,4 @@
-import { faCubes, faGears, faRulerHorizontal } from '@fortawesome/free-solid-svg-icons';
+import { faCubes, faGears, faRulerHorizontal, faWater } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import * as styles from './styles.module.css';
@@ -14,6 +14,7 @@ export function AppTiles() {
 	return <div className={styles['tiles']}>
 		<AppTileLink href="/map/" title="Color Map"><FontAwesomeIcon icon={faCubes} /></AppTileLink>
 		<AppTileLink href="/gradient/" title="Gradient Editor"><FontAwesomeIcon icon={faRulerHorizontal} /></AppTileLink>
+		<AppTileLink href="/texturizer/" title="Texturizer"><FontAwesomeIcon icon={faWater} /></AppTileLink>
 		<AppTileLink href="/data/" title="Data Manager"><FontAwesomeIcon icon={faGears} /></AppTileLink>
 	</div>
 }
