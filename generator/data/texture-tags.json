@@ -330,7 +330,8 @@
     ],
     "black_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "black_stained_glass": [
         "direction:any",
@@ -402,7 +403,8 @@
     ],
     "blue_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "blue_stained_glass": [
         "direction:any",
@@ -486,7 +488,8 @@
     ],
     "brown_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "brown_stained_glass": [
         "direction:any",
@@ -950,7 +953,8 @@
     ],
     "cyan_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "cyan_stained_glass": [
         "transparent",
@@ -1443,7 +1447,8 @@
     ],
     "gray_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "gray_stained_glass": [
         "direction:any",
@@ -1483,7 +1488,8 @@
     ],
     "green_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "green_stained_glass": [
         "transparent",
@@ -1730,7 +1736,8 @@
     ],
     "light_blue_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "light_blue_stained_glass": [
         "direction:any",
@@ -1769,7 +1776,8 @@
     ],
     "light_gray_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "light_gray_stained_glass": [
         "direction:any",
@@ -1832,7 +1840,8 @@
     ],
     "lime_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "lime_stained_glass": [
         "transparent",
@@ -1896,7 +1905,8 @@
     ],
     "magenta_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "magenta_stained_glass": [
         "direction:any",
@@ -2167,7 +2177,8 @@
     ],
     "orange_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "orange_stained_glass": [
         "transparent",
@@ -2255,7 +2266,8 @@
     ],
     "pink_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "pink_stained_glass": [
         "transparent",
@@ -2517,7 +2529,8 @@
     ],
     "purple_shulker_box": [
         "model:block",
-        "direction:any"
+        "direction:any",
+        "block-entity"
     ],
     "purple_stained_glass": [
         "direction:any",
@@ -2641,7 +2654,8 @@
     ],
     "red_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "red_stained_glass": [
         "direction:any",
@@ -2875,7 +2889,8 @@
     ],
     "shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "slime_block": [
         "direction:any",
@@ -3246,15 +3261,18 @@
     ],
     "suspicious_gravel_1": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "unobtainable"
     ],
     "suspicious_gravel_2": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "unobtainable"
     ],
     "suspicious_gravel_3": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "unobtainable"
     ],
     "suspicious_sand_0": [
         "direction:any",
@@ -3262,15 +3280,18 @@
     ],
     "suspicious_sand_1": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "unobtainable"
     ],
     "suspicious_sand_2": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "unobtainable"
     ],
     "suspicious_sand_3": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "unobtainable"
     ],
     "sweet_berry_bush_stage0": [
         "direction:side",
@@ -3532,7 +3553,8 @@
     ],
     "white_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "white_stained_glass": [
         "direction:any",
@@ -3580,7 +3602,8 @@
     ],
     "yellow_shulker_box": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "block-entity"
     ],
     "yellow_stained_glass": [
         "direction:any",

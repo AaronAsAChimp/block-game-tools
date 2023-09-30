@@ -8,6 +8,7 @@ const TEXTURE_TAGS = [
 	"transparent",
     "redstone",
     "unobtainable",
+    "block-entity",
     "model:other",
     "model:pane",
     "model:crops",
