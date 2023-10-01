@@ -31,7 +31,7 @@ const DEFAULT_SIZE = 16;
  * @param {SwatchGridProps} props
  */
 function SwatchGrid({width, height, blocks}) {
-	return <div style={{display: 'grid', gridTemplateColumns: `repeat(${width}, 1fr`}}>
+	return <div style={{display: 'grid', gridTemplateColumns: `repeat(${width}, 64px)`, gridTemplateRows: `repeat(${height}, 64px)`}}>
 		{ blocks ? blocks.map((block, idx) => <TextureSwatch block={block} key={idx} showColor={false} />) : null }
 	</div>
 }
@@ -66,6 +66,10 @@ export function Component() {
 	}, [blocks]);
 
 	useEffect(() => {
+
+		if (width <= 0 || height <= 0) {
+			return;
+		}
 
 		if (!noiserRef.current) {
 			resetNoiser();
@@ -138,11 +142,15 @@ export function Component() {
 				{/*<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>*/}
 			</AppTitleBar>
 			<label>
-				Scale
+				Scale:
 				<input type="range" value={noiseScale} onInput={ (e) => setNoiseScale(+e.target.value) } min={1} max={ Math.max(width, height) * 2} />
 			</label>
 			<label>
-				Dithering
+				Size:
+				<input type="number" value={width} min={1} size={3} onInput={ (e) => setWidth(+e.target.value) } /> &times; <input type="number" value={height} min={1} size={3} onInput={ (e) => setHeight(+e.target.value) } />
+			</label>
+			<label>
+				Dithering:
 				<select value={ditheringAlgo} onInput={(e) => setDitheringAlgo(e.target.value)}>
 					<option value="none">None</option>
 					<option value="floydSteinberg">Floyd-Steinberg</option>
