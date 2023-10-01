@@ -81,6 +81,12 @@ const DITHERING_ALGOS = {
 		pixels.data[nextRed + 1] += g * FLOYD_STEINBERG_7;
 		pixels.data[nextRed + 2] += b * FLOYD_STEINBERG_7;
 
+		const belowPrevRed = coordToIndex(width, x - 1, y + 1);
+
+		pixels.data[belowPrevRed] += r * FLOYD_STEINBERG_3;
+		pixels.data[belowPrevRed + 1] += g * FLOYD_STEINBERG_3;
+		pixels.data[belowPrevRed + 2] += b * FLOYD_STEINBERG_3;
+
 		const belowRed = coordToIndex(width, x, y + 1);
 
 		pixels.data[belowRed] += r * FLOYD_STEINBERG_5;
@@ -92,12 +98,6 @@ const DITHERING_ALGOS = {
 		pixels.data[belowNextRed] += r * FLOYD_STEINBERG_1;
 		pixels.data[belowNextRed + 1] += g * FLOYD_STEINBERG_1;
 		pixels.data[belowNextRed + 2] += b * FLOYD_STEINBERG_1;
-
-		const belowPrevRed = coordToIndex(width, x - 1, y);
-
-		pixels.data[belowPrevRed] += r * FLOYD_STEINBERG_3;
-		pixels.data[belowPrevRed + 1] += g * FLOYD_STEINBERG_3;
-		pixels.data[belowPrevRed + 2] += b * FLOYD_STEINBERG_3;
 	},
 	// 'stucki': {
 	// 	'divisor': 42,
