@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { RGBColor } from "shared";
 import { Gradient } from "shared/src/gradient";
@@ -14,6 +14,7 @@ import * as styles from './styles.module.css';
 
 const DEFAULT_SIZE = 16;
 const MONOCHROME_STEPS = 32;
+const TextureSwatchMemo = memo(TextureSwatch);
 
 /**
  * @typedef {import('../../../jsx/server.d.ts').Block} Block
@@ -33,7 +34,7 @@ const MONOCHROME_STEPS = 32;
  */
 function SwatchGrid({width, height, blocks}) {
 	return <div style={{display: 'grid', gridTemplateColumns: `repeat(${width}, 64px)`, gridTemplateRows: `repeat(${height}, 64px)`}}>
-		{ blocks ? blocks.map((block, idx) => <TextureSwatch block={block} key={idx} showColor={false} />) : null }
+		{ blocks ? blocks.map((block, idx) => <TextureSwatchMemo block={block} key={idx} showColor={false} />) : null }
 	</div>
 }
 
