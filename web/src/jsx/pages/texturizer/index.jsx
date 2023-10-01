@@ -13,6 +13,7 @@ import { coordToIndex, dither } from "../../dithering";
 import * as styles from './styles.module.css';
 
 const DEFAULT_SIZE = 16;
+const MONOCHROME_STEPS = 32;
 
 /**
  * @typedef {import('../../../jsx/server.d.ts').Block} Block
@@ -40,11 +41,13 @@ export function Component() {
 	/** @type {React.MutableRefObject<HTMLCanvasElement>} */
 	const canvasRef = useRef(null);
 	const noiserRef = useRef(null);
+	const gradientRef = useRef(null);
 	const [width, setWidth] = useState(DEFAULT_SIZE);
 	const [height, setHeight] = useState(DEFAULT_SIZE);
 	const [noiseScale, setNoiseScale] = useState(1);
 	const [textureBlocks, setTextureBlocks] = useState(null);
 	const [ditheringAlgo, setDitheringAlgo] = useState('floydSteinberg');
+	const [isMonochrome, setIsMonochrome] = useState(false);
 
 	const [palette, setPalette] = useState('average');
 	const [helpOpen, setHelpOpen] = useState(false);
@@ -62,12 +65,47 @@ export function Component() {
 	const blocks = useLoaderData();
 
 	const blockLookup = useMemo(() => {
-		return new BlockLookup(blocks.blocks);
-	}, [blocks]);
+		const globalBlockLookup = new BlockLookup(blocks.blocks);
+		let blockLookup = globalBlockLookup;
+
+		if (isMonochrome) {
+			const monochromeBlocks = new Array(MONOCHROME_STEPS);
+
+			for (let i = 0; i < MONOCHROME_STEPS; i++) {
+				monochromeBlocks[i] = blockLookup.find(gradientRef.current.interpolate(i / (MONOCHROME_STEPS - 1)), palette).block;
+			}
+
+			blockLookup = new BlockLookup([
+				...new Set(monochromeBlocks)
+			]);
+		}
+
+		return blockLookup;
+	}, [gradientRef, blocks, isMonochrome]);
 
 	useEffect(() => {
+		const gradient = new Gradient();
 
+		// gradient.addStop(0, RGBColor.fromInteger(0x33252e));
+		// gradient.addStop(0.4437, RGBColor.fromInteger(0xff9b1b));
+		// gradient.addStop(0.7281, RGBColor.fromInteger(0xfbd26f));
+		// gradient.addStop(1, RGBColor.fromInteger(0xffe1b8));
+
+		// gradient.addStop(0, RGBColor.fromInteger(0x20180d));
+		// gradient.addStop(1, RGBColor.fromInteger(0x207d3d));
+
+		gradient.addStop(0, RGBColor.fromInteger(0x000000));
+		gradient.addStop(1, RGBColor.fromInteger(0xffffff));
+
+		gradientRef.current = gradient;
+	}, []);
+
+	useEffect(() => {
 		if (width <= 0 || height <= 0) {
+			return;
+		}
+
+		if (!gradientRef.current) {
 			return;
 		}
 
@@ -75,40 +113,21 @@ export function Component() {
 			resetNoiser();
 		}
 
+		console.log('gradient', gradientRef.current);
+
 		const ctx = canvasRef.current.getContext('2d');
 		const pixels = ctx.getImageData(0, 0, width, height);
-		const gradient = new Gradient();
-
-		gradient.addStop(0, RGBColor.fromInteger(0x33252e));
-		gradient.addStop(0.4437, RGBColor.fromInteger(0xff9b1b));
-		gradient.addStop(0.7281, RGBColor.fromInteger(0xfbd26f));
-		gradient.addStop(1, RGBColor.fromInteger(0xffe1b8));
-
-		// gradient.addStop(0, RGBColor.fromInteger(0x20180d));
-		// gradient.addStop(1, RGBColor.fromInteger(0x207d3d));
-
 
 		for (let y = 0; y < height; y++) {
 			for (let x = 0; x < width; x++) {
 				const noise = (noiserRef.current(x/noiseScale, y/noiseScale) / 2) + 0.5;
 				const red = coordToIndex(width, x, y);
-				const color = gradient.interpolate(noise).toRGBColor();
-				const block = blockLookup.find(color, palette).block;
-				const matchedColor = block.palette[palette].rgb;
+				const color = gradientRef.current.interpolate(noise).toRGBColor();
 
 				pixels.data[red] = color.r;
 				pixels.data[red + 1] = color.g;
 				pixels.data[red + 2] = color.b;
 				pixels.data[red + 3] = 255;
-
-				const rDelta = color.r - matchedColor.r;
-				const gDelta = color.g - matchedColor.g;
-				const bDelta = color.b - matchedColor.b;
-
-
-				pixels[red + 4] = rDelta * (7 / 16);
-				pixels[red + 4 + 1] = gDelta * (7 / 16);
-				pixels[red + 4 + 2] = bDelta * (7 / 16);
 			}
 		}
 
@@ -126,7 +145,7 @@ export function Component() {
 		setTextureBlocks(textureBlocks);
 
 		ctx.putImageData(pixels, 0, 0);
-	}, [width, height, noiseScale, ditheringAlgo, palette])
+	}, [width, height, isMonochrome, noiseScale, ditheringAlgo, palette])
 
 	return <div className="page-texturizer">
 		<PaletteContext.Provider value={palette}>
@@ -141,6 +160,10 @@ export function Component() {
 				</label>
 				{/*<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>*/}
 			</AppTitleBar>
+			<label>
+				Monochrome:
+				<input type="checkbox" checked={isMonochrome} onChange={ (e) => setIsMonochrome(e.target.checked) } />
+			</label>
 			<label>
 				Scale:
 				<input type="range" value={noiseScale} onInput={ (e) => setNoiseScale(+e.target.value) } min={1} max={ Math.max(width, height) * 2} />
