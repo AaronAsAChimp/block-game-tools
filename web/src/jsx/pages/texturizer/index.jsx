@@ -62,6 +62,12 @@ const STUCKI_1 = 1 / 42;
 
 const ATKINSON_1 = 1 / 8;
 
+const STEVENSON_ARCE_32 = 32 / 200;
+const STEVENSON_ARCE_30 = 30 / 200;
+const STEVENSON_ARCE_26 = 26 / 200;
+const STEVENSON_ARCE_16 = 16 / 200;
+const STEVENSON_ARCE_12 = 12 / 200;
+const STEVENSON_ARCE_5 = 5 / 200;
 /**
  * @type {Record<string, DitheringAlgo | null>}
  */
@@ -220,6 +226,89 @@ const DITHERING_ALGOS = {
 		pixels.data[pixel] += r * ATKINSON_1;
 		pixels.data[pixel + 1] += g * ATKINSON_1;
 		pixels.data[pixel + 2] += b * ATKINSON_1;
+	},
+	// 'stevensonArce': {
+	// 	'divisor': 200,
+	// 	'weights': [
+	// 		[ 0,  0,  0,  0,  0, 32,  0],
+	// 		[12,  0, 26,  0, 30,  0, 16],
+	// 		[ 0, 12,  0, 26,  0, 12,  0],
+	// 		[ 5,  0, 12,  0, 12,  0,  5]
+	// 	]
+	// }
+	stevensonArce(pixels, x, y, r, g, b) {
+		const width = pixels.width;
+		let pixel = coordToIndex(width, x + 2, y);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_32;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_32;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_32;
+
+		pixel = coordToIndex(width, x - 3, y + 1);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_12;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_12;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_12;
+
+		pixel = coordToIndex(width, x - 1, y + 1);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_26;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_26;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_26;
+
+		pixel = coordToIndex(width, x + 1, y + 1);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_30;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_30;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_30;
+
+		pixel = coordToIndex(width, x + 3, y + 1);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_16;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_16;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_16;
+
+		pixel = coordToIndex(width, x - 2, y + 2);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_12;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_12;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_12;
+
+		pixel = coordToIndex(width, x, y + 2);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_26;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_26;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_26;
+
+		pixel = coordToIndex(width, x - 2, y + 2);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_12;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_12;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_12;
+
+		pixel = coordToIndex(width, x - 3, y + 3);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_5;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_5;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_5;
+
+		pixel = coordToIndex(width, x - 1, y + 3);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_12;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_12;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_12;
+
+		pixel = coordToIndex(width, x + 1, y + 3);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_12;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_12;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_12;
+
+		pixel = coordToIndex(width, x + 3, y + 3);
+
+		pixels.data[pixel] += r * STEVENSON_ARCE_5;
+		pixels.data[pixel + 1] += g * STEVENSON_ARCE_5;
+		pixels.data[pixel + 2] += b * STEVENSON_ARCE_5;
 	}
 }
 
@@ -361,6 +450,7 @@ export function Component() {
 					<option value="floydSteinberg">Floyd-Steinberg</option>
 					<option value="stucki">Stucki</option>
 					<option value="atkinson">Atkinson</option>
+					<option value="stevensonArce">Stevenson-Arce</option>
 				</select>
 			</label>
 			<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={width} height={height} />
