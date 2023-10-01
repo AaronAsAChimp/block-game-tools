@@ -31,7 +31,7 @@ const DEFAULT_SIZE = 16;
  */
 function SwatchGrid({width, height, blocks}) {
 	return <div style={{display: 'grid', gridTemplateColumns: `repeat(${width}, 1fr`}}>
-		{ blocks ? blocks.map((block, idx) => <TextureSwatch block={block} key={idx} />) : null }
+		{ blocks ? blocks.map((block, idx) => <TextureSwatch block={block} key={idx} showColor={false} />) : null }
 	</div>
 }
 

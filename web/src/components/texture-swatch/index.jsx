@@ -26,38 +26,42 @@ function cssColor(block, palette) {
 /**
  * @typedef {Object} TextureImageProps
  * @property {Block} block The block to display.
- * @property {string} title Additional information
  */
 
 /**
  * A component for displaying a texture image
  * @param {TextureImageProps} props
  */
-export function TextureImage({block, title}) {
-	const palette = useContext(PaletteContext);
-	let tooltip = block.name;
-
-	if (title) {
-		tooltip += ' - ' + title;
-	}
-
-	return <TooltipWrapper className={styles['texture']} title={tooltip}>
-		<img className={styles['texture-image']} src={DATA_DIR + 'textures/' + block.name + '.png'} />
-		<div className={styles['texture-image-swatch']} style={{ backgroundColor: cssColor(block, palette) }}></div>
-	</TooltipWrapper>
+export function TextureImage({block}) {
+	return <img className={styles['texture-image']} src={DATA_DIR + 'textures/' + block.name + '.png'} />
 }
 
 /**
  * @typedef {Object} TextureAnimationProps
  * @property {Block} block The block to display.
- * @property {string} title Additional information
  */
 
 /**
  * A component for displaying a texture image
  * @param {TextureAnimationProps} props
  */
-export function TextureAnimation({block, title}) {
+export function TextureAnimation({block}) {
+	return <div className={styles['texture-animation'] + ' texture-' + block.name}></div>
+}
+
+/**
+ * @typedef {Object} TextureSwatchProps
+ * @property {Block} block The block to display.
+ * @property {string} [title] Additional information
+ * @property {boolean} [showColor]
+ *   Show the extracted color overlaid on the texture.
+ */
+
+/**
+ * A component for displaying a texture image
+ * @param {TextureSwatchProps} props
+ */
+export function TextureSwatch({block, title, showColor}) {
 	const palette = useContext(PaletteContext);
 	let tooltip = block.name;
 
@@ -66,25 +70,15 @@ export function TextureAnimation({block, title}) {
 	}
 
 	return <TooltipWrapper className={styles['texture']} title={tooltip}>
-		<div className={styles['texture-animation'] + ' texture-' + block.name}></div>
-		<div className={styles['texture-image-swatch']} style={{ backgroundColor: cssColor(block, palette) }}></div>
+		{
+			block.animated ?
+				<TextureAnimation block={block} /> :
+				<TextureImage block={block} />
+		}
+		{
+			showColor || typeof showColor === 'undefined' ?
+				<div className={styles['texture-image-swatch']} style={{ backgroundColor: cssColor(block, palette) }}></div> :
+				null
+		}
 	</TooltipWrapper>
-}
-
-/**
- * @typedef {Object} TextureSwatchProps
- * @property {Block} block The block to display.
- * @property {string} title Additional information
- */
-
-/**
- * A component for displaying a texture image
- * @param {TextureAnimationProps} props
- */
-export function TextureSwatch({block, ...props}) {
-	if (block.animated) {
-		return <TextureAnimation block={block} {...props} />
-	} else {
-		return <TextureImage block={block} {...props} />
-	}
 }
