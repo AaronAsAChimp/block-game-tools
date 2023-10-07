@@ -33,7 +33,7 @@ function cssColor(block, palette) {
  * @param {TextureImageProps} props
  */
 export function TextureImage({block}) {
-	return <img className={styles['texture-image']} src={DATA_DIR + 'textures/' + block.name + '.png'} />
+	return <img className={styles['texture-image']} height="64" width="64" loading="lazy" src={DATA_DIR + 'textures/' + block.name + '.png'} />
 }
 
 /**
