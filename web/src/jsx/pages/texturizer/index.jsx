@@ -79,7 +79,6 @@ export function Component() {
 	/** @type {React.MutableRefObject<HTMLCanvasElement>} */
 	const canvasRef = useRef(null);
 	const noiserRef = useRef(null);
-	const gradientRef = useRef(null);
 	const [width, setWidth] = useState(DEFAULT_SIZE);
 	const [height, setHeight] = useState(DEFAULT_SIZE);
 	const [noiseScale, setNoiseScale] = useState(1);
@@ -103,7 +102,7 @@ export function Component() {
 	/** @type {import("../../server").BlocksResponse} */
 	const blocks = useLoaderData();
 
-	useEffect(() => {
+	const gradient = useMemo(() => {
 		const gradientSelection = BUILTIN_GRADIENTS[gradientName];
 		const gradient = new Gradient();
 
@@ -111,7 +110,7 @@ export function Component() {
 			gradient.addStop(stop.offset, RGBColor.fromInteger(stop.color));
 		}
 
-		gradientRef.current = gradient;
+		return gradient;
 	}, [gradientName]);
 
 	const blockLookup = useMemo(() => {
@@ -122,8 +121,7 @@ export function Component() {
 			const monochromeBlocks = new Array(MONOCHROME_STEPS);
 
 			for (let i = 0; i < MONOCHROME_STEPS; i++) {
-				// TODO gradientRef isn't updated yet by the time that this memo is updated.
-				monochromeBlocks[i] = blockLookup.find(gradientRef.current.interpolate(i / (MONOCHROME_STEPS - 1)), palette).block;
+				monochromeBlocks[i] = blockLookup.find(gradient.interpolate(i / (MONOCHROME_STEPS - 1)), palette).block;
 			}
 
 			blockLookup = new BlockLookup([
@@ -141,15 +139,13 @@ export function Component() {
 			return;
 		}
 
-		if (!gradientRef.current) {
+		if (!gradient) {
 			return;
 		}
 
 		if (!noiserRef.current) {
 			resetNoiser();
 		}
-
-		// console.log('gradient', gradientRef.current);
 
 		const ctx = canvasRef.current.getContext('2d');
 		const pixels = ctx.getImageData(0, 0, width, height);
@@ -158,7 +154,7 @@ export function Component() {
 			for (let x = 0; x < width; x++) {
 				const noise = (noiserRef.current(x/noiseScale, y/noiseScale) / 2) + 0.5;
 				const red = coordToIndex(width, x, y);
-				const color = gradientRef.current.interpolate(noise).toRGBColor();
+				const color = gradient.interpolate(noise).toRGBColor();
 
 				pixels.data[red] = color.r;
 				pixels.data[red + 1] = color.g;
