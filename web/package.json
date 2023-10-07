@@ -17,6 +17,8 @@
     "ava": "^4.3.1",
     "buffer": "^5.7.1",
     "chalk": "^5.0.1",
+    "eslint": "^8.51.0",
+    "eslint-plugin-react": "^7.33.2",
     "parcel": "^2.8.0",
     "parcel-reporter-static-files-copy": "^1.4.0",
     "parcel-transformer-google-fonts": "^0.1.4",
