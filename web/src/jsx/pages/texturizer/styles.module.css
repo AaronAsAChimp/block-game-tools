@@ -2,3 +2,12 @@
 	width: 480px;
 	image-rendering: pixelated;
 }
+
+.texturizer-controls {
+	width: 20em;
+}
+
+.texturizer-controls label {
+	display: grid;
+	grid-template-columns: 1fr auto;
+}

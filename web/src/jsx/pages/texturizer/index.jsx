@@ -38,6 +38,43 @@ function SwatchGrid({width, height, blocks}) {
 	</div>
 }
 
+const BUILTIN_GRADIENTS = {
+	"grayscale": {
+		"display": "Grayscale",
+		"gradient": [
+			{
+				"offset": 0,
+				"color": 0x000000
+			},
+			{
+				"offset": 1,
+				"color": 0xFFFFFF
+			}
+		]
+	},
+	"goldenSunrise": {
+		"display": "Golden Sunrise",
+		"gradient": [
+			{
+				"offset": 0,
+				"color": 0x33252e
+			},
+			{
+				"offset": 0.4437,
+				"color": 0xff9b1b
+			},
+			{
+				"offset": 0.7281,
+				"color": 0xfbd26f
+			},
+			{
+				"offset": 1,
+				"color": 0xffe1b8
+			}
+		]
+	},
+};
+
 export function Component() {
 	/** @type {React.MutableRefObject<HTMLCanvasElement>} */
 	const canvasRef = useRef(null);
@@ -49,6 +86,7 @@ export function Component() {
 	const [textureBlocks, setTextureBlocks] = useState(null);
 	const [ditheringAlgo, setDitheringAlgo] = useState('floydSteinberg');
 	const [isMonochrome, setIsMonochrome] = useState(false);
+	const [gradientName, setGradientName] = useState('goldenSunrise');
 
 	const [palette, setPalette] = useState('average');
 	const [helpOpen, setHelpOpen] = useState(false);
@@ -65,6 +103,17 @@ export function Component() {
 	/** @type {import("../../server").BlocksResponse} */
 	const blocks = useLoaderData();
 
+	useEffect(() => {
+		const gradientSelection = BUILTIN_GRADIENTS[gradientName];
+		const gradient = new Gradient();
+
+		for (const stop of gradientSelection.gradient) {
+			gradient.addStop(stop.offset, RGBColor.fromInteger(stop.color));
+		}
+
+		gradientRef.current = gradient;
+	}, [gradientName]);
+
 	const blockLookup = useMemo(() => {
 		const globalBlockLookup = new BlockLookup(blocks.blocks);
 		let blockLookup = globalBlockLookup;
@@ -73,33 +122,19 @@ export function Component() {
 			const monochromeBlocks = new Array(MONOCHROME_STEPS);
 
 			for (let i = 0; i < MONOCHROME_STEPS; i++) {
+				// TODO gradientRef isn't updated yet by the time that this memo is updated.
 				monochromeBlocks[i] = blockLookup.find(gradientRef.current.interpolate(i / (MONOCHROME_STEPS - 1)), palette).block;
 			}
 
 			blockLookup = new BlockLookup([
 				...new Set(monochromeBlocks)
 			]);
+
+			console.log(blockLookup);
 		}
 
 		return blockLookup;
-	}, [gradientRef, blocks, isMonochrome]);
-
-	useEffect(() => {
-		const gradient = new Gradient();
-
-		// gradient.addStop(0, RGBColor.fromInteger(0x33252e));
-		// gradient.addStop(0.4437, RGBColor.fromInteger(0xff9b1b));
-		// gradient.addStop(0.7281, RGBColor.fromInteger(0xfbd26f));
-		// gradient.addStop(1, RGBColor.fromInteger(0xffe1b8));
-
-		// gradient.addStop(0, RGBColor.fromInteger(0x20180d));
-		// gradient.addStop(1, RGBColor.fromInteger(0x207d3d));
-
-		gradient.addStop(0, RGBColor.fromInteger(0x000000));
-		gradient.addStop(1, RGBColor.fromInteger(0xffffff));
-
-		gradientRef.current = gradient;
-	}, []);
+	}, [gradientName, blocks, isMonochrome]);
 
 	useEffect(() => {
 		if (width <= 0 || height <= 0) {
@@ -114,7 +149,7 @@ export function Component() {
 			resetNoiser();
 		}
 
-		console.log('gradient', gradientRef.current);
+		// console.log('gradient', gradientRef.current);
 
 		const ctx = canvasRef.current.getContext('2d');
 		const pixels = ctx.getImageData(0, 0, width, height);
@@ -146,7 +181,7 @@ export function Component() {
 		setTextureBlocks(textureBlocks);
 
 		ctx.putImageData(pixels, 0, 0);
-	}, [width, height, isMonochrome, noiseScale, ditheringAlgo, palette])
+	}, [width, height, gradientName, isMonochrome, noiseScale, ditheringAlgo, palette])
 
 	return <div className="page-texturizer">
 		<PaletteContext.Provider value={palette}>
@@ -161,28 +196,42 @@ export function Component() {
 				</label>
 				{/*<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>*/}
 			</AppTitleBar>
-			<label>
-				Monochrome:
-				<input type="checkbox" checked={isMonochrome} onChange={ (e) => setIsMonochrome(e.target.checked) } />
-			</label>
-			<label>
-				Scale:
-				<input type="range" value={noiseScale} onInput={ (e) => setNoiseScale(+e.target.value) } min={1} max={ Math.max(width, height) * 2} />
-			</label>
-			<label>
-				Size:
-				<input type="number" value={width} min={1} size={3} onInput={ (e) => setWidth(+e.target.value) } /> &times; <input type="number" value={height} min={1} size={3} onInput={ (e) => setHeight(+e.target.value) } />
-			</label>
-			<label>
-				Dithering:
-				<select value={ditheringAlgo} onInput={(e) => setDitheringAlgo(e.target.value)}>
-					<option value="none">None</option>
-					<option value="floydSteinberg">Floyd-Steinberg</option>
-					<option value="stucki">Stucki</option>
-					<option value="atkinson">Atkinson</option>
-					<option value="stevensonArce">Stevenson-Arce</option>
-				</select>
-			</label>
+			<div className={styles['texturizer-controls']}>
+				<label>
+					Monochrome:
+					<input type="checkbox" checked={isMonochrome} onChange={ (e) => setIsMonochrome(e.target.checked) } />
+				</label>
+				<label>
+					Scale:
+					<input type="range" value={noiseScale} onInput={ (e) => setNoiseScale(+e.target.value) } min={1} max={ Math.max(width, height) * 2} />
+				</label>
+				<label>
+					Size:
+					<span>
+						<input type="number" value={width} min={1} size={3} onInput={ (e) => setWidth(+e.target.value) } /> &times; <input type="number" value={height} min={1} size={3} onInput={ (e) => setHeight(+e.target.value) } />
+					</span>
+				</label>
+				<label>
+					Dithering:
+					<select value={ditheringAlgo} onInput={(e) => setDitheringAlgo(e.target.value)}>
+						<option value="none">None</option>
+						<option value="floydSteinberg">Floyd-Steinberg</option>
+						<option value="stucki">Stucki</option>
+						<option value="atkinson">Atkinson</option>
+						<option value="stevensonArce">Stevenson-Arce</option>
+					</select>
+				</label>
+				<label>
+					Gradient:
+					<select value={gradientName} onInput={(e) => setGradientName(e.target.value)}>
+						{ Object.entries(BUILTIN_GRADIENTS).map(([name, gradient]) => {
+							return <option value={name} key={name}>{ gradient.display }</option>
+						}) }
+					</select>
+				</label>
+
+				<button type="button" onClick={resetNoiser}>Randomize</button>
+			</div>
 			<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={width} height={height} />
 			<SwatchGrid width={width} height={height} blocks={textureBlocks} />
 		</PaletteContext.Provider>
