@@ -111,7 +111,7 @@ export function Component() {
 		}
 
 		return gradient;
-	}, [gradientName]);
+	}, [gradientName, palette]);
 
 	const blockLookup = useMemo(() => {
 		const globalBlockLookup = new BlockLookup(blocks.blocks);
@@ -128,11 +128,11 @@ export function Component() {
 				...new Set(monochromeBlocks)
 			]);
 
-			console.log(blockLookup);
+			// console.log(blockLookup);
 		}
 
 		return blockLookup;
-	}, [gradientName, blocks, isMonochrome]);
+	}, [gradientName, palette, blocks, isMonochrome]);
 
 	useEffect(() => {
 		if (width <= 0 || height <= 0) {
