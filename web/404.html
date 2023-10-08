@@ -5,7 +5,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>404</title>
 	<script type="module">
-		import 'ghspa/ghspa.js';
+		let url = window.location.pathname;
+
+		if (window.location.search) {
+			url += window.location.search;
+		}
+
+		if (window.location.hash) {
+			url += window.location.hash;
+		}
+
+		window.location = '/?url=' + encodeURIComponent(url);
 	</script>
 </head>
 <body></body>
