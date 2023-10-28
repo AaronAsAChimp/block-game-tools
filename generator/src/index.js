@@ -13,6 +13,7 @@ import { BoundingBox } from "./bounding-box.js";
 import { BasicColorExtractor, QuantizerColorExtractor, SaturatedColorExtractor } from './color-extractor.js';
 import { buildTintMap, tintTexture } from './color-shift.js';
 import { OBJFile } from './objfile.js';
+import { createAnimatedTexture } from "./animated-texture.js";
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
@@ -252,8 +253,6 @@ await fs.promises.mkdir(extractPath, {
 	recursive: true
 });
 
-const animationCssFile = fs.createWriteStream(path.join(extractPath, `texture-animations.css`));
-
 await fs.promises.mkdir(extractedTexturesPath, {
 	recursive: true
 });
@@ -262,7 +261,7 @@ await fs.promises.mkdir(extractedTexturesPath, {
 // Build the block data
 // 
 
-console.log(tintMap);
+// console.log(tintMap);
 
 for await (const filename of walk(dirPath)) {
 	const name = path.basename(filename, '.png');
@@ -300,7 +299,7 @@ for await (const filename of walk(dirPath)) {
 		const mcmeta = await fs.promises.readFile(mcmetaName);
 		const animation = Animation.fromMcmeta(JSON.parse(mcmeta), name, `./textures`, file.width, file.height);
 
-		animationCssFile.write(animation.toCSS());
+		createAnimatedTexture(animation, file, path.join(extractedTexturesPath, name + '.webp'))
 	}
 
 	if (palette.average) {

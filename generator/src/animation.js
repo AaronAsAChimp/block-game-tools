@@ -1,6 +1,6 @@
-import {relative} from 'path';
 
 const MS_PER_TICK = 1000 / 20;
+export const FRAME_SIZE = 64;
 
 
 /**
@@ -31,43 +31,26 @@ export class Animation {
 	}
 
 	/**
-	 * Generate a CSS animation.
+	 * Determine if this animation is interpolated.
 	 *
-	 * @return {string}          The CSS>
+	 * @return {boolean} True if the animation is interpolated.
 	 */
-	toCSS() {
-		const name = this._name;
-		const frameCount = this._frames.length;
-		const percentStep = 100 / (frameCount - 1);
-
-		let keyframes = ``;
-
-		for (let i = 0; i < this._frames.length; i++) {
-			const frame = this._frames[i];
-			keyframes += `
-	${ i * percentStep }% {
-		background-position: 0 ${ -frame * 64 }px;
+	isInterpolated() {
+		return this._interpolate;
 	}
 
-`;
-		}
+	/**
+	 * Get the frames for this animation.
+	 *
+	 * @return {number[]} An array containing the integer index of the frame at
+	 *                    each step of the sequence.
+	 */
+	getFrames() {
+		return this._frames;
+	}
 
-		// console.log(name, frameCount, this._frametime);
-
-		return `
-/*
-Animation: ${ name }
- */
-.texture-${ name } {
-	background-image: url(${this._path}/${name}.png);
-	animation-name: ${ name };
-	animation-duration: ${ frameCount * this._frametime}ms;
-}
-
-@keyframes ${ name } {
-${ keyframes }
-}
-`;
+	getFrameTime() {
+		return this._frametime;
 	}
 
 	static fromMcmeta(json, name, path, width, height) {

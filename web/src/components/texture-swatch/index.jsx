@@ -33,7 +33,9 @@ function cssColor(block, palette) {
  * @param {TextureImageProps} props
  */
 export function TextureImage({block}) {
-	return <img className={styles['texture-image']} height="64" width="64" loading="lazy" src={DATA_DIR + 'textures/' + block.name + '.png'} />
+	const ext = block.animated ? '.webp' : '.png';
+
+	return <img className={styles['texture-image']} height="64" width="64" loading="lazy" src={DATA_DIR + 'textures/' + block.name + ext} />
 }
 
 /**
@@ -46,7 +48,7 @@ export function TextureImage({block}) {
  * @param {TextureAnimationProps} props
  */
 export function TextureAnimation({block}) {
-	return <div className={styles['texture-animation'] + ' texture-' + block.name}></div>
+	return <img className={styles['texture-image']} height="64" width="64" loading="lazy" src={DATA_DIR + 'textures/' + block.name + '.webp'} />
 }
 
 /**
@@ -63,6 +65,7 @@ export function TextureAnimation({block}) {
  */
 export function TextureSwatch({block, title, showColor}) {
 	const palette = useContext(PaletteContext);
+	const ext = block.animated ? '.webp' : '.png';
 	let tooltip = block.name;
 
 	if (title) {
@@ -70,11 +73,7 @@ export function TextureSwatch({block, title, showColor}) {
 	}
 
 	return <TooltipWrapper className={styles['texture']} title={tooltip}>
-		{
-			block.animated ?
-				<TextureAnimation block={block} /> :
-				<TextureImage block={block} />
-		}
+		<img className={styles['texture-image']} height="64" width="64" loading="lazy" src={DATA_DIR + 'textures/' + block.name + ext} />
 		{
 			showColor || typeof showColor === 'undefined' ?
 				<div className={styles['texture-image-swatch']} style={{ backgroundColor: cssColor(block, palette) }}></div> :
