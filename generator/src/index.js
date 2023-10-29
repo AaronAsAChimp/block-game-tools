@@ -201,6 +201,38 @@ function writeBlockSet(version, blocks, path, filter) {
 	jsonOutput.close();
 }
 
+/**
+ * Write the blocks to a GIMP palette file.
+ *
+ * @param  {string} name   The name of the palette.
+ * @param  {import('shared/src/block').Block[]} blocks The blocks
+ * @param  {string} path   The path to write the file to.
+ * @param  {() => boolean} [filter] A function to filter the blocks by.
+ */
+function writeGimpPalette(name, blocks, path, filter) {
+	const gplOut = fs.createWriteStream(path);
+
+	if (filter) {
+		blocks = blocks.filter(filter);
+	}
+
+	function palComponent(n) {
+		return Math.round(n).toString().padStart(3, ' ')
+	}
+
+	gplOut.write('GIMP Palette\n');
+	gplOut.write('Name: ' + name + '\n');
+	gplOut.write('Columns: 16\n');
+	gplOut.write('#\n');
+
+	for (const block of blocks) {
+		const rgb = block.palette.average.rgb;
+		gplOut.write(`${ palComponent(rgb.r) } ${ palComponent(rgb.g) } ${ palComponent(rgb.b) }\t${ block.name }\n`)
+	}
+
+	gplOut.close();
+}
+
 //
 // Primaries
 // 
@@ -295,7 +327,7 @@ for await (const filename of walk(dirPath)) {
 
 	if (hasMcmeta) {
 		const mcmeta = await fs.promises.readFile(mcmetaName);
-		const animation = Animation.fromMcmeta(JSON.parse(mcmeta), name, `./textures`, file.width, file.height);
+		const animation = Animation.fromMcmeta(JSON.parse(mcmeta.toString()), name, `./textures`, file.width, file.height);
 
 		createAnimatedTexture(animation, file, path.join(extractedTexturesPath, name + '.webp'))
 	}
@@ -317,12 +349,17 @@ for await (const filename of walk(dirPath)) {
 	}
 }
 
-writeBlockSet(MC_VERSION, json, path.join(extractPath, `blocks.json`));
-writeBlockSet(MC_VERSION, json, path.join(extractPath, `gradient-blocks.json`), (block) => {
+const gradientBlocksFilter = (block) => {
 	return block?.tags && block.tags.includes('model:block') && block.tags.includes('direction:any')
 		&& !block.tags.includes('unobtainable') && !block.tags.includes('transparent')
 		&& !block.tags.includes('ore') && !block.tags.includes('redstone') && !block.tags.includes('block-entity');
-});
+};
+
+writeBlockSet(MC_VERSION, json, path.join(extractPath, `blocks.json`));
+writeBlockSet(MC_VERSION, json, path.join(extractPath, `gradient-blocks.json`), gradientBlocksFilter);
+
+writeGimpPalette(`Minecraft v${ MC_VERSION } Blocks - Average`, json, path.join(extractPath, 'blocks.gpl'));
+writeGimpPalette(`Minecraft v${ MC_VERSION } Gradient Blocks - Average`, json, path.join(extractPath, 'gradient-blocks.gpl'), gradientBlocksFilter);
 
 
 // Build the bounds geometry.
