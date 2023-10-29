@@ -2,33 +2,31 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
-import { Color, RGBColor } from "shared/src/color";
-import { Gradient } from "shared/src/gradient.js";
+import { RGBColor } from "shared/src/color";
 import { AppTitleBar } from "../../../components/app-title-bar";
 import { GradientHelpContent } from "../../../components/content";
+import { GradientDisplay } from "../../../components/gradient-display";
 import { LazyDialog } from "../../../components/lazy-dialog";
 import { Share } from "../../../components/share";
 import { TextureSwatch } from "../../../components/texture-swatch";
 import { PaletteContext } from "../../../context/palette-context";
 import { BlockLookup } from "../../blocks";
 import './styles.css';
-import { GradientDisplay } from "../../../components/gradient-display";
 
 const MIN_STEPS = 0;
 const DEFAULT_START = 0x000000;
 const DEFAULT_END = 0xFFFFFF;
 const DEFAULT_STEPS = 5;
 
-const ShareMemo = memo(Share);
 const TextureSwatchMemo = memo(TextureSwatch);
 
 /**
- * @typedef {[Gradient, number]} InitialGradient
+ * @typedef {[import('shared/src/gradient').Gradient, number]} InitialGradient
  */
 
 function parseSteps(steps) {
 	if (steps && steps.length) {
-		 return parseInt(steps, 10);
+		return parseInt(steps, 10);
 	} else {
 		return DEFAULT_STEPS;
 	}

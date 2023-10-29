@@ -1,9 +1,7 @@
 
 /**
- * @typedef {import('./server.d.ts').Block} Block
+ * @typedef {import('shared/src/block').Block} Block
  */
-
-import { Color } from 'shared/src/color.js';
 
 function distanceSquared(pos1, pos2) {
 	const delta = {
@@ -105,7 +103,7 @@ export class BlockLookup {
 
 	/**
 	 * Find the closest block for the given color.
-	 * @param  {Color} color The color.
+	 * @param  {import('shared/src/color').Color} color The color.
 	 * @param  {string} palette The palette for the chose block.
 	 * @return {BlockMatch}       The block.
 	 */

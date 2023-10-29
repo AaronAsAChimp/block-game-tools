@@ -1,5 +1,4 @@
 import { RGBColor } from "shared/src/color";
-import { BlockLookup } from "./blocks";
 
 export function coordToIndex(width, x, y) {
 	return y * (width * 4) + x * 4;
@@ -283,7 +282,7 @@ const DITHERING_ALGOS = {
  * @param  {keyof typeof DITHERING_ALGOS} algo  The name of the dithering algorithm.
  * @param  {ImageData} pixels The pixels to dither.
  * @param  {string} palette The name of the palette.
- * @param  {BlockLookup} blockLookup The lookup to find the block color.
+ * @param  {import('./blocks').BlockLookup} blockLookup The lookup to find the block color.
  */
 export function dither(algo, pixels, palette, blockLookup) {
 	const height = pixels.height;

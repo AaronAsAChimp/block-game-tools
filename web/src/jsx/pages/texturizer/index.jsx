@@ -17,7 +17,7 @@ const MONOCHROME_STEPS = 32;
 const TextureSwatchMemo = memo(TextureSwatch);
 
 /**
- * @typedef {import('../../../jsx/server.d.ts').Block} Block
+ * @typedef {import('shared/src/block').Block} Block
  */
 
 /**

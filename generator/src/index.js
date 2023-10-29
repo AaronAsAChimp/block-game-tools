@@ -261,8 +261,6 @@ await fs.promises.mkdir(extractedTexturesPath, {
 // Build the block data
 // 
 
-// console.log(tintMap);
-
 for await (const filename of walk(dirPath)) {
 	const name = path.basename(filename, '.png');
 
