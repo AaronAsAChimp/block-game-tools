@@ -68,8 +68,9 @@ export async function createAnimatedTexture(animation, srcImage, outPath) {
 	const image = await webp.Image.getEmptyImage();
 	// const isInterpolated = animation.isInterpolated();
 	const frames = animation.getFrames();
+	const srcFrames = srcImage.height / srcImage.width;
 	const width = srcImage.width;
-	const height = srcImage.height / frames.length;
+	const height = Math.floor(srcImage.height / srcFrames);
 	const channels = 4;
 	const destFrames = [];
 	const srcHasAlpha = hasAlpha(srcImage.data);
