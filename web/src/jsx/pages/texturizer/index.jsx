@@ -11,10 +11,19 @@ import { PaletteContext } from "../../../context/palette-context";
 import { BlockLookup } from "../../blocks";
 import { coordToIndex, dither } from "../../dithering";
 import * as styles from './styles.module.css';
+import { GradientButton } from "../../../components/gradient-button";
+import { GradientDisplay } from "../../../components/gradient-display";
 
 const DEFAULT_SIZE = 16;
 const MONOCHROME_STEPS = 32;
 const TextureSwatchMemo = memo(TextureSwatch);
+
+const DEFAULT_START = 0x000000;
+const DEFAULT_END = 0xFFFFFF;
+const INITIAL_GRADIENT = [
+	[RGBColor.fromInteger(DEFAULT_START), 0],
+	[RGBColor.fromInteger(DEFAULT_END), 1]
+];
 
 /**
  * @typedef {import('shared/src/block').Block} Block
@@ -86,6 +95,8 @@ export function Component() {
 	const [ditheringAlgo, setDitheringAlgo] = useState('floydSteinberg');
 	const [isMonochrome, setIsMonochrome] = useState(false);
 	const [gradientName, setGradientName] = useState('goldenSunrise');
+	const [redraws, setRedraws] = useState(0);
+
 
 	const [palette, setPalette] = useState('average');
 	const [helpOpen, setHelpOpen] = useState(false);
@@ -97,31 +108,27 @@ export function Component() {
 
 	function resetNoiser() {
 		noiserRef.current = createNoise2D();
+
+		setRedraws(redraws + 1);
 	}
 
 	/** @type {import("../../server").BlocksResponse} */
 	const blocks = useLoaderData();
 
-	const gradient = useMemo(() => {
-		const gradientSelection = BUILTIN_GRADIENTS[gradientName];
-		const gradient = new Gradient();
+	const gradientRef = useRef(null);
 
-		for (const stop of gradientSelection.gradient) {
-			gradient.addStop(stop.offset, RGBColor.fromInteger(stop.color));
-		}
-
-		return gradient;
-	}, [gradientName, palette]);
 
 	const blockLookup = useMemo(() => {
 		const globalBlockLookup = new BlockLookup(blocks.blocks);
 		let blockLookup = globalBlockLookup;
 
+		console.log(redraws);
+
 		if (isMonochrome) {
 			const monochromeBlocks = new Array(MONOCHROME_STEPS);
 
 			for (let i = 0; i < MONOCHROME_STEPS; i++) {
-				monochromeBlocks[i] = blockLookup.find(gradient.interpolate(i / (MONOCHROME_STEPS - 1)), palette).block;
+				monochromeBlocks[i] = blockLookup.find(gradientRef.current.interpolate(i / (MONOCHROME_STEPS - 1)), palette).block;
 			}
 
 			blockLookup = new BlockLookup([
@@ -132,14 +139,14 @@ export function Component() {
 		}
 
 		return blockLookup;
-	}, [gradientName, palette, blocks, isMonochrome]);
+	}, [redraws, gradientName, palette, blocks, isMonochrome]);
 
 	useEffect(() => {
 		if (width <= 0 || height <= 0) {
 			return;
 		}
 
-		if (!gradient) {
+		if (!gradientRef.current) {
 			return;
 		}
 
@@ -154,7 +161,7 @@ export function Component() {
 			for (let x = 0; x < width; x++) {
 				const noise = (noiserRef.current(x/noiseScale, y/noiseScale) / 2) + 0.5;
 				const red = coordToIndex(width, x, y);
-				const color = gradient.interpolate(noise).toRGBColor();
+				const color = gradientRef.current.interpolate(noise).toRGBColor();
 
 				pixels.data[red] = color.r;
 				pixels.data[red + 1] = color.g;
@@ -177,7 +184,7 @@ export function Component() {
 		setTextureBlocks(textureBlocks);
 
 		ctx.putImageData(pixels, 0, 0);
-	}, [width, height, gradientName, isMonochrome, noiseScale, ditheringAlgo, palette])
+	}, [width, height, redraws, gradientName, isMonochrome, noiseScale, ditheringAlgo, palette])
 
 	return <div className="page-texturizer">
 		<PaletteContext.Provider value={palette}>
@@ -219,12 +226,15 @@ export function Component() {
 				</label>
 				<label>
 					Gradient:
-					<select value={gradientName} onInput={(e) => setGradientName(e.target.value)}>
+{/*					<select value={gradientName} onInput={(e) => setGradientName(e.target.value)}>
 						{ Object.entries(BUILTIN_GRADIENTS).map(([name, gradient]) => {
 							return <option value={name} key={name}>{ gradient.display }</option>
 						}) }
-					</select>
+					</select>*/}
 				</label>
+				<div style={{width: '200px'}}>
+					<GradientDisplay onGradientChange={(gradient) => {gradientRef.current = gradient; setRedraws(redraws + 1)}} initialGradientStops={INITIAL_GRADIENT} />
+				</div>
 
 				<button type="button" onClick={resetNoiser}>Randomize</button>
 			</div>
