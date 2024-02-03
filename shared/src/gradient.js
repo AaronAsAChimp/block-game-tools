@@ -233,3 +233,79 @@ export class Gradient {
 		return css + ')';
 	}
 }
+
+const DEFAULT_START = 0x000000;
+const DEFAULT_END = 0xFFFFFF;
+const DEFAULT_STEPS = 5;
+
+function parseSteps(steps) {
+	if (steps && steps.length) {
+		return parseInt(steps, 10);
+	} else {
+		return DEFAULT_STEPS;
+	}
+}
+
+/**
+ * Parse the gradient paraemter in the form of:
+ *
+ * FFFFFF-000000-12
+ * FFFFFF@20-000000@40-12
+ * 
+ * @param  {string} colorsParam 
+ * @returns {{steps: number, stops: import("../../../components/gradient-display").GradientStop[]}}
+ */
+export function parseGradientParam(colorsParam) {
+	if (!colorsParam) {
+		colorsParam = '';
+	}
+
+	const colorParts = colorsParam.split('-');
+	const steps = parseSteps(colorParts.pop());
+	/** @type {[Color, number?][]} */
+	const stops = [];
+
+	for (const part of colorParts) {
+		const [color, percent] = part.split('@');
+
+		stops.push([RGBColor.parseCSSHex('#' + color), percent ? parseFloat(percent) / 100 : null])
+	}
+
+	if (stops.length === 0) {
+		stops.push([RGBColor.fromInteger(DEFAULT_START), 0]);
+		stops.push([RGBColor.fromInteger(DEFAULT_END), 1]);
+	}
+
+	if (!stops[0][1]) {
+		stops[0][1] = 0;
+	}
+
+	if (!stops[stops.length - 1][1]) {
+		stops[stops.length - 1][1] = 1;
+	}
+
+	return {
+		steps,
+		stops
+	}
+}
+
+/**
+ * Build the gradient parameter in the form of:
+ *
+ * FFFFFF@20-000000@40-12
+ *  
+ * @param  {Gradient} gradient
+ * @param  {number} numSteps
+ * @return  {string} The color param
+ */
+export function buildGradientParam(gradient, numSteps) {
+	const stops = gradient.getStops();
+	let url = '';
+
+	for (const stop of stops) {
+		url += stop.color.toCSS().substring(1) + '@' + (Math.floor(stop.offset * 10000) / 100) + '-';
+	}
+
+	return url + numSteps;
+}

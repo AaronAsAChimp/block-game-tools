@@ -114,7 +114,7 @@ export function GradientDisplay({onGradientChange, initialGradientStops}) {
 					key={idx}
 					stopIdx={idx}
 					onChange={e => {setStopColor(idx, e.target.value)}}
-					onDelete={e => deleteStop(idx)}
+					onDelete={() => deleteStop(idx)}
 					onPointerDown={onKnobDown}
 				/>
 			})

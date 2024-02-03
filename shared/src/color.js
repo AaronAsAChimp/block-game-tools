@@ -270,7 +270,7 @@ export class RGBAColor extends RGBColor {
 	 * Create a new RGBAColor from an integer (e.g.  0xFFFFFFFF).
 	 *
 	 * @param {number} value The RGBA color as an integer.
-	 * @return {RGBColor} The new color
+	 * @return {RGBAColor} The new color
 	 */
 	static fromInteger(value) {
 		const a = value & 0xFF;

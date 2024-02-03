@@ -26,3 +26,4 @@ jobs:
     - run: npm ci
     - run: npm test -w shared
     - run: npm test -w generator
+    - run: npm test -w web
