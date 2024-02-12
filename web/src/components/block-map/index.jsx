@@ -9,11 +9,10 @@
 import { animated, useSpring } from '@react-spring/three';
 import { Billboard, OrbitControls, Text3D } from '@react-three/drei';
 import { Canvas, useLoader, useThree } from '@react-three/fiber';
-import { forwardRef, memo, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { forwardRef, memo, useContext, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import droidSansRegular from 'three/examples/fonts/droid/droid_sans_regular.typeface.json';
 
-import { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { OBJLoader as ThreeOBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { ContrastContext } from '../../context/contrast-context.js';
 import { PaletteContext } from '../../context/palette-context.js';
@@ -36,7 +35,7 @@ const SPRING_CONFIG = {
  * From: https://wejn.org/2020/12/cracking-the-threejs-object-fitting-nut/
  * 
  * @param {THREE.Group} boundsObj THe bounds object to center in view.
- * @param {ThreeOrbitControls} orbitControls
+ * @param {import('three/examples/jsm/controls/OrbitControls.js').OrbitControls} orbitControls
  */
 function repositionCamera(boundsObj, orbitControls) {
     const boundingBox = new THREE.Box3();
@@ -138,6 +137,7 @@ const BoundsMesh = forwardRef(({}, ref) => {
 
 	return <primitive ref={ref} object={boundsObj}></primitive>
 });
+BoundsMesh.displayName = 'BoundsMesh';
 
 const AnimatedBillboard = animated(Billboard);
 
@@ -194,21 +194,33 @@ function SelectionMesh({block}) {
 function Labels({labels}) {
 	return <group>
 		{ labels.map((label) => {
-			return <Text3D key={label.name} font={droidSansRegular} size={2.5} height={1} position={[
-					label.pos.a,
-					label.pos.l,
-					label.pos.b,
-				]}>
-				{label.name}
-				<meshStandardMaterial color={[
-					label.rgb.r / 255,
-					label.rgb.g / 255,
-					label.rgb.b / 255
-				]} />
-			</Text3D>
+			const pos = [
+				label.pos.a,
+				label.pos.l,
+				label.pos.b,
+			];
+
+			const lightPos = [
+				label.pos.a + 2.2,
+				label.pos.l,
+				label.pos.b + 5,
+			]
+
+			return <group key={label.name}>
+				<Text3D font={droidSansRegular} size={2.5} height={1} position={pos}>
+					{label.name}
+					<meshStandardMaterial color={[
+						label.rgb.r / 255,
+						label.rgb.g / 255,
+						label.rgb.b / 255
+					]} />
+				</Text3D>
+				<pointLight position={lightPos} distance={8} intensity={5} decay={0.8} />
+			</group>
 		}) }
+
 	</group>
-};
+}
 
 const LabelsMemoized = memo(Labels);
 
@@ -261,7 +273,7 @@ function Blocks({blocks, onSelected, onHovered}) {
 			return <BlockMesh block={block} key={block.name} onSelect={onSelected} onMouseEnter={() => onHovered(block)} onMouseLeave={() => onHovered(null)} />
 		}) }
 	</group>
-};
+}
 
 const BlocksMemoied = memo(Blocks);
 
@@ -307,18 +319,8 @@ export function BlockMap({labels, blocks, selected, onSelected, onAlphaChange}) 
 	const [grabbing, setGrabbing] = useState(false);
 	const controlsRef = useRef(null);
 	const boundsRef = useRef(null);
-	// const palette = useContext(PaletteContext);
 	const canvasRef = useRef(null);
-	// const cameraTarget = useMemo(() => {
-	// 	console.log('cameraTarget', selected, boundsRef.current);
-	// 	if (selected) {
-	// 		const color = selected.palette[palette];
 
-	// 		return new THREE.Vector3(color.lab.a, color.lab.l, color.lab.b);
-	// 	} else {
-	// 		return null;
-	// 	}
-	// }, [selected, palette, boundsRef.current]);
 
 	function updateAlpha(camera) {
 		const newAlpha = Math.max(Math.min(camera.position.y / 100, 1), 0) > 0.5 ? 1 : 0;
@@ -352,7 +354,6 @@ export function BlockMap({labels, blocks, selected, onSelected, onAlphaChange}) 
 	return <TooltipWrapper title={hovered?.name}>
 		<Canvas linear flat ref={canvasRef} style={{width: '100vw', height: '100vh'}} onPointerDown={cursorGrab} onPointerUp={cursorRelease} onPointerMove={cursorMove}>
 			<Centerer boundsObj={boundsRef} onChange={(camera) => updateAlpha(camera) }>
-				<pointLight position={[0,110,0]} distance={1000} intensity={1} />
 				<ambientLight intensity={0.8} />
 				<BoundsMesh ref={boundsRef} />
 				<SelectionMesh block={selected} />
