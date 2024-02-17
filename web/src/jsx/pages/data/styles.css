@@ -9,10 +9,12 @@ body {
 
 .page-container {
 	display: grid;
-	grid-template-areas: 'queue a'
-		'queue tags'
-		'queue output';
-	grid-template-columns: 15em auto;
+	grid-template-areas: 'queue a a'
+		'queue tags tags'
+		'queue . download'
+		'queue output output';
+	grid-template-columns: 15em 1fr auto;
+	grid-template-rows: 1fr 1fr auto 1fr;
 	height: 100vh;
 }
 
@@ -46,4 +48,16 @@ body {
 
 .file-output {
 	grid-area: output;
+}
+
+.file-download {
+	grid-area: download;
+	font-weight: bold;
+
+	color: var(--base-contrast-color);
+	text-decoration: none;
+
+	svg {
+		margin-left: 0.4em;
+	}
 }

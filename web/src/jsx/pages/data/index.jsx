@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AppTitleBar } from "../../../components/app-title-bar";
 import "./styles.css";
 import { TextureSwatch } from "../../../components/texture-swatch";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 const TEXTURE_TAGS = [
 	"transparent",
@@ -50,6 +52,18 @@ function useQueue(initialItems) {
 	];
 }
 
+/**
+ * Sorts the keys of an aobject
+ * @param {Record<string, any>} obj The object ot be sorted.
+ * @return {Record<string, any>} A new object with sorted keys that reference the origninal values
+ */
+function toSortedRecord(obj) {
+	return Object.keys(obj).sort().reduce((newObj, key) => {
+		newObj[key] = obj[key]
+		return newObj;
+	}, {});
+}
+
 export function Component() {
 	/** @type {import("../../server").BlocksResponse} */
 	const blocks = useLoaderData();
@@ -63,6 +77,8 @@ export function Component() {
 	const [queue, current, enqueue, dequeue] = useQueue(untagged);
 
 	const [file, setFile] = useState({});
+	/** @type {React.MutableRefObject<HTMLAnchorElement>} */
+	const downloadRef = useRef(null);
 
 	useEffect(() => {
 		const newTags = {};
@@ -165,7 +181,11 @@ export function Component() {
 				</div>
 				<button onClick={onDoneChoosing}>Done</button>
 			</div>
-			<textarea className="file-output" readOnly value={JSON.stringify(file, null, '    ')}></textarea>
+			<a className="file-download" download="block-textures.json" href="#" ref={downloadRef} onClick={() => {downloadRef.current.href = 'data:application/json;base64,' + btoa(JSON.stringify(toSortedRecord(file), null, '    ')) }}>
+				Download
+				<FontAwesomeIcon icon={faDownload} />
+			</a>
+			<textarea className="file-output" readOnly value={JSON.stringify(toSortedRecord(file), null, '    ')}></textarea>
 		</div>
 	</div>;
 }
