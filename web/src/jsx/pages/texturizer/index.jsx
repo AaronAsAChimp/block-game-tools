@@ -232,7 +232,7 @@ export function Component() {
 						}) }
 					</select>*/}
 				</label>
-				<div style={{width: '200px'}}>
+				<div className={styles['texturizer-gradient']}>
 					<GradientDisplay onGradientChange={(gradient) => {gradientRef.current = gradient; setRedraws(redraws + 1)}} initialGradientStops={INITIAL_GRADIENT} />
 				</div>
 

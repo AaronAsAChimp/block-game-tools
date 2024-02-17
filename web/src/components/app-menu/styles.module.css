@@ -3,6 +3,7 @@
 .menu {
 	position: fixed;
 	top: 0;
+	right: 0;
 	display: block;
 	margin: 0;
 	height: 100%;
@@ -11,7 +12,7 @@
 	width: 30vw;
 	min-width: 20em;
 	transition: transform 0.5s;
-	transform: translateX(-100%);
+	transform: translateX(100%);
 	background: var(--layer1-color);
 	color: var(--layer1-contrast-color);
 	padding: 1em;}
