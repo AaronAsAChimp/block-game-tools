@@ -14,6 +14,7 @@ import { BasicColorExtractor, QuantizerColorExtractor, SaturatedColorExtractor }
 import { buildTintMap, tintTexture } from './color-shift.js';
 import { OBJFile } from './objfile.js';
 import { createAnimatedTexture } from "./animated-texture.js";
+import { exit } from "process";
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
@@ -260,6 +261,7 @@ bounds.add(cyan);
 bounds.add(blue);
 bounds.add(magenta);
 
+const EXIT_CODE_NO_JAR = 1;
 
 const dirPath = `./jars/${ MC_VERSION }/assets/minecraft/textures/block/`;
 const extractPath = `./web/data/${ MC_VERSION }/`;
@@ -291,7 +293,12 @@ await fs.promises.mkdir(extractedTexturesPath, {
 
 //
 // Build the block data
-// 
+//
+
+if (!fs.existsSync(dirPath)) {
+	console.error(`ERROR: Could not find the unpacked JAR file, make sure you've run the loader for Minecraft version ${ MC_VERSION }`);
+	process.exit(EXIT_CODE_NO_JAR)
+}
 
 for await (const filename of walk(dirPath)) {
 	const name = path.basename(filename, '.png');
