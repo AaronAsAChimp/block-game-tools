@@ -5,6 +5,8 @@ import "./styles.css";
 import { TextureSwatch } from "../../../components/texture-swatch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import blockIds from '../../../../data/block-ids.json';
+import { MultiSelect } from "../../../components/multi-select";
 
 const TEXTURE_TAGS = [
 	"transparent",
@@ -16,6 +18,7 @@ const TEXTURE_TAGS = [
 	"model:crops",
 	"model:block",
 	"model:slab",
+	"model:stair",
 	"model:flower",
 	"model:on-ground",
 	"model:door",
@@ -46,8 +49,12 @@ function useQueue(initialItems) {
 			]);
 		},
 		function dequeue() {
-			setCurrent(queue[0]);
+			const current = queue[0];
+
+			setCurrent(current);
 			setQueue(queue.slice(1));
+
+			return current;
 		}
 	];
 }
@@ -59,40 +66,77 @@ function useQueue(initialItems) {
  */
 function toSortedRecord(obj) {
 	return Object.keys(obj).sort().reduce((newObj, key) => {
-		newObj[key] = obj[key]
+		newObj[key] = obj[key];
 		return newObj;
 	}, {});
 }
+
+function buildBlockTexturesFile(blocks) {
+	const newFile = {};
+
+	for (const block of blocks) {
+
+		if (block.blockIds) {
+			for (const id of block.blockIds) {
+				let blockIds = newFile[id];
+
+				if (!blockIds) {
+					blockIds = [];
+					newFile[id] = blockIds;
+				}
+
+				blockIds.push(block.name);
+			}
+		}
+	}
+
+	return newFile;
+}
+
 
 export function Component() {
 	/** @type {import("../../server").BlocksResponse} */
 	const blocks = useLoaderData();
 
-	const untagged = useMemo(() => {
+	const todos = useMemo(() => {
 		return blocks.blocks.filter((block) => {
-			return !block.tags;
+			return !block.tags || !block.blockIds;
 		})
 	}, [blocks]);
 
-	const [queue, current, enqueue, dequeue] = useQueue(untagged);
+	const [queue, current, enqueue, dequeue] = useQueue(todos);
 
-	const [file, setFile] = useState({});
+	const [textureTagsFile, setTextureTagsFile] = useState({});
+
 	/** @type {React.MutableRefObject<HTMLAnchorElement>} */
-	const downloadRef = useRef(null);
+	const blockTexturesRef = useRef(null);
+
+	/** @type {React.MutableRefObject<HTMLAnchorElement>} */
+	const textureTagsRef = useRef(null);
 
 	useEffect(() => {
 		const newTags = {};
+		const newBlockIds = {};
 
 		for (const block of blocks.blocks) {
 			if (block.tags) {
 				newTags[block.name] = block.tags;
 			}
+
+			if (block.blockIds) {
+				if (!(block.blockIds in newBlockIds)) {
+					newBlockIds[block.blockIds] = [];
+				}
+
+				newBlockIds[block.blockIds].push(block.name);
+			}
 		}
 
-		setFile(newTags);
+		setTextureTagsFile(toSortedRecord(newTags));
 	}, [blocks]);
 
 	const [selectedTags, setSelectedTags] = useState({});
+	const [selectedBlockIds, setSelectedBlockIds] = useState([]);
 
 	/**
 	 * Select the specified tag
@@ -108,8 +152,8 @@ export function Component() {
 
 	function onDoneChoosing() {
 		if (current) {
-			let newFile = {
-				...file,
+			const newTextureTagsFile = {
+				...textureTagsFile,
 				[current.name]: Object.keys(selectedTags)
 					.map((selectedTag) => {
 						const isSelected = selectedTags[selectedTag];
@@ -122,19 +166,20 @@ export function Component() {
 					.sort()
 			};
 
-			newFile = Object.keys(newFile).sort()
-				.reduce((obj, key) => {
-					obj[key] = newFile[key];
+			setTextureTagsFile(toSortedRecord(newTextureTagsFile));
 
-					return obj;
-				}, {});
-
-			setFile(newFile);
+			current.blockIds = selectedBlockIds;
 		}
 
-		setSelectedTags({});
+		const next = dequeue();
+		const tags = next?.tags ?? [];
 
-		dequeue();
+		setSelectedTags(tags.reduce((current, key) => {
+			current[key] = true;
+			return current;
+		}, {}));
+
+		setSelectedBlockIds(next?.blockIds ?? null);
 	}
 
 	function computePercent(queueLength, blocksLength) {
@@ -159,12 +204,15 @@ export function Component() {
 			<div className="texture-properties">
 				{
 					current ? <>
-						<TextureSwatch block={current} />
-						{ current.name }
+						<h1>{current.name}</h1>
+						<TextureSwatch block={current} showColor={false} />
 					</> : null
 				}
 			</div>
 			<div className="tags-editor">
+				<h2>Block ID</h2>
+				<MultiSelect selected={selectedBlockIds} setSelected={(ids) => setSelectedBlockIds(ids)} options={blockIds} />
+				<h2>Tags</h2>
 				<div className="tags-choices">
 					{
 						TEXTURE_TAGS.map((tag) => {
@@ -181,11 +229,15 @@ export function Component() {
 				</div>
 				<button onClick={onDoneChoosing}>Done</button>
 			</div>
-			<a className="file-download" download="block-textures.json" href="#" ref={downloadRef} onClick={() => {downloadRef.current.href = 'data:application/json;base64,' + btoa(JSON.stringify(toSortedRecord(file), null, '    ')) }}>
-				Download
+			<a className="download download-block-textures" download="block-textures.json" href="#" ref={blockTexturesRef} onClick={() => {blockTexturesRef.current.href = 'data:application/json;base64,' + btoa(JSON.stringify(buildBlockTexturesFile(blocks.blocks), null, '    ')) }}>
+				block-textures.json
 				<FontAwesomeIcon icon={faDownload} />
 			</a>
-			<textarea className="file-output" readOnly value={JSON.stringify(toSortedRecord(file), null, '    ')}></textarea>
+			<a className="download download-texture-tags" download="texture-tags.json" href="#" ref={textureTagsRef} onClick={() => {textureTagsRef.current.href = 'data:application/json;base64,' + btoa(JSON.stringify(textureTagsFile, null, '    ')) }}>
+				texture-tags.json
+				<FontAwesomeIcon icon={faDownload} />
+			</a>
+			<textarea className="file-output" readOnly value={JSON.stringify(buildBlockTexturesFile(blocks.blocks), null, '    ')}></textarea>
 		</div>
 	</div>;
 }

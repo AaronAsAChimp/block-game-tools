@@ -11,7 +11,7 @@ body {
 	display: grid;
 	grid-template-areas: 'queue a a'
 		'queue tags tags'
-		'queue . download'
+		'queue download-bt download-tt'
 		'queue output output';
 	grid-template-columns: 15em 1fr auto;
 	grid-template-rows: 1fr 1fr auto 1fr;
@@ -50,8 +50,7 @@ body {
 	grid-area: output;
 }
 
-.file-download {
-	grid-area: download;
+.download {
 	font-weight: bold;
 
 	color: var(--base-contrast-color);
@@ -60,4 +59,12 @@ body {
 	svg {
 		margin-left: 0.4em;
 	}
+}
+
+.download-block-textures {
+	grid-area: download-bt;
+}
+
+.download-texture-tags {
+	grid-area: download-tt;
 }

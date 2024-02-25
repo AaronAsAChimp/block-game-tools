@@ -14,7 +14,6 @@ import { BasicColorExtractor, QuantizerColorExtractor, SaturatedColorExtractor }
 import { buildTintMap, tintTexture } from './color-shift.js';
 import { OBJFile } from './objfile.js';
 import { createAnimatedTexture } from "./animated-texture.js";
-import { exit } from "process";
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
@@ -61,10 +60,6 @@ function addBlockExcludes(blockId, blockTextures, excludes) {
 function buildExcludes(colorBlocks, blockTextures) {
 	const excludes = new Set();
 
-	// Exclude the grass block because it uses overlays that the current tinting
-	// algorithm doesn't really know how to handle
-	addBlockExcludes("grass_block", blockTextures, excludes);
-
 	excludes.add("water_overlay");
 
 	// destroy stages
@@ -75,14 +70,26 @@ function buildExcludes(colorBlocks, blockTextures) {
 	excludes.add("debug");
 	excludes.add("debug2");
 
-	addBlockExcludes("jigsaw", blockTextures, excludes);
-	addBlockExcludes("structure_block", blockTextures, excludes);
-	addBlockExcludes("redstone_wire", blockTextures, excludes);
-	addBlockExcludes("repeating_command_block", blockTextures, excludes);
-	addBlockExcludes("chain_command_block", blockTextures, excludes);
-	addBlockExcludes("command_block", blockTextures, excludes);
-
 	return excludes;
+}
+
+function buildBlockIdMap(blockTextures) {
+	const blockIdMap = {};
+
+	for (const blockId of Object.keys(blockTextures)) {
+		for (const textureName of blockTextures[blockId]) {
+			let blockIds = blockIdMap[textureName];
+
+			if (!blockIds) {
+				blockIds = [];
+				blockIdMap[textureName] = blockIds;
+			}
+
+			blockIds.push(blockId);
+		}
+	}
+
+	return blockIdMap;
 }
 
 async function loadPng(filename) {
@@ -283,6 +290,8 @@ const quantizerExtractor = new QuantizerColorExtractor();
 const saturatedExtractor = new SaturatedColorExtractor();
 const tintMap = buildTintMap(colorBlocks, blockTextures);
 
+const blockIdMap = buildBlockIdMap(blockTextures);
+
 await fs.promises.mkdir(extractPath, {
 	recursive: true
 });
@@ -306,6 +315,8 @@ for await (const filename of walk(dirPath)) {
 	if (excludes.has(name)) {
 		continue;
 	}
+
+	// console.log(name);
 
 	const mcmetaName = filename + '.mcmeta';
 
@@ -343,6 +354,7 @@ for await (const filename of walk(dirPath)) {
 		json.push({
 			name,
 			animated: hasMcmeta,
+			blockIds: blockIdMap[name],
 			tags: textureTags[name] ?? null,
 			palette: {
 				average: buildPaletteEntry(palette.average),
@@ -352,7 +364,7 @@ for await (const filename of walk(dirPath)) {
 		});
 
 	} else {
-		console.log(filename);
+		console.log('No color:', filename);
 	}
 }
 
@@ -362,8 +374,28 @@ const gradientBlocksFilter = (block) => {
 		&& !block.tags.includes('ore') && !block.tags.includes('redstone') && !block.tags.includes('block-entity');
 };
 
-writeBlockSet(MC_VERSION, json, path.join(extractPath, `blocks.json`));
-writeBlockSet(MC_VERSION, json, path.join(extractPath, `gradient-blocks.json`), gradientBlocksFilter);
+const NON_BUILDING_BLOCKS = new Set([
+	// Exclude the grass block because it uses overlays that the current tinting
+	// algorithm doesn't really know how to handle
+	"grass_block",
+
+	"jigsaw",
+	"structure_block",
+	"redstone_wire",
+	"repeating_command_block",
+	"chain_command_block",
+	"command_block",
+]);
+
+const nonBuildingBlocksFilter = (block) => {
+	return !block?.blockIds || block.blockIds.filter(blockId => NON_BUILDING_BLOCKS.has(blockId)).length === 0;
+}
+
+writeBlockSet(MC_VERSION, json, path.join(extractPath, `all-blocks.json`));
+writeBlockSet(MC_VERSION, json, path.join(extractPath, `blocks.json`), nonBuildingBlocksFilter);
+writeBlockSet(MC_VERSION, json, path.join(extractPath, `gradient-blocks.json`), (blockId) => {
+	return gradientBlocksFilter(blockId) && nonBuildingBlocksFilter(blockId);
+});
 
 writeGimpPalette(`Minecraft v${ MC_VERSION } Blocks - Average`, json, path.join(extractPath, 'blocks.gpl'));
 writeGimpPalette(`Minecraft v${ MC_VERSION } Gradient Blocks - Average`, json, path.join(extractPath, 'gradient-blocks.gpl'), gradientBlocksFilter);

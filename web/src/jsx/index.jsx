@@ -44,7 +44,7 @@ const router = createBrowserRouter([
   path: '/data/',
   lazy: () => import('./pages/data/index.jsx'),
   loader: () => {
-    return fetch(DATA_DIR + 'blocks.json');
+    return fetch(DATA_DIR + 'all-blocks.json');
   }
 }
 ], {

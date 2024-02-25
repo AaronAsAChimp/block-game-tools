@@ -313,6 +313,7 @@ function splitVBoxes(pixels, width, height, splits = NUMBER_OF_SPLITS) {
  */
 export function quantize(pixels, width, height, splits = NUMBER_OF_SPLITS) {
 	return splitVBoxes(pixels, width, height, splits)
+		.filter(vbox => vbox.isNotEmpty())
 		.map(vbox => vbox.getRepresentitveColor());
 }
 

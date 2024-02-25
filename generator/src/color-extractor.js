@@ -109,7 +109,7 @@ export class SaturatedColorExtractor extends ColorExtractor {
 		// }
 
 		return {
-			mostSaturated: mostCommon[0].rgb
+			mostSaturated: mostCommon.length ? mostCommon[0].rgb : null
 		};
 	}
 }
@@ -137,7 +137,7 @@ export class QuantizerColorExtractor extends ColorExtractor {
 		// }
 
 		return {
-			mostCommon: mostCommon[0].color
+			mostCommon: mostCommon.length ? mostCommon[0].color : null
 		};
 	}
 }
