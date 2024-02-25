@@ -17,12 +17,12 @@
         "model:block"
     ],
     "acacia_log_top": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "acacia_planks": [
-        "model:block",
         "direction:any",
+        "model:block",
         "model:slab"
     ],
     "acacia_sapling": [
@@ -81,9 +81,9 @@
         "model:other"
     ],
     "azalea_leaves": [
-        "transparent",
         "direction:any",
-        "model:block"
+        "model:block",
+        "transparent"
     ],
     "azalea_plant": [
         "direction:side",
@@ -130,8 +130,8 @@
         "model:other"
     ],
     "bamboo_large_leaves": [
-        "model:other",
-        "direction:side"
+        "direction:side",
+        "model:other"
     ],
     "bamboo_mosaic": [
         "direction:any",
@@ -162,20 +162,20 @@
         "model:trapdoor"
     ],
     "barrel_bottom": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "barrel_side": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "barrel_top": [
         "direction:any",
         "model:block"
     ],
     "barrel_top_open": [
-        "model:block",
         "direction:any",
+        "model:block",
         "unobtainable"
     ],
     "basalt_side": [
@@ -183,8 +183,8 @@
         "model:block"
     ],
     "basalt_top": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "beacon": [
         "direction:any",
@@ -192,8 +192,8 @@
         "transparent"
     ],
     "bedrock": [
-        "model:block",
         "direction:any",
+        "model:block",
         "unobtainable"
     ],
     "bee_nest_bottom": [
@@ -290,8 +290,8 @@
         "transparent"
     ],
     "birch_log": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "birch_log_top": [
         "direction:any",
@@ -457,8 +457,8 @@
         "model:other"
     ],
     "bricks": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "brown_candle": [
         "model:candle"
@@ -479,8 +479,8 @@
         "model:block"
     ],
     "brown_mushroom": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "brown_mushroom_block": [
         "direction:any",
@@ -531,8 +531,8 @@
         "model:other"
     ],
     "cactus_side": [
-        "model:other",
-        "direction:side"
+        "direction:side",
+        "model:other"
     ],
     "cactus_top": [
         "direction:top",
@@ -600,8 +600,8 @@
         "model:crops"
     ],
     "carrots_stage3": [
-        "model:crops",
-        "direction:side"
+        "direction:side",
+        "model:crops"
     ],
     "cartography_table_side1": [
         "direction:side",
@@ -656,8 +656,28 @@
         "model:other"
     ],
     "chain": [
-        "model:other",
-        "direction:any"
+        "direction:any",
+        "model:other"
+    ],
+    "chain_command_block_back": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "chain_command_block_conditional": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "chain_command_block_front": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "chain_command_block_side": [
+        "direction:any",
+        "model:block",
+        "redstone"
     ],
     "cherry_door_bottom": [
         "direction:side",
@@ -713,6 +733,10 @@
         "direction:top",
         "model:block"
     ],
+    "chiseled_copper": [
+        "direction:any",
+        "model:block"
+    ],
     "chiseled_deepslate": [
         "direction:any",
         "model:block"
@@ -722,8 +746,8 @@
         "model:block"
     ],
     "chiseled_polished_blackstone": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "chiseled_quartz_block": [
         "direction:any",
@@ -745,6 +769,19 @@
         "direction:any",
         "model:block"
     ],
+    "chiseled_tuff": [],
+    "chiseled_tuff_bricks": [
+        "direction:side",
+        "model:block"
+    ],
+    "chiseled_tuff_bricks_top": [
+        "direction:top",
+        "model:block"
+    ],
+    "chiseled_tuff_top": [
+        "direction:top",
+        "model:block"
+    ],
     "chorus_flower": [
         "direction:any",
         "model:other"
@@ -758,8 +795,8 @@
         "model:other"
     ],
     "clay": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "coal_block": [
         "direction:any",
@@ -771,8 +808,8 @@
         "ore"
     ],
     "coarse_dirt": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "cobbled_deepslate": [
         "direction:any",
@@ -794,6 +831,24 @@
     ],
     "cocoa_stage2": [
         "model:other"
+    ],
+    "command_block_back": [
+        "direction:any",
+        "model:block"
+    ],
+    "command_block_conditional": [
+        "direction:any",
+        "model:block"
+    ],
+    "command_block_front": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "command_block_side": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
     ],
     "comparator": [
         "direction:top",
@@ -833,14 +888,47 @@
         "direction:any",
         "model:block"
     ],
+    "copper_bulb": [
+        "direction:any",
+        "model:block"
+    ],
+    "copper_bulb_lit": [
+        "direction:any",
+        "model:block"
+    ],
+    "copper_bulb_lit_powered": [
+        "direction:any",
+        "model:block"
+    ],
+    "copper_bulb_powered": [
+        "direction:any",
+        "model:block"
+    ],
+    "copper_door_bottom": [
+        "direction:any",
+        "model:door"
+    ],
+    "copper_door_top": [
+        "direction:side",
+        "model:door"
+    ],
+    "copper_grate": [
+        "direction:any",
+        "model:block",
+        "transparent"
+    ],
     "copper_ore": [
         "direction:any",
         "model:block",
         "ore"
     ],
+    "copper_trapdoor": [
+        "direction:any",
+        "model:trapdoor"
+    ],
     "cornflower": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "cracked_deepslate_bricks": [
         "direction:any",
@@ -855,12 +943,62 @@
         "model:block"
     ],
     "cracked_polished_blackstone_bricks": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "cracked_stone_bricks": [
         "direction:any",
         "model:block"
+    ],
+    "crafter_bottom": [],
+    "crafter_east": [
+        "direction:any",
+        "model:block",
+        "redstone"
+    ],
+    "crafter_east_crafting": [
+        "direction:any",
+        "model:block",
+        "redstone"
+    ],
+    "crafter_east_triggered": [
+        "direction:any",
+        "model:block",
+        "redstone"
+    ],
+    "crafter_north": [],
+    "crafter_north_crafting": [
+        "direction:any",
+        "model:block",
+        "redstone"
+    ],
+    "crafter_south": [],
+    "crafter_south_triggered": [
+        "direction:any",
+        "model:block",
+        "redstone"
+    ],
+    "crafter_top": [
+        "direction:any",
+        "model:block",
+        "redstone"
+    ],
+    "crafter_top_crafting": [],
+    "crafter_top_triggered": [],
+    "crafter_west": [
+        "direction:any",
+        "model:block",
+        "redstone"
+    ],
+    "crafter_west_crafting": [
+        "direction:any",
+        "model:block",
+        "redstone"
+    ],
+    "crafter_west_triggered": [
+        "direction:any",
+        "model:block",
+        "redstone"
     ],
     "crafting_table_front": [
         "direction:side",
@@ -875,16 +1013,16 @@
         "model:block"
     ],
     "crimson_door_bottom": [
-        "model:door",
-        "direction:side"
+        "direction:side",
+        "model:door"
     ],
     "crimson_door_top": [
         "direction:side",
         "model:door"
     ],
     "crimson_fungus": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "crimson_nylium": [
         "direction:top",
@@ -931,7 +1069,8 @@
         "model:block"
     ],
     "cut_sandstone": [
-        "model:block"
+        "model:block",
+        "model:slab"
     ],
     "cyan_candle": [
         "model:candle"
@@ -952,14 +1091,14 @@
         "model:block"
     ],
     "cyan_shulker_box": [
+        "block-entity",
         "direction:any",
-        "model:block",
-        "block-entity"
+        "model:block"
     ],
     "cyan_stained_glass": [
-        "transparent",
+        "direction:any",
         "model:block",
-        "direction:any"
+        "transparent"
     ],
     "cyan_stained_glass_pane_top": [
         "direction:top",
@@ -971,24 +1110,24 @@
         "model:block"
     ],
     "cyan_wool": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "damaged_anvil_top": [
         "direction:top",
         "model:other"
     ],
     "dandelion": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "dark_oak_door_bottom": [
         "direction:side",
         "model:door"
     ],
     "dark_oak_door_top": [
-        "model:door",
-        "direction:side"
+        "direction:side",
+        "model:door"
     ],
     "dark_oak_leaves": [
         "direction:any",
@@ -1013,8 +1152,8 @@
         "model:flower"
     ],
     "dark_oak_trapdoor": [
-        "model:trapdoor",
-        "direction:any"
+        "direction:any",
+        "model:trapdoor"
     ],
     "dark_prismarine": [
         "direction:any",
@@ -1025,8 +1164,8 @@
         "model:other"
     ],
     "daylight_detector_side": [
-        "direction:side",
         "direction:bottom",
+        "direction:side",
         "model:other"
     ],
     "daylight_detector_top": [
@@ -1066,8 +1205,8 @@
         "model:other"
     ],
     "dead_fire_coral_block": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "dead_fire_coral_fan": [
         "direction:side",
@@ -1098,8 +1237,8 @@
         "model:other"
     ],
     "deepslate": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "deepslate_bricks": [
         "direction:any",
@@ -1170,12 +1309,12 @@
         "ore"
     ],
     "diorite": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "dirt": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "dirt_path_side": [
         "direction:side",
@@ -1207,8 +1346,8 @@
         "model:block"
     ],
     "dried_kelp_top": [
-        "model:block",
-        "direction:top"
+        "direction:top",
+        "model:block"
     ],
     "dripstone_block": [
         "direction:any",
@@ -1224,8 +1363,8 @@
         "model:block"
     ],
     "emerald_block": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "emerald_ore": [
         "direction:any",
@@ -1266,17 +1405,54 @@
         "direction:any",
         "model:block"
     ],
+    "exposed_chiseled_copper": [
+        "direction:any",
+        "model:block"
+    ],
     "exposed_copper": [
         "direction:any",
         "model:block"
+    ],
+    "exposed_copper_bulb": [
+        "direction:any",
+        "model:block"
+    ],
+    "exposed_copper_bulb_lit": [
+        "direction:any",
+        "model:block"
+    ],
+    "exposed_copper_bulb_lit_powered": [
+        "direction:any",
+        "model:block"
+    ],
+    "exposed_copper_bulb_powered": [
+        "direction:any",
+        "model:block"
+    ],
+    "exposed_copper_door_bottom": [
+        "direction:side",
+        "model:door"
+    ],
+    "exposed_copper_door_top": [
+        "direction:side",
+        "model:door"
+    ],
+    "exposed_copper_grate": [
+        "direction:any",
+        "model:block",
+        "transparent"
+    ],
+    "exposed_copper_trapdoor": [
+        "direction:any",
+        "model:trapdoor"
     ],
     "exposed_cut_copper": [
         "direction:any",
         "model:block"
     ],
     "farmland": [
-        "model:farmland",
-        "direction:top"
+        "direction:top",
+        "model:farmland"
     ],
     "farmland_moist": [
         "direction:top",
@@ -1287,16 +1463,16 @@
         "direction:side"
     ],
     "fire_0": [
-        "model:other",
-        "direction:side"
+        "direction:side",
+        "model:other"
     ],
     "fire_1": [
-        "model:other",
-        "direction:side"
+        "direction:side",
+        "model:other"
     ],
     "fire_coral": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "fire_coral_block": [
         "direction:any",
@@ -1339,23 +1515,23 @@
         "model:on-ground"
     ],
     "frosted_ice_0": [
-        "model:block",
         "direction:any",
+        "model:block",
         "unobtainable"
     ],
     "frosted_ice_1": [
-        "model:block",
         "direction:any",
+        "model:block",
         "unobtainable"
     ],
     "frosted_ice_2": [
-        "model:block",
         "direction:any",
+        "model:block",
         "unobtainable"
     ],
     "frosted_ice_3": [
-        "model:block",
         "direction:any",
+        "model:block",
         "unobtainable"
     ],
     "furnace_front": [
@@ -1415,12 +1591,20 @@
         "direction:any",
         "model:block"
     ],
-    "grass": [
+    "grass_block_side": [
         "direction:side",
-        "model:flower"
+        "model:block"
+    ],
+    "grass_block_side_overlay": [
+        "direction:side",
+        "model:block"
     ],
     "grass_block_snow": [
         "direction:side",
+        "model:block"
+    ],
+    "grass_block_top": [
+        "direction:top",
         "model:block"
     ],
     "gravel": [
@@ -1438,8 +1622,8 @@
         "model:block"
     ],
     "gray_concrete_powder": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "gray_glazed_terracotta": [
         "direction:any",
@@ -1501,8 +1685,8 @@
         "model:pane"
     ],
     "green_terracotta": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "green_wool": [
         "direction:any",
@@ -1516,8 +1700,8 @@
         "model:other"
     ],
     "grindstone_side": [
-        "model:other",
-        "direction:any"
+        "direction:any",
+        "model:other"
     ],
     "hanging_roots": [
         "direction:side",
@@ -1532,9 +1716,9 @@
         "model:block"
     ],
     "honey_block_bottom": [
-        "transparent",
+        "direction:bottom",
         "model:block",
-        "direction:bottom"
+        "transparent"
     ],
     "honey_block_side": [
         "direction:any",
@@ -1588,8 +1772,8 @@
         "model:block"
     ],
     "iron_door_bottom": [
-        "model:door",
-        "direction:side"
+        "direction:side",
+        "model:door"
     ],
     "iron_door_top": [
         "direction:side",
@@ -1605,11 +1789,30 @@
         "model:trapdoor"
     ],
     "item_frame": [
-        "model:other",
-        "direction:any"
+        "direction:any",
+        "model:other"
     ],
     "jack_o_lantern": [
         "direction:side",
+        "model:block"
+    ],
+    "jigsaw_bottom": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "jigsaw_lock": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "jigsaw_side": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "jigsaw_top": [
+        "direction:any",
         "model:block"
     ],
     "jukebox_side": [
@@ -1634,8 +1837,8 @@
         "transparent"
     ],
     "jungle_log": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "jungle_log_top": [
         "direction:any",
@@ -1655,8 +1858,8 @@
         "model:trapdoor"
     ],
     "kelp": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "kelp_plant": [
         "direction:side",
@@ -1674,8 +1877,8 @@
         "model:block"
     ],
     "lapis_ore": [
-        "model:block",
         "direction:any",
+        "model:block",
         "ore"
     ],
     "large_amethyst_bud": [
@@ -1745,16 +1948,16 @@
         "transparent"
     ],
     "light_blue_stained_glass_pane_top": [
-        "model:pane",
-        "direction:top"
+        "direction:top",
+        "model:pane"
     ],
     "light_blue_terracotta": [
         "direction:any",
         "model:block"
     ],
     "light_blue_wool": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "light_gray_candle": [
         "model:candle"
@@ -1809,12 +2012,12 @@
         "model:flower"
     ],
     "lilac_top": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "lily_of_the_valley": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "lily_pad": [
         "direction:top",
@@ -1835,13 +2038,13 @@
         "model:block"
     ],
     "lime_glazed_terracotta": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "lime_shulker_box": [
+        "block-entity",
         "direction:any",
-        "model:block",
-        "block-entity"
+        "model:block"
     ],
     "lime_stained_glass": [
         "transparent",
@@ -1896,8 +2099,8 @@
         "model:block"
     ],
     "magenta_concrete_powder": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "magenta_glazed_terracotta": [
         "direction:any",
@@ -1930,12 +2133,12 @@
         "model:block"
     ],
     "mangrove_door_bottom": [
-        "model:door",
-        "direction:side"
+        "direction:side",
+        "model:door"
     ],
     "mangrove_door_top": [
-        "model:door",
-        "direction:side"
+        "direction:side",
+        "model:door"
     ],
     "mangrove_leaves": [
         "direction:any",
@@ -1947,8 +2150,8 @@
         "model:block"
     ],
     "mangrove_log_top": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "mangrove_planks": [
         "direction:any",
@@ -1956,8 +2159,8 @@
         "model:slab"
     ],
     "mangrove_propagule": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "mangrove_propagule_hanging": [
         "model:other"
@@ -1973,8 +2176,8 @@
         "transparent"
     ],
     "mangrove_trapdoor": [
-        "model:trapdoor",
-        "direction:any"
+        "direction:any",
+        "model:trapdoor"
     ],
     "medium_amethyst_bud": [
         "direction:any",
@@ -1993,8 +2196,8 @@
         "model:block"
     ],
     "moss_block": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "mossy_cobblestone": [
         "direction:any",
@@ -2017,8 +2220,8 @@
         "model:block"
     ],
     "muddy_mangrove_roots_top": [
-        "model:block",
-        "direction:top"
+        "direction:top",
+        "model:block"
     ],
     "mushroom_block_inside": [
         "direction:any",
@@ -2046,8 +2249,8 @@
         "ore"
     ],
     "nether_portal": [
-        "model:pane",
-        "direction:any"
+        "direction:any",
+        "model:pane"
     ],
     "nether_quartz_ore": [
         "direction:any",
@@ -2101,8 +2304,8 @@
         "transparent"
     ],
     "oak_log": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "oak_log_top": [
         "direction:any",
@@ -2141,21 +2344,21 @@
         "redstone"
     ],
     "observer_top": [
-        "model:block",
         "direction:any",
+        "model:block",
         "redstone"
     ],
     "obsidian": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "ochre_froglight_side": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "ochre_froglight_top": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "orange_candle": [
         "model:candle"
@@ -2172,8 +2375,8 @@
         "model:block"
     ],
     "orange_glazed_terracotta": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "orange_shulker_box": [
         "direction:any",
@@ -2181,17 +2384,17 @@
         "block-entity"
     ],
     "orange_stained_glass": [
-        "transparent",
+        "direction:any",
         "model:block",
-        "direction:any"
+        "transparent"
     ],
     "orange_stained_glass_pane_top": [
         "direction:top",
         "model:pane"
     ],
     "orange_terracotta": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "orange_tulip": [
         "direction:side",
@@ -2205,14 +2408,52 @@
         "direction:side",
         "model:flower"
     ],
+    "oxidized_chiseled_copper": [
+        "direction:any",
+        "model:block"
+    ],
     "oxidized_copper": [
         "direction:any",
         "model:block"
     ],
+    "oxidized_copper_bulb": [
+        "direction:any",
+        "model:block"
+    ],
+    "oxidized_copper_bulb_lit": [
+        "direction:any",
+        "model:block"
+    ],
+    "oxidized_copper_bulb_lit_powered": [
+        "direction:any",
+        "model:block"
+    ],
+    "oxidized_copper_bulb_powered": [
+        "direction:any",
+        "model:block"
+    ],
+    "oxidized_copper_door_bottom": [
+        "direction:side",
+        "model:door"
+    ],
+    "oxidized_copper_door_top": [
+        "direction:side",
+        "model:door"
+    ],
+    "oxidized_copper_grate": [
+        "direction:any",
+        "model:block",
+        "transparent"
+    ],
+    "oxidized_copper_trapdoor": [
+        "direction:any",
+        "model:trapdoor"
+    ],
     "oxidized_cut_copper": [
         "direction:any",
         "model:block",
-        "model:slab"
+        "model:slab",
+        "model:stair"
     ],
     "packed_ice": [
         "direction:any",
@@ -2227,12 +2468,12 @@
         "model:block"
     ],
     "pearlescent_froglight_top": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "peony_bottom": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "peony_top": [
         "direction:side",
@@ -2303,7 +2544,6 @@
     ],
     "piston_side": [
         "direction:any",
-        "redstone",
         "model:block",
         "redstone"
     ],
@@ -2378,16 +2618,16 @@
         "model:other"
     ],
     "pointed_dripstone_down_tip_merge": [
-        "model:other",
-        "direction:side"
+        "direction:side",
+        "model:other"
     ],
     "pointed_dripstone_up_base": [
         "direction:side",
         "model:other"
     ],
     "pointed_dripstone_up_frustum": [
-        "model:other",
-        "direction:side"
+        "direction:side",
+        "model:other"
     ],
     "pointed_dripstone_up_middle": [
         "direction:side",
@@ -2398,12 +2638,12 @@
         "model:other"
     ],
     "pointed_dripstone_up_tip_merge": [
-        "model:other",
-        "direction:side"
+        "direction:side",
+        "model:other"
     ],
     "polished_andesite": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "polished_basalt_side": [
         "direction:any",
@@ -2433,13 +2673,17 @@
         "direction:any",
         "model:block"
     ],
+    "polished_tuff": [
+        "direction:any",
+        "model:block"
+    ],
     "poppy": [
         "direction:side",
         "model:flower"
     ],
     "potatoes_stage0": [
-        "model:crops",
-        "direction:side"
+        "direction:side",
+        "model:crops"
     ],
     "potatoes_stage1": [
         "direction:side",
@@ -2454,8 +2698,8 @@
         "model:crops"
     ],
     "potted_azalea_bush_plant": [
-        "model:other",
-        "direction:side"
+        "direction:side",
+        "model:other"
     ],
     "potted_azalea_bush_side": [
         "direction:side",
@@ -2498,8 +2742,8 @@
         "model:block"
     ],
     "pumpkin_side": [
-        "model:block",
-        "direction:side"
+        "direction:side",
+        "model:block"
     ],
     "pumpkin_stem": [
         "direction:side",
@@ -2520,17 +2764,17 @@
         "model:block"
     ],
     "purple_concrete_powder": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "purple_glazed_terracotta": [
         "direction:any",
         "model:block"
     ],
     "purple_shulker_box": [
-        "model:block",
+        "block-entity",
         "direction:any",
-        "block-entity"
+        "model:block"
     ],
     "purple_stained_glass": [
         "direction:any",
@@ -2559,8 +2803,8 @@
         "model:block"
     ],
     "purpur_pillar_top": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "quartz_block_bottom": [
         "direction:bottom",
@@ -2579,8 +2823,8 @@
         "model:block"
     ],
     "quartz_pillar": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "quartz_pillar_top": [
         "direction:any",
@@ -2603,8 +2847,8 @@
         "model:block"
     ],
     "raw_iron_block": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "red_candle": [
         "model:candle"
@@ -2663,8 +2907,8 @@
         "transparent"
     ],
     "red_stained_glass_pane_top": [
-        "model:pane",
         "direction:top",
+        "model:pane",
         "transparent"
     ],
     "red_terracotta": [
@@ -2684,6 +2928,25 @@
         "model:block",
         "redstone"
     ],
+    "redstone_dust_dot": [
+        "direction:top",
+        "model:on-ground",
+        "redstone"
+    ],
+    "redstone_dust_line0": [
+        "model:on-ground",
+        "redstone"
+    ],
+    "redstone_dust_line1": [
+        "direction:top",
+        "model:on-ground",
+        "redstone"
+    ],
+    "redstone_dust_overlay": [
+        "direction:top",
+        "model:on-ground",
+        "redstone"
+    ],
     "redstone_lamp": [
         "direction:any",
         "model:block"
@@ -2693,8 +2956,8 @@
         "model:block"
     ],
     "redstone_ore": [
-        "model:block",
         "direction:any",
+        "model:block",
         "ore"
     ],
     "redstone_torch": [
@@ -2705,8 +2968,8 @@
         "model:other"
     ],
     "reinforced_deepslate_bottom": [
-        "model:block",
         "direction:bottom",
+        "model:block",
         "unobtainable"
     ],
     "reinforced_deepslate_side": [
@@ -2728,13 +2991,31 @@
         "model:on-ground",
         "redstone"
     ],
+    "repeating_command_block_back": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "repeating_command_block_conditional": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "repeating_command_block_front": [
+        "direction:any",
+        "model:block"
+    ],
+    "repeating_command_block_side": [
+        "direction:side",
+        "model:block"
+    ],
     "respawn_anchor_bottom": [
         "direction:bottom",
         "model:block"
     ],
     "respawn_anchor_side0": [
-        "model:block",
-        "direction:side"
+        "direction:side",
+        "model:block"
     ],
     "respawn_anchor_side1": [
         "direction:side",
@@ -2745,12 +3026,12 @@
         "model:block"
     ],
     "respawn_anchor_side3": [
-        "model:block",
-        "direction:side"
+        "direction:side",
+        "model:block"
     ],
     "respawn_anchor_side4": [
-        "model:block",
-        "direction:side"
+        "direction:side",
+        "model:block"
     ],
     "respawn_anchor_top": [
         "direction:top",
@@ -2765,8 +3046,8 @@
         "model:block"
     ],
     "rose_bush_bottom": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "rose_bush_top": [
         "direction:side",
@@ -2820,8 +3101,8 @@
         "model:block"
     ],
     "sculk_catalyst_top": [
-        "model:block",
-        "direction:top"
+        "direction:top",
+        "model:block"
     ],
     "sculk_catalyst_top_bloom": [
         "direction:top",
@@ -2880,6 +3161,10 @@
         "model:other"
     ],
     "seagrass": [
+        "direction:side",
+        "model:flower"
+    ],
+    "short_grass": [
         "direction:side",
         "model:flower"
     ],
@@ -3043,8 +3328,8 @@
         "model:block"
     ],
     "soul_campfire_fire": [
-        "model:other",
-        "direction:side"
+        "direction:side",
+        "model:other"
     ],
     "soul_campfire_log_lit": [
         "model:other"
@@ -3144,16 +3429,16 @@
         "model:other"
     ],
     "stonecutter_top": [
-        "model:other",
-        "direction:top"
+        "direction:top",
+        "model:other"
     ],
     "stripped_acacia_log": [
         "direction:any",
         "model:block"
     ],
     "stripped_acacia_log_top": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "stripped_bamboo_block": [
         "direction:any",
@@ -3164,8 +3449,8 @@
         "model:block"
     ],
     "stripped_birch_log": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "stripped_birch_log_top": [
         "direction:any",
@@ -3228,20 +3513,43 @@
         "model:block"
     ],
     "stripped_warped_stem": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "stripped_warped_stem_top": [
         "direction:any",
         "model:block"
+    ],
+    "structure_block": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "structure_block_corner": [
+        "direction:any",
+        "model:block"
+    ],
+    "structure_block_data": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "structure_block_load": [
+        "direction:any",
+        "model:block"
+    ],
+    "structure_block_save": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
     ],
     "sugar_cane": [
         "direction:side",
         "model:flower"
     ],
     "sunflower_back": [
-        "model:other",
-        "direction:east"
+        "direction:east",
+        "model:other"
     ],
     "sunflower_bottom": [
         "direction:side",
@@ -3322,8 +3630,8 @@
         "model:flower"
     ],
     "tall_seagrass_top": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "target_side": [
         "direction:side",
@@ -3355,8 +3663,8 @@
         "model:block"
     ],
     "torch": [
-        "model:other",
-        "direction:side"
+        "direction:side",
+        "model:other"
     ],
     "torchflower": [
         "direction:side",
@@ -3369,6 +3677,28 @@
     "torchflower_crop_stage1": [
         "direction:side",
         "model:flower"
+    ],
+    "trial_spawner_bottom": [
+        "direction:bottom",
+        "model:block",
+        "unobtainable"
+    ],
+    "trial_spawner_side_active": [
+        "direction:side",
+        "model:block",
+        "unobtainable"
+    ],
+    "trial_spawner_side_inactive": [],
+    "trial_spawner_top_active": [],
+    "trial_spawner_top_ejecting_reward": [
+        "direction:top",
+        "model:block",
+        "unobtainable"
+    ],
+    "trial_spawner_top_inactive": [
+        "direction:top",
+        "model:block",
+        "unobtainable"
     ],
     "tripwire": [
         "direction:side",
@@ -3391,9 +3721,10 @@
         "model:other"
     ],
     "tuff": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
+    "tuff_bricks": [],
     "turtle_egg": [
         "model:other"
     ],
@@ -3480,9 +3811,46 @@
         "direction:any",
         "model:farmland"
     ],
+    "weathered_chiseled_copper": [
+        "direction:any",
+        "model:block"
+    ],
     "weathered_copper": [
         "direction:any",
         "model:block"
+    ],
+    "weathered_copper_bulb": [
+        "direction:any",
+        "model:block"
+    ],
+    "weathered_copper_bulb_lit": [
+        "direction:any",
+        "model:block"
+    ],
+    "weathered_copper_bulb_lit_powered": [
+        "direction:any",
+        "model:block"
+    ],
+    "weathered_copper_bulb_powered": [
+        "direction:any",
+        "model:block"
+    ],
+    "weathered_copper_door_bottom": [
+        "direction:side",
+        "model:door"
+    ],
+    "weathered_copper_door_top": [
+        "direction:side",
+        "model:door"
+    ],
+    "weathered_copper_grate": [
+        "direction:any",
+        "model:block",
+        "transparent"
+    ],
+    "weathered_copper_trapdoor": [
+        "direction:any",
+        "model:trapdoor"
     ],
     "weathered_cut_copper": [
         "direction:any",
@@ -3575,12 +3943,12 @@
         "model:flower"
     ],
     "white_wool": [
-        "model:block",
-        "direction:any"
+        "direction:any",
+        "model:block"
     ],
     "wither_rose": [
-        "model:flower",
-        "direction:side"
+        "direction:side",
+        "model:flower"
     ],
     "yellow_candle": [
         "model:candle"
