@@ -26,6 +26,7 @@ type Color = {
 export type Block = {
 	name: string,
 	animated: boolean,
+	blockIds: string[],
 	palette: {
 		average: Color | null,
 		mostCommon: Color | null,

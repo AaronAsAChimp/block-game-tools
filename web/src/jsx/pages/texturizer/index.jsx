@@ -128,11 +128,23 @@ export function Component() {
 		const region = new SchematicRegion({x: 0, y: 0, z: 0}, {x: width, y: 1, z: height});
 
 		for (let idx = 0; idx < textureBlocks.length; idx++) {
+			/** @type {Block} */
 			const block = textureBlocks[idx];
+			const properties = {};
 
-			// console.log(block);
+			if (block.name === 'polished_basalt_side') {
+				console.log(block);
+			}
 
-			region.setBlock('minecraft:' + block.blockIds[0], null, {
+			// Hacky way of determining the axis
+			// TODO: this should be added to the preprocessed data instead
+			if (block.name.endsWith('_side') || block.name.endsWith('_log')) {
+				properties.axis = 'z';
+			} else if (block.name.endsWith('_top')) {
+				properties.axis = 'y';
+			}
+
+			region.setBlock('minecraft:' + block.blockIds[0], properties, {
 				x: idx % width,
 				y: 0,
 				z: Math.floor(idx / width),
