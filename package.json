@@ -12,5 +12,14 @@
 	"staticFiles": {
 		"staticPath": "data",
 		"staticOutPath": "data"
+	},
+	"dependencies": {
+		"prismarine-nbt": "^2.5.0"
+	},
+	"devDependencies": {
+		"assert": "^2.1.0",
+		"browserify-zlib": "^0.2.0",
+		"events": "^3.3.0",
+		"stream-browserify": "^3.0.0"
 	}
 }

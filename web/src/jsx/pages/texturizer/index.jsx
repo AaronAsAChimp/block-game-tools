@@ -13,6 +13,8 @@ import { coordToIndex, dither } from "../../dithering";
 import * as styles from './styles.module.css';
 import { GradientButton } from "../../../components/gradient-button";
 import { GradientDisplay } from "../../../components/gradient-display";
+import { LitematicaSchematic } from "../../../js/schematic";
+import { SchematicRegion } from "../../../js/schematic-region";
 
 const DEFAULT_SIZE = 16;
 const MONOCHROME_STEPS = 32;
@@ -112,6 +114,48 @@ export function Component() {
 		setRedraws(redraws + 1);
 	}
 
+	const downloadSchematicRef = useRef(null);
+
+	async function downloadSchematic() {
+		const schematic = new LitematicaSchematic({
+			author: 'Block Game Tools',
+			description: "",
+			name: 'Texturizer',
+			timeCreated: new Date(),
+			timeModified: new Date(),
+		});
+
+		const region = new SchematicRegion({x: 0, y: 0, z: 0}, {x: width, y: 1, z: height});
+
+		for (let idx = 0; idx < textureBlocks.length; idx++) {
+			const block = textureBlocks[idx];
+
+			// console.log(block);
+
+			region.setBlock('minecraft:' + block.blockIds[0], null, {
+				x: idx % width,
+				y: 0,
+				z: Math.floor(idx / width),
+			});
+		}
+
+		schematic.addRegion('region', region);
+
+		const blob = await LitematicaSchematic.writeCompressed(schematic);
+		const url = URL.createObjectURL(blob);
+		const anchor = document.createElement('a');
+
+		anchor.href = url.toString();
+		anchor.download = 'schematic.litematic';
+
+		document.body.appendChild(anchor);
+
+		anchor.click();
+		anchor.remove();
+
+		window.URL.revokeObjectURL(url);
+	}
+
 	/** @type {import("../../server").BlocksResponse} */
 	const blocks = useLoaderData();
 
@@ -178,7 +222,7 @@ export function Component() {
 			const red = pixelIdx * 4;
 			const blockColor = new RGBColor(pixels.data[red], pixels.data[red + 1], pixels.data[red + 2]);
 
-			textureBlocks.push(blockLookup.find(blockColor, palette).block);
+			textureBlocks[pixelIdx] = blockLookup.find(blockColor, palette).block;
 		}
 
 		setTextureBlocks(textureBlocks);
@@ -237,6 +281,7 @@ export function Component() {
 				</div>
 
 				<button type="button" onClick={resetNoiser}>Randomize</button>
+				<a href="#" download="schematic.litematic" ref={downloadSchematicRef} onClick={downloadSchematic}>Download Litematica Schematic</a>
 			</div>
 			<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={width} height={height} />
 			<SwatchGrid width={width} height={height} blocks={textureBlocks} />

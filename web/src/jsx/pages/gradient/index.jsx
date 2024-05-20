@@ -13,6 +13,7 @@ import { PaletteContext } from "../../../context/palette-context";
 import { BlockLookup } from "../../blocks";
 import './styles.css';
 import { buildGradientParam, parseGradientParam } from "shared/src/gradient";
+import { LitematicaSchematic } from "../../../js/schematic";
 
 const MIN_STEPS = 0;
 const DEFAULT_START = 0x000000;
@@ -89,6 +90,17 @@ export function Component() {
 		}
 	}
 
+	/**
+	 * 
+	 * @param  {MouseEvent} e
+	 */
+    // function onSchematicDownload(e) {
+    //     if (e.currentTarget instanceof HTMLAnchorElement) {
+    //     	const schematic = new LitematicaSchematic({}, )
+    //     	e.currentTarget.href = 'data:application/octet-stream;base64,' + btoa()
+    //     }
+    // }
+
 	return <div className="page-gradient">
 		<PaletteContext.Provider value={palette}>
 			<AppTitleBar title="Gradient Editor">
@@ -110,6 +122,9 @@ export function Component() {
 						Number of blocks:
 						<input type="number" min={MIN_STEPS} onInput={stepsChange} value={numSteps} />
 					</label>
+{/*					<a onClick={ onSchematicDownload } download="schematic.lightmatic">
+						Schematic
+					</a>*/}
 				</div>
 
 				<div className="gradient-share">
