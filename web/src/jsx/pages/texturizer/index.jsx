@@ -293,7 +293,7 @@ export function Component() {
 				</div>
 
 				<button type="button" onClick={resetNoiser}>Randomize</button>
-				<a href="#" download="schematic.litematic" ref={downloadSchematicRef} onClick={downloadSchematic}>Download Litematica Schematic</a>
+				<button ref={downloadSchematicRef} onClick={downloadSchematic}>Download Litematica Schematic</button>
 			</div>
 			<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={width} height={height} />
 			<SwatchGrid width={width} height={height} blocks={textureBlocks} />
