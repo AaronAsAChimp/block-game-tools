@@ -104,7 +104,7 @@ export function Component() {
 		})
 	}, [blocks]);
 
-	const [queue, current, enqueue, dequeue] = useQueue(todos);
+	const [queue, current,, dequeue] = useQueue(todos);
 
 	const [textureTagsFile, setTextureTagsFile] = useState({});
 
@@ -186,6 +186,12 @@ export function Component() {
 		return Math.floor(((blocksLength - queueLength) / blocksLength) * 100);
 	}
 
+	const [valid, setValid] = useState(false);
+
+	useEffect(() => {
+		setValid(selectedBlockIds && selectedBlockIds.length > 0);
+	}, [selectedBlockIds])
+
 	return <div className="page-data">
 		<AppTitleBar title="Data Manager">
 		</AppTitleBar>
@@ -211,7 +217,10 @@ export function Component() {
 			</div>
 			<div className="tags-editor">
 				<h2>Block ID</h2>
-				<MultiSelect selected={selectedBlockIds} setSelected={(ids) => setSelectedBlockIds(ids)} options={blockIds} />
+				<MultiSelect
+					selected={selectedBlockIds}
+					setSelected={(ids) => setSelectedBlockIds(ids)}
+					options={blockIds} />
 				<h2>Tags</h2>
 				<div className="tags-choices">
 					{
@@ -227,7 +236,7 @@ export function Component() {
 						})
 					}
 				</div>
-				<button onClick={onDoneChoosing}>Done</button>
+				<button onClick={onDoneChoosing} disabled={!valid}>Done</button>
 			</div>
 			<a className="download download-block-textures" download="block-textures.json" href="#" ref={blockTexturesRef} onClick={() => {blockTexturesRef.current.href = 'data:application/json;base64,' + btoa(JSON.stringify(buildBlockTexturesFile(blocks.blocks), null, '    ')) }}>
 				block-textures.json
