@@ -104,7 +104,7 @@ export class BlockLookup {
 	/**
 	 * Find the closest block for the given color.
 	 * @param  {import('shared/src/color').Color} color The color.
-	 * @param  {string} palette The palette for the chose block.
+	 * @param  {string} palette The palette for the chosen block.
 	 * @return {BlockMatch}       The block.
 	 */
 	find(color, palette) {
@@ -124,5 +124,14 @@ export class BlockLookup {
 		}
 
 		return block;
+	}
+
+	/**
+	 * Get all of the colors for the given palette.
+	 * @param  {string} palette The palette.
+	 * @return {import('shared/src/color').Color[]}  The colors
+	 */
+	getPaletteColors(palette) {
+		return this.#blocks.map(block => block.palette[palette]);
 	}
 }

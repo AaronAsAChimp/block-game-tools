@@ -9,7 +9,7 @@ import { LazyDialog } from "../../../components/lazy-dialog";
 import { TextureSwatch } from "../../../components/texture-swatch";
 import { PaletteContext } from "../../../context/palette-context";
 import { BlockLookup } from "../../blocks";
-import { coordToIndex, dither } from "../../dithering";
+import { coordToIndex, dither, ordered } from "../../dithering";
 import * as styles from './styles.module.css';
 import { GradientButton } from "../../../components/gradient-button";
 import { GradientDisplay } from "../../../components/gradient-display";
@@ -226,7 +226,15 @@ export function Component() {
 			}
 		}
 
-		dither(ditheringAlgo, pixels, palette, blockLookup);
+		if (ditheringAlgo === 'ordered2') {
+			ordered(2, pixels, palette, blockLookup);
+		} else if (ditheringAlgo === 'ordered4') {			
+			ordered(4, pixels, palette, blockLookup);
+		} else if (ditheringAlgo === 'ordered8') {			
+			ordered(8, pixels, palette, blockLookup);
+		} else {
+			dither(ditheringAlgo, pixels, palette, blockLookup);
+		}
 
 		const textureBlocks = new Array(pixels.data.length / 4);
 
@@ -274,10 +282,17 @@ export function Component() {
 					Dithering:
 					<select value={ditheringAlgo} onInput={(e) => setDitheringAlgo(e.target.value)}>
 						<option value="none">None</option>
-						<option value="floydSteinberg">Floyd-Steinberg</option>
-						<option value="stucki">Stucki</option>
-						<option value="atkinson">Atkinson</option>
-						<option value="stevensonArce">Stevenson-Arce</option>
+						<optgroup label="Error Diffusion">
+							<option value="floydSteinberg">Floyd-Steinberg</option>
+							<option value="stucki">Stucki</option>
+							<option value="atkinson">Atkinson</option>
+							<option value="stevensonArce">Stevenson-Arce</option>
+						</optgroup>
+						<optgroup label="Ordered">
+							<option value="ordered2">Bayer 2x2</option>
+							<option value="ordered4">Bayer 4x4</option>
+							<option value="ordered8">Bayer 8x8</option>
+						</optgroup>
 					</select>
 				</label>
 				<label>
