@@ -23,11 +23,11 @@ export function Share({href, subject, body}) {
 				<FontAwesomeIcon icon={faMessage} />
 			</a>
 
-			<a className={styles['share-link']} title="Twitter" href={`https://twitter.com/intent/tweet/?text=${ encodeURIComponent(subject) }&url=${ encodeURIComponent(href) }`} target="_blank" rel="noopener" aria-label="Share on Twitter">
+			<a className={styles['share-link']} title="Twitter" href={`https://twitter.com/intent/tweet/?text=${ encodeURIComponent(subject) }&url=${ encodeURIComponent(href) }`} target="_blank" rel="noreferrer" aria-label="Share on Twitter">
 				<FontAwesomeIcon icon={faTwitter} />
 			</a>
 
-			<a className={styles['share-link']} title="Reddit" href={`https://reddit.com/submit/?url=${ encodeURIComponent(href) }&resubmit=true&title=${ encodeURIComponent(subject) }`} target="_blank" rel="noopener" aria-label="Share on Reddit">
+			<a className={styles['share-link']} title="Reddit" href={`https://reddit.com/submit/?url=${ encodeURIComponent(href) }&resubmit=true&title=${ encodeURIComponent(subject) }`} target="_blank" rel="noreferrer" aria-label="Share on Reddit">
 				<FontAwesomeIcon icon={faReddit} />
 			</a>
 		</div>

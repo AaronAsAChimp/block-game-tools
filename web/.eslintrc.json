@@ -13,10 +13,12 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "react-compiler"
     ],
     "rules": {
-        "react/prop-types": 0 // Checked with typescript
+        "react/prop-types": 0, // Checked with typescript
+        "react-compiler/react-compiler": "error"
     },
     "globals": {
         "process": true

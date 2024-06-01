@@ -34,10 +34,6 @@ function Accordion({children}) {
  * @param {BlockSearchProps} props
  */
 export function SelectedBlock({selected, blocks}) {
-	if (!selected) {
-		return null;
-	}
-
 	const palette = useContext(PaletteContext);
 
 	const nearest = useMemo(() => {

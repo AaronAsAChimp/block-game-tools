@@ -131,7 +131,10 @@ export function Component() {
 					</label>
 					<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>
 				</AppTitleBar>
-				<SelectedBlock selected={selection} blocks={blocks.blocks} />
+				{ selected
+					? <SelectedBlock selected={selection} blocks={blocks.blocks} />
+					: null}
+				
 			</ContrastContext.Provider>
 		</PaletteContext.Provider>
 		<LazyDialog open={helpOpen} onClose={() => setHelpOpen(false)}>

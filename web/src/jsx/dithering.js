@@ -1,5 +1,4 @@
 import { RGBColor } from "shared/src/color";
-import { normalize } from "three/src/math/MathUtils";
 
 export function coordToIndex(width, x, y) {
 	return y * (width * 4) + x * 4;

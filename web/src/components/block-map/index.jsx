@@ -151,10 +151,6 @@ const AnimatedBillboard = animated(Billboard);
  * @param {SelectionMeshProps} props
  */
 function SelectionMesh({block}) {
-	if (!block) {
-		return null;
-	}
-
 	const palette = useContext(PaletteContext);
 	/** @type {import('../../jsx/server.d.ts').Color} */
 	const color = block.palette[palette];
@@ -356,7 +352,9 @@ export function BlockMap({labels, blocks, selected, onSelected, onAlphaChange}) 
 			<Centerer boundsObj={boundsRef} onChange={(camera) => updateAlpha(camera) }>
 				<ambientLight intensity={0.8} />
 				<BoundsMesh ref={boundsRef} />
-				<SelectionMesh block={selected} />
+				{ selected
+					? <SelectionMesh block={selected} />
+					: null }
 				<LabelsMemoized labels={labels} />
 				<BlocksMemoied blocks={blocks} onSelected={onSelected} onHovered={setHovered} />
 				<OrbitControls ref={controlsRef} makeDefault onChange={(e) => updateAlpha(e.target.object)} />
