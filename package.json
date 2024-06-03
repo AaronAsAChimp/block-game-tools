@@ -9,10 +9,6 @@
 		"loader",
 		"shared"
 	],
-	"staticFiles": {
-		"staticPath": "data",
-		"staticOutPath": "data"
-	},
 	"dependencies": {
 		"prismarine-nbt": "^2.5.0"
 	},
