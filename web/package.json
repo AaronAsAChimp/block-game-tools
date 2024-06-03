@@ -24,16 +24,21 @@
   "devDependencies": {
     "@types/pngjs": "^6.0.1",
     "@types/three": "^0.146.0",
+    "assert": "^2.1.0",
     "ava": "^4.3.1",
+    "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "chalk": "^5.0.1",
     "eslint": "^8.51.0",
     "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-compiler": "^0.0.0-experimental-51a85ea-20240601",
+    "events": "^3.3.0",
     "parcel": "^2.11.0",
     "parcel-reporter-static-files-copy": "^1.5.3",
     "parcel-transformer-google-fonts": "^0.1.4",
     "parcel-transformer-markdown": "^2.1.1",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
@@ -43,6 +48,7 @@
     "@react-spring/three": "^9.7.2",
     "@react-three/drei": "^9.66.3",
     "@react-three/fiber": "^8.13.0",
+    "prismarine-nbt": "^2.5.0",
     "react": "^18.3.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1",
