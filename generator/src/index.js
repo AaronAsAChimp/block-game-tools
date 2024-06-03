@@ -2,9 +2,9 @@ import fs from "fs";
 import path from 'path';
 import { PNG } from 'pngjs';
 
-import blockTextures from '../data/block-textures.json' assert { type: "json" };
-import colorBlocks from '../data/color-blocks.json' assert { type: "json" };
-import textureTags from '../data/texture-tags.json' assert { type: "json" };
+import blockTextures from '../data/block-textures.json' with { type: "json" };
+import colorBlocks from '../data/color-blocks.json' with { type: "json" };
+import textureTags from '../data/texture-tags.json' with { type: "json" };
 
 import { MC_VERSION } from "shared";
 import { Color, LabColor, RGBColor, XYZColor } from "shared/src/color.js";
