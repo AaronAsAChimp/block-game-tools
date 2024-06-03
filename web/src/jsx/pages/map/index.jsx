@@ -131,7 +131,7 @@ export function Component() {
 					</label>
 					<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>
 				</AppTitleBar>
-				{ selected
+				{ selection
 					? <SelectedBlock selected={selection} blocks={blocks.blocks} />
 					: null}
 				
