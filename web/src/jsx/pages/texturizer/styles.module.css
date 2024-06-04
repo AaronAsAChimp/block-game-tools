@@ -1,3 +1,12 @@
+@import '../../../css/variables.css';
+
+body {
+	margin: 0;
+	font-family: 'PT Sans', sans-serif;
+	background: var(--base-color);
+	color: var(--base-contrast-color);
+}
+
 .texturizer-canvas {
 	width: 480px;
 	image-rendering: pixelated;
