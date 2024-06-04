@@ -1,12 +1,12 @@
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { AppTitleBar } from "../../../components/app-title-bar";
-import "./styles.css";
-import { TextureSwatch } from "../../../components/texture-swatch";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import blockIds from '../../../../data/block-ids.json';
+import { AppTitleBar } from "../../../components/app-title-bar";
 import { MultiSelect } from "../../../components/multi-select";
+import { TextureSwatch } from "../../../components/texture-swatch";
+import "./styles.css";
 
 const TEXTURE_TAGS = [
 	"transparent",

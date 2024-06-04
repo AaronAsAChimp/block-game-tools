@@ -2,7 +2,7 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
-import { RGBColor } from "shared/src/color";
+import { buildGradientParam, parseGradientParam } from "shared/src/gradient";
 import { AppTitleBar } from "../../../components/app-title-bar";
 import { GradientHelpContent } from "../../../components/content";
 import { GradientDisplay } from "../../../components/gradient-display";
@@ -12,8 +12,6 @@ import { TextureSwatch } from "../../../components/texture-swatch";
 import { PaletteContext } from "../../../context/palette-context";
 import { BlockLookup } from "../../blocks";
 import './styles.css';
-import { buildGradientParam, parseGradientParam } from "shared/src/gradient";
-import { LitematicaSchematic } from "../../../js/schematic";
 
 const MIN_STEPS = 0;
 const DEFAULT_START = 0x000000;

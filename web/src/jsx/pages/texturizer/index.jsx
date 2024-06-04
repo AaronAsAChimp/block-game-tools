@@ -1,20 +1,19 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { RGBColor } from "shared";
-import { Gradient } from "shared/src/gradient";
 import { createNoise2D } from "simplex-noise";
 import { AppTitleBar } from "../../../components/app-title-bar";
 import { GradientHelpContent } from "../../../components/content";
+import { GradientDisplay } from "../../../components/gradient-display";
 import { LazyDialog } from "../../../components/lazy-dialog";
 import { TextureSwatch } from "../../../components/texture-swatch";
 import { PaletteContext } from "../../../context/palette-context";
-import { BlockLookup } from "../../blocks";
-import { coordToIndex, dither, ordered } from "../../dithering";
-import * as styles from './styles.module.css';
-import { GradientButton } from "../../../components/gradient-button";
-import { GradientDisplay } from "../../../components/gradient-display";
 import { LitematicaSchematic } from "../../../js/schematic";
 import { SchematicRegion } from "../../../js/schematic-region";
+import { BlockLookup } from "../../blocks";
+import { coordToIndex, dither, ordered } from "../../dithering";
+
+import * as styles from './styles.module.css';
 
 const DEFAULT_SIZE = 16;
 const MONOCHROME_STEPS = 32;
