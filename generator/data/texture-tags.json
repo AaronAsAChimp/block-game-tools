@@ -1715,6 +1715,9 @@
         "direction:any",
         "model:block"
     ],
+    "heavy_core": [
+        "model:other"
+    ],
     "honey_block_bottom": [
         "direction:bottom",
         "model:block",
@@ -3688,15 +3691,43 @@
         "model:block",
         "unobtainable"
     ],
+    "trial_spawner_side_active_ominous": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
     "trial_spawner_side_inactive": [],
+    "trial_spawner_side_inactive_ominous": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
     "trial_spawner_top_active": [],
+    "trial_spawner_top_active_ominous": [
+        "direction:bottom",
+        "model:block",
+        "unobtainable"
+    ],
     "trial_spawner_top_ejecting_reward": [
         "direction:top",
         "model:block",
         "unobtainable"
     ],
+    "trial_spawner_top_ejecting_reward_ominous": [
+        "direction:top",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
     "trial_spawner_top_inactive": [
         "direction:top",
+        "model:block",
+        "unobtainable"
+    ],
+    "trial_spawner_top_inactive_ominous": [
+        "direction:bottom",
         "model:block",
         "unobtainable"
     ],
@@ -3741,6 +3772,101 @@
     "twisting_vines_plant": [
         "direction:side",
         "model:other"
+    ],
+    "vault_bottom": [
+        "direction:bottom",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_bottom_ominous": [
+        "direction:bottom",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_front_ejecting": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_front_ejecting_ominous": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_front_off": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_front_off_ominous": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_front_on": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_front_on_ominous": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_side_off": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_side_off_ominous": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_side_on": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_side_on_ominous": [
+        "direction:side",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_top": [
+        "direction:top",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_top_ejecting": [
+        "direction:top",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_top_ejecting_ominous": [
+        "direction:top",
+        "model:block",
+        "transparent",
+        "unobtainable"
+    ],
+    "vault_top_ominous": [
+        "direction:top",
+        "model:block",
+        "unobtainable"
     ],
     "verdant_froglight_side": [
         "direction:any",

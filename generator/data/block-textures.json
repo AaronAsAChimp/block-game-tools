@@ -824,6 +824,25 @@
     "sea_pickle": [
         "sea_pickle"
     ],
+    "vault": [
+        "vault_bottom",
+        "vault_front_off_ominous",
+        "vault_top",
+        "vault_bottom_ominous",
+        "vault_front_off",
+        "vault_front_on",
+        "vault_side_on",
+        "vault_side_off",
+        "vault_front_on_ominous",
+        "trial_spawner_top_ejecting_reward_ominous",
+        "vault_side_on_ominous",
+        "vault_front_ejecting_ominous",
+        "vault_side_off_ominous",
+        "vault_front_ejecting",
+        "vault_top_ejecting",
+        "vault_top_ominous",
+        "vault_top_ejecting_ominous"
+    ],
     "peony": [
         "peony_bottom",
         "peony_top"
@@ -1002,7 +1021,11 @@
     "trial_spawner": [
         "trial_spawner_side_inactive",
         "trial_spawner_top_active",
+        "trial_spawner_top_active_ominous",
+        "trial_spawner_side_inactive_ominous",
+        "trial_spawner_side_active_ominous",
         "trial_spawner_side_active",
+        "trial_spawner_top_inactive_ominous",
         "trial_spawner_top_inactive",
         "trial_spawner_top_ejecting_reward",
         "trial_spawner_bottom"
@@ -2272,6 +2295,9 @@
     ],
     "oak_leaves": [
         "oak_leaves"
+    ],
+    "heavy_core": [
+        "heavy_core"
     ],
     "red_sand": [
         "red_sand"
