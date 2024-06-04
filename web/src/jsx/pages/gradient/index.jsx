@@ -113,7 +113,9 @@ export function Component() {
 				<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>
 			</AppTitleBar>
 			<div className="gradient-editor">
-				<GradientDisplay onGradientChange={gradientChange} initialGradientStops={initialStops} />
+				<div className="gradient-display-panel">
+					<GradientDisplay onGradientChange={gradientChange} initialGradientStops={initialStops} />
+				</div>
 
 				<div className="gradient-controls">
 					<label>

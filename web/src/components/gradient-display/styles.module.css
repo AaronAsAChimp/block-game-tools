@@ -1,0 +1,9 @@
+.gradient-display-container {
+	height: 80px;
+	position: relative;
+}
+
+.gradient-display {
+	height: 32px;
+	border-radius: 0.3em;
+}

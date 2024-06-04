@@ -24,15 +24,8 @@ body {
 	gap: 0.8em;
 }
 
-.gradient-display-container {
+.gradient-display-panel {
 	grid-area: display;
-	position: relative;
-	height: 80px;
-}
-
-.gradient-display {
-	height: 32px;
-	border-radius: 0.3em;
 }
 
 .gradient-swatches {

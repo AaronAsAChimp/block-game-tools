@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { RGBColor } from "shared/src/color";
 import { Gradient } from "shared/src/gradient";
 import { GradientKnob } from "../gradient-knob";
+import * as styles from './styles.module.css';
 
 /**
  * @typedef {[import("shared/src/color").Color, number?]} GradientStop
@@ -103,8 +104,8 @@ export function GradientDisplay({onGradientChange, initialGradientStops}) {
 		document.addEventListener('pointerup', pointerUp);
 	}
 
-	return <div className="gradient-display-container">
-		<div className="gradient-display" ref={gradientDisplayRef} style={{ background: gradientBg }} onDoubleClick={(e) => addStop(e.target, e.clientX)}>
+	return <div className={ styles['gradient-display-container'] }>
+		<div className={ styles['gradient-display'] } ref={gradientDisplayRef} style={{ background: gradientBg }} onDoubleClick={(e) => addStop(e.target, e.clientX)}>
 		</div>
 		{
 			gradientStops.map((stop, idx) => {
