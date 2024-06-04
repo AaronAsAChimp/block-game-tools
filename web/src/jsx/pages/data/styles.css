@@ -15,6 +15,7 @@ body {
 		'queue output output';
 	grid-template-columns: 15em 1fr auto;
 	grid-template-rows: 1fr 1fr auto 1fr;
+	gap: 0.6em;
 	height: 100vh;
 }
 

@@ -133,6 +133,8 @@ export function Component() {
 		}
 
 		setTextureTagsFile(toSortedRecord(newTags));
+
+		onDoneChoosing();
 	}, [blocks]);
 
 	const [selectedTags, setSelectedTags] = useState({});
