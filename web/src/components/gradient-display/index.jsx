@@ -86,8 +86,18 @@ export function GradientDisplay({onGradientChange, initialGradientStops}) {
 
 	function onKnobDown(e) {
 		const idx = +e.currentTarget.dataset.stopIdx;
+		const labelEl = e.target.closest('label');
+
+		const startX = e.pageX;
+		const startY = e.pageY;
+
+		e.preventDefault();
 	
 		function pointerMove(e) {
+			if (Math.abs(e.pageX - startX) > 5 || Math.abs(e.pageY - startY) > 5) {
+				labelEl.style.pointerEvents = 'none';
+			}
+
 			gradient.setStopOffset(idx, calculateOffset(gradientDisplayRef.current, e.clientX));
 
 			setGradientBg(gradient.toCSS());
@@ -95,7 +105,9 @@ export function GradientDisplay({onGradientChange, initialGradientStops}) {
 			onGradientChange(gradient);
 		}
 
-		function pointerUp() {
+		function pointerUp() {			
+			labelEl.style.pointerEvents = '';
+
 			document.removeEventListener('pointermove', pointerMove);
 			document.removeEventListener('pointerup', pointerUp);
 		}
