@@ -1,11 +1,11 @@
 import { useContext, useMemo, useState } from 'react';
 
-import { SELECTION_RADIUS } from '../../jsx/consts.js';
+import { SELECTION_RADIUS } from '../../consts.js';
 import { TextureSwatch } from '../texture-swatch/index.jsx';
 import { PaletteContext } from '../../context/palette-context.js';
-import { findNear } from '../../jsx/blocks.js';
+import { findNear } from '../../blocks.js';
 
-import * as styles from './styles.module.css';
+import styles from './styles.module.css';
 
 /**
  * @typedef {import('../../jsx/server.d.ts').Block} Block

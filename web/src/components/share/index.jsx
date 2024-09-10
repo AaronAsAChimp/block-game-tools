@@ -2,7 +2,7 @@ import { faReddit, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import * as styles from './styles.module.css';
+import styles from './styles.module.css';
 
 
 // Loosely based on https://sharingbuttons.io/

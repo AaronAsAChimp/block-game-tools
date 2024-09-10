@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
 
 import { useRef, useState } from "react";
-import * as styles from './styles.module.css';
+import styles from './styles.module.css';
 
 export function TooltipWrapper({title, className='', children}) {
 	const [xy, setXy] = useState({x: 0, y: 0});

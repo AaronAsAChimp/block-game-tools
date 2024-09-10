@@ -1,0 +1,50 @@
+@import '../../css/variables.css';
+
+body {
+	margin: 0;
+	font-family: 'PT Sans', sans-serif;
+	background: var(--base-color);
+	color: var(--base-contrast-color);
+}
+
+.page-gradient {
+
+}
+
+.gradient-editor {
+	display: grid;
+	grid-template-areas:
+		"display display"
+		"controls share"
+		"swatches swatches";
+	grid-template-columns: 1fr 1fr;
+	width: calc(100vw - 40px);
+	max-width: 60em;
+	margin: 60px auto 20px;
+	gap: 0.8em;
+}
+
+.gradient-display-panel {
+	grid-area: display;
+}
+
+.gradient-swatches {
+	display: grid;
+	grid-area: swatches;
+	grid-template-columns: repeat(auto-fill, 64px);
+	justify-content: center;
+}
+
+.gradient-controls {
+	grid-area: controls;
+	align-self: center;
+	justify-self: center;
+}
+
+.gradient-share {
+	grid-area: share;
+	align-self: center;
+}
+
+.gradient-swatch-container {
+}

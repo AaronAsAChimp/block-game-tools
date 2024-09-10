@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { RGBColor } from 'shared/src/color';
 import { PaletteContext } from '../../context/palette-context';
-import { DATA_DIR } from '../../jsx/consts';
+import { DATA_DIR } from '../../consts';
 
 import { TooltipWrapper } from '../tooltip/index';
-import * as styles from './styles.module.css';
+import styles from './styles.module.css';
 
 /**
  * @typedef {import('../../jsx/server.d.ts').Block} Block

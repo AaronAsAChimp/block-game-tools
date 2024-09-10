@@ -2,15 +2,15 @@ import { faBars, faCircleInfo, faCubes, faGears, faHouse, faRulerHorizontal, faX
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "react-router-dom";
-import { AboutContent } from "../content";
+import { AboutContent } from "../content/index.jsx";
+// import { Content as AboutContent} from '../../md/about.md';
 import { LazyDialog } from "../lazy-dialog";
 
-import * as styles from './styles.module.css';
+import styles from './styles.module.css';
 
 
 function AppMenuLink({children, href}) {
-	return <li><Link className={styles['menu-item']} to={href}>{ children }</Link></li>
+	return <li><a className={styles['menu-item']} href={href}>{ children }</a></li>
 }
 
 function AppMenuButton({children, onClick}) {
@@ -18,8 +18,8 @@ function AppMenuButton({children, onClick}) {
 }
 
 function AppMenuSlideout({children, open, onClose}) {
-	return <div className={styles.menu + ' ' + (open ? styles.open : '')}>
-		<button className={styles.close} onClick={() => onClose()}><FontAwesomeIcon icon={faXmark} /></button>
+	return <div className={styles['menu'] + ' ' + (open ? styles['open'] : '')}>
+		<button className={styles['close']} onClick={() => onClose()}><FontAwesomeIcon icon={faXmark} /></button>
 		<ul className={styles['menu-items']}>
 			{children}
 		</ul>

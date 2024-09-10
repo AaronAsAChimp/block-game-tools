@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AppTitleBar from '../components/AppTitleBar.astro';
+import AppTiles from '../components/AppTiles.astro';
+---
+
+<Layout title="Block Game Color Map">
+	<div class="page-home">
+		<AppTitleBar title="Block Game Tools"></AppTitleBar>
+		<div class="home-title">
+			<h1>Block Game Tools</h1>
+			<AppTiles />
+		</div>
+	</div>
+</Layout>
+
+<style>
+@import '../css/variables.css';
+
+body {
+	margin: 0;
+	font-family: 'PT Sans', sans-serif;
+	background: var(--base-color);
+	color: var(--base-contrast-color);
+}
+
+.home-title {
+	width: 80vw;
+	margin: auto;
+}
+</style>

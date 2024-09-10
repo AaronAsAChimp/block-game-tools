@@ -1,0 +1,21 @@
+---
+import AppTileLink from "./AppTileLink.astro"
+import { faCubes, faGears, faRulerHorizontal, faWater } from '@fortawesome/free-solid-svg-icons';
+import FontAwesomeIcon from './FontAwesomeIcon.astro';
+---
+
+<div class="tiles">
+	<AppTileLink href="/map/" title="Color Map"><FontAwesomeIcon icon={faCubes} /></AppTileLink>
+	<AppTileLink href="/gradient/" title="Gradient Editor"><FontAwesomeIcon icon={faRulerHorizontal} /></AppTileLink>
+	<AppTileLink href="/texturizer/" title="Texturizer"><FontAwesomeIcon icon={faWater} /></AppTileLink>
+	<AppTileLink href="/data/" title="Data Manager"><FontAwesomeIcon icon={faGears} /></AppTileLink>
+</div>
+<style>
+.tiles {
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(5, minmax(auto, 10em));
+	gap: 1em;
+}
+</style>

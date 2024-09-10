@@ -3,7 +3,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Suspense, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
-import * as styles from './styles.module.css';
+import styles from './styles.module.css';
 
 export function LazyDialog({open=false, onClose, children}) {
 	const dialogRef = useRef(null);

@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "parcel index.html 404.html",
-    "build": "parcel build index.html 404.html",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
     "test": "ava"
   },
   "keywords": [],
@@ -17,41 +20,32 @@
       "!test/utils.js"
     ]
   },
-  "staticFiles": {
-    "staticPath": "data",
-    "staticOutPath": "data"
-  },
   "devDependencies": {
     "@types/pngjs": "^6.0.1",
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
     "@types/three": "^0.146.0",
-    "assert": "^2.1.0",
     "ava": "^4.3.1",
-    "browserify-zlib": "^0.2.0",
-    "buffer": "^6.0.3",
-    "chalk": "^5.0.1",
     "eslint": "^8.51.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-compiler": "^0.0.0-experimental-51a85ea-20240601",
-    "events": "^3.3.0",
-    "parcel": "^2.11.0",
-    "parcel-reporter-static-files-copy": "^1.5.3",
-    "parcel-transformer-google-fonts": "^0.1.4",
-    "parcel-transformer-markdown": "^2.1.1",
-    "process": "^0.11.10",
-    "stream-browserify": "^3.0.0"
+    "node-stdlib-browser": "^1.2.0",
+    "vite-plugin-markdown": "^2.2.0"
   },
   "dependencies": {
+    "@astrojs/react": "^3.6.2",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@react-spring/three": "^9.7.2",
     "@react-three/drei": "^9.66.3",
     "@react-three/fiber": "^8.13.0",
     "prismarine-nbt": "^2.5.0",
+    "@rollup/plugin-inject": "^5.0.5",
+    "astro": "^4.14.5",
     "react": "^18.3.1",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.11.1",
+    "react-dom": "^18.3.1",
     "simplex-noise": "^4.0.1",
     "three": "^0.146.0"
   }

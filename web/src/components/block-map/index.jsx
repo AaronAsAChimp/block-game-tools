@@ -16,7 +16,7 @@ import droidSansRegular from 'three/examples/fonts/droid/droid_sans_regular.type
 import { OBJLoader as ThreeOBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { ContrastContext } from '../../context/contrast-context.js';
 import { PaletteContext } from '../../context/palette-context.js';
-import { DATA_DIR, SELECTION_RADIUS } from '../../jsx/consts.js';
+import { DATA_DIR, SELECTION_RADIUS } from '../../consts.js';
 import { TooltipWrapper } from '../tooltip/index.jsx';
 
 const BLOCK_SIZE = SELECTION_RADIUS / 8;

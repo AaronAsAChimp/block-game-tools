@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { RGBColor } from "shared/src/color";
 import { Gradient } from "shared/src/gradient";
 import { GradientKnob } from "../gradient-knob";
-import * as styles from './styles.module.css';
+import styles from './styles.module.css';
 
 /**
  * @typedef {[import("shared/src/color").Color, number?]} GradientStop
