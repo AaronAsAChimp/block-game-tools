@@ -3,7 +3,6 @@ import { RGBColor } from "shared";
 import { createNoise2D } from "simplex-noise";
 // import { AppTitleBar } from "../app-title-bar";
 import { GradientHelpContent } from "../content";
-import { GradientDisplay } from "../gradient-display";
 import { LazyDialog } from "../lazy-dialog";
 import { TextureSwatch } from "../texture-swatch";
 import { PaletteContext } from "../../context/palette-context";
@@ -13,18 +12,12 @@ import { BlockLookup, loadBlocks } from "../../blocks";
 import { coordToIndex, dither, ordered } from "../../dithering";
 
 import styles from './styles.module.css';
-import { buildGradientParam } from 'shared/src/gradient.js';
+import { useStore } from '@nanostores/react';
+import { texturizerOptionsStore } from '../../context/texturizer-store.js';
 
-const DEFAULT_SIZE = 16;
 const MONOCHROME_STEPS = 32;
 const TextureSwatchMemo = memo(TextureSwatch);
 
-const DEFAULT_START = 0x000000;
-const DEFAULT_END = 0xFFFFFF;
-const INITIAL_GRADIENT = [
-	[RGBColor.fromInteger(DEFAULT_START), 0],
-	[RGBColor.fromInteger(DEFAULT_END), 1]
-];
 
 /**
  * @typedef {import('shared/src/block').Block} Block
@@ -89,12 +82,9 @@ export function Texturizer() {
 	/** @type {React.MutableRefObject<HTMLCanvasElement>} */
 	const canvasRef = useRef(null);
 	const noiserRef = useRef(null);
-	const [width, setWidth] = useState(DEFAULT_SIZE);
-	const [height, setHeight] = useState(DEFAULT_SIZE);
-	const [noiseScale, setNoiseScale] = useState(1);
 	const [textureBlocks, setTextureBlocks] = useState(null);
-	const [ditheringAlgo, setDitheringAlgo] = useState('floydSteinberg');
-	const [isMonochrome, setIsMonochrome] = useState(false);
+	const texturizerOptions = useStore(texturizerOptionsStore);
+
 	const [gradientUpdateToken, setGradientUpdateToken] = useState(null);
 	const [redraws, setRedraws] = useState(0);
 	const [blocks, setBlocks] = useState([]);
@@ -116,6 +106,9 @@ export function Texturizer() {
 	const downloadSchematicRef = useRef(null);
 
 	async function downloadSchematic() {
+		const width = texturizerOptions.width;
+		const height = texturizerOptions.height;
+
 		const schematic = new LitematicaSchematic({
 			author: 'Block Game Tools',
 			description: "",
@@ -174,8 +167,6 @@ export function Texturizer() {
 			});
 	}, [])
 
-	const gradientRef = useRef(null);
-
 
 	const blockLookup = useMemo(() => {
 		if (!(blocks && blocks.length)) {
@@ -185,11 +176,11 @@ export function Texturizer() {
 		const globalBlockLookup = new BlockLookup(blocks);
 		let blockLookup = globalBlockLookup;
 
-		if (isMonochrome) {
+		if (texturizerOptions.isMonochrome) {
 			const monochromeBlocks = new Array(MONOCHROME_STEPS);
 
 			for (let i = 0; i < MONOCHROME_STEPS; i++) {
-				monochromeBlocks[i] = blockLookup.find(gradientRef.current.interpolate(i / (MONOCHROME_STEPS - 1)), palette).block;
+				monochromeBlocks[i] = blockLookup.find(texturizerOptions.gradient.interpolate(i / (MONOCHROME_STEPS - 1)), palette).block;
 			}
 
 			blockLookup = new BlockLookup([
@@ -200,14 +191,17 @@ export function Texturizer() {
 		}
 
 		return blockLookup;
-	}, [palette, blocks, isMonochrome]);
+	}, [palette, blocks, texturizerOptions.isMonochrome]);
 
 	useEffect(() => {
+		const width = texturizerOptions.width;
+		const height = texturizerOptions.height;
+
 		if (width <= 0 || height <= 0) {
 			return;
 		}
 
-		if (!gradientRef.current) {
+		if (!texturizerOptions.gradient) {
 			return;
 		}
 
@@ -221,12 +215,13 @@ export function Texturizer() {
 
 		const ctx = canvasRef.current.getContext('2d');
 		const pixels = ctx.getImageData(0, 0, width, height);
+		const noiseScale = texturizerOptions.noiseScale;
 
 		for (let y = 0; y < height; y++) {
 			for (let x = 0; x < width; x++) {
 				const noise = (noiserRef.current(x/noiseScale, y/noiseScale) / 2) + 0.5;
 				const red = coordToIndex(width, x, y);
-				const color = gradientRef.current.interpolate(noise).toRGBColor();
+				const color = texturizerOptions.gradient.interpolate(noise).toRGBColor();
 
 				pixels.data[red] = color.r;
 				pixels.data[red + 1] = color.g;
@@ -234,6 +229,8 @@ export function Texturizer() {
 				pixels.data[red + 3] = 255;
 			}
 		}
+
+		const ditheringAlgo = texturizerOptions.ditheringAlgo;
 
 		if (ditheringAlgo === 'ordered2') {
 			ordered(2, pixels, palette, blockLookup);
@@ -259,12 +256,7 @@ export function Texturizer() {
 		setTextureBlocks(textureBlocks);
 
 		ctx.putImageData(pixels, 0, 0);
-	}, [width, height, redraws, gradientUpdateToken, noiseScale, ditheringAlgo, palette, blockLookup])
-
-	const updateGradient = useCallback((gradient) => {
-		gradientRef.current = gradient;
-		setGradientUpdateToken(buildGradientParam(gradient, 0));
-	}, [])
+	}, [redraws, texturizerOptions, palette, blockLookup])
 
 	return <>
 		<PaletteContext.Provider value={palette}>
@@ -280,54 +272,11 @@ export function Texturizer() {
 				{/*<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>*/}
 			{/*</AppTitleBar>*/}
 			<div className={styles['texturizer-controls']}>
-				<label>
-					Monochrome:
-					<input type="checkbox" checked={isMonochrome} onChange={ (e) => setIsMonochrome(e.target.checked) } />
-				</label>
-				<label>
-					Scale:
-					<input type="range" value={noiseScale} onInput={ (e) => setNoiseScale(+e.target.value) } min={1} max={ Math.max(width, height) * 2} />
-				</label>
-				<label>
-					Size:
-					<span>
-						<input type="number" value={width} min={1} size={3} onInput={ (e) => setWidth(+e.target.value) } /> &times; <input type="number" value={height} min={1} size={3} onInput={ (e) => setHeight(+e.target.value) } />
-					</span>
-				</label>
-				<label>
-					Dithering:
-					<select value={ditheringAlgo} onInput={(e) => setDitheringAlgo(e.target.value)}>
-						<option value="none">None</option>
-						<optgroup label="Error Diffusion">
-							<option value="floydSteinberg">Floyd-Steinberg</option>
-							<option value="stucki">Stucki</option>
-							<option value="atkinson">Atkinson</option>
-							<option value="stevensonArce">Stevenson-Arce</option>
-						</optgroup>
-						<optgroup label="Ordered">
-							<option value="ordered2">Bayer 2x2</option>
-							<option value="ordered4">Bayer 4x4</option>
-							<option value="ordered8">Bayer 8x8</option>
-						</optgroup>
-					</select>
-				</label>
-				<label>
-					Gradient:
-{/*					<select value={gradientName} onInput={(e) => setGradientName(e.target.value)}>
-						{ Object.entries(BUILTIN_GRADIENTS).map(([name, gradient]) => {
-							return <option value={name} key={name}>{ gradient.display }</option>
-						}) }
-					</select>*/}
-				</label>
-				<div className={styles['texturizer-gradient']}>
-					<GradientDisplay onGradientChange={updateGradient} initialGradientStops={INITIAL_GRADIENT} />
-				</div>
-
 				<button type="button" onClick={resetNoiser}>Randomize</button>
 				<button ref={downloadSchematicRef} onClick={downloadSchematic}>Download Litematica Schematic</button>
 			</div>
-			<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={width} height={height} />
-			<SwatchGrid width={width} height={height} blocks={textureBlocks} />
+			<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={texturizerOptions.width} height={texturizerOptions.height} />
+			<SwatchGrid width={texturizerOptions.width} height={texturizerOptions.height} blocks={textureBlocks} />
 		</PaletteContext.Provider>
 		<LazyDialog open={helpOpen} onClose={() => setHelpOpen(false)}>
 			<GradientHelpContent />

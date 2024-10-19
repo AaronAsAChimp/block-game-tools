@@ -1,11 +1,11 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import AppTitleBar from '../../components/AppTitleBar.astro';
+import RightNavLayout from '../../layouts/RightNavLayout.astro';
+import AppSideBar from '../../components/AppSideBar.astro';
 import {Gradient} from '../../components/page-gradient/index'
 ---
-<Layout title="Gradient" class="page-gradient">
-	<Gradient client:only="react" />
-	<AppTitleBar title="Gradient">
-	</AppTitleBar>
-</Layout>
+<RightNavLayout title="Gradient" class="page-gradient">
+	<Gradient client:only="react" slot="main" />
+	<AppSideBar title="Gradient" slot="nav">
+	</AppSideBar>
+</RightNavLayout>
 

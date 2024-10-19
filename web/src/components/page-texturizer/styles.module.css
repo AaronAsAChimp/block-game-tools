@@ -1,26 +1,6 @@
 @import '../../css/variables.css';
 
-body {
-	margin: 0;
-	font-family: 'PT Sans', sans-serif;
-	background: var(--base-color);
-	color: var(--base-contrast-color);
-}
-
 .texturizer-canvas {
 	width: 480px;
 	image-rendering: pixelated;
-}
-
-.texturizer-controls {
-	width: 20em;
-}
-
-.texturizer-controls > label {
-	display: grid;
-	grid-template-columns: 1fr auto;
-}
-
-.texturizer-gradient {
-	width: 100%;
 }

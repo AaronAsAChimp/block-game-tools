@@ -1,12 +1,12 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import AppTitleBar from '../../components/AppTitleBar.astro';
+import RightNavLayout from '../../layouts/RightNavLayout.astro';
+import AppSideBar from '../../components/AppSideBar.astro';
 import {ColorMap} from '../../components/page-color-map/index'
 ---
 
-<Layout title="Block Game Color Map" class="page-map">
-	<ColorMap client:only="react" />
-	<AppTitleBar title="Block Game Color Map">
-	</AppTitleBar>
-</Layout>
+<RightNavLayout title="Block Game Color Map" class="page-map">
+	<ColorMap client:only="react" slot="main" />
+	<AppSideBar title="Color Map" slot="nav">
+	</AppSideBar>
+</RightNavLayout>
 

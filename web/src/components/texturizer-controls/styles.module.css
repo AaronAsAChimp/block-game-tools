@@ -1,0 +1,12 @@
+.texturizer-controls {
+	width: 20em;
+}
+
+.texturizer-controls > label {
+	display: grid;
+	grid-template-columns: 1fr auto;
+}
+
+.texturizer-gradient {
+	width: 100%;
+}

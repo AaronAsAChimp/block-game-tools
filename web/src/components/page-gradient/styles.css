@@ -1,12 +1,5 @@
 @import '../../css/variables.css';
 
-body {
-	margin: 0;
-	font-family: 'PT Sans', sans-serif;
-	background: var(--base-color);
-	color: var(--base-contrast-color);
-}
-
 .page-gradient {
 
 }

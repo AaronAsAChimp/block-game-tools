@@ -3,11 +3,6 @@
 	--inverse-color: #f0f0f0;
 }
 
-body {
-	margin: 0;
-	font-family: 'PT Sans', sans-serif;
-}
-
 .page-map {
 	margin: 0;
 	color: var(--inverse-color);

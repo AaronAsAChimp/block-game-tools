@@ -1,5 +1,20 @@
 @import '../../css/variables.css';
 
+.menu-button {
+	aspect-ratio: 1;
+	align-self: center;
+	width: 2.2em;
+	background: var(--layer1-color);
+	color: var(--layer1-contrast-color);
+	border: none;
+	cursor: pointer;
+
+	&:hover {
+		background: var(--layer1-hover);
+		color: var(--layer1-hover-contrast-color);
+	}
+}
+
 .menu {
 	position: fixed;
 	top: 0;

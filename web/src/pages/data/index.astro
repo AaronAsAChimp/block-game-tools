@@ -1,11 +1,11 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import AppTitleBar from '../../components/AppTitleBar.astro';
+import RightNavLayout from '../../layouts/RightNavLayout.astro';
+import AppSideBar from '../../components/AppSideBar.astro';
 import {Data} from '../../components/page-data/index'
 ---
-<Layout title="Data Editor" class="page-data">
-	<Data client:only="react" />
-	<AppTitleBar title="Data Editor">
-	</AppTitleBar>
-</Layout>
+<RightNavLayout title="Data Editor" class="page-data">
+	<Data client:only="react" slot="main" />
+	<AppSideBar title="Data Editor" slot="nav">
+	</AppSideBar>
+</RightNavLayout>
 

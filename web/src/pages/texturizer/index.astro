@@ -1,11 +1,13 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import AppTitleBar from '../../components/AppTitleBar.astro';
+import RightNavLayout from '../../layouts/RightNavLayout.astro';
+import AppSideBar from '../../components/AppSideBar.astro';
 import {Texturizer} from '../../components/page-texturizer/index'
+import {TexturizerControls} from '../../components/texturizer-controls/index'
 ---
-<Layout title="Texturizer" class="page-texturizer">
-	<Texturizer client:only="react" />
-	<AppTitleBar title="Texturizer">
-	</AppTitleBar>
-</Layout>
+<RightNavLayout title="Texturizer" class="page-texturizer">
+	<Texturizer client:only="react" slot="main" />
+	<AppSideBar title="Texturizer" slot="nav">
+		<TexturizerControls client:only="react" />
+	</AppSideBar>
+</RightNavLayout>
 

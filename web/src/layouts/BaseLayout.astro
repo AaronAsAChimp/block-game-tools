@@ -1,12 +1,13 @@
 ---
 interface Props {
 	title: string;
-	class: string;
 }
 
-const { title, class: className } = Astro.props;
+const { title } = Astro.props;
 ---
-
+<script>
+import '@fontsource-variable/bitter';
+</script>
 <!doctype html>
 <html lang="en">
 	<head>
@@ -17,9 +18,7 @@ const { title, class: className } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<div class={className}>
-			<slot />
-		</div>
+		<slot />
 	</body>
 </html>
 <style is:global>
@@ -27,7 +26,8 @@ const { title, class: className } = Astro.props;
 
 body {
 	margin: 0;
-	font-family: 'PT Sans', sans-serif;
+	font-family: 'Bitter Variable', sans-serif;
+	font-weight: 200;
 	background: var(--base-color);
 	color: var(--base-contrast-color);
 }

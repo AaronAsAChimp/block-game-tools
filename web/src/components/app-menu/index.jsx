@@ -36,7 +36,7 @@ export function AppMenu() {
 	}
 
 	return <>
-		<button title="Menu" onClick={() => setOpen(!open)}><FontAwesomeIcon icon={faBars} /></button>
+		<button title="Menu" className={styles['menu-button']} onClick={() => setOpen(!open)}><FontAwesomeIcon icon={faBars} /></button>
 		<LazyDialog open={aboutShown} onClose={() => setAboutShown(false)}>
 			<AboutContent />
 		</LazyDialog>
