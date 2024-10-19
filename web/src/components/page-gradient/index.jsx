@@ -107,7 +107,7 @@ export function Gradient() {
     //     }
     // }
 
-	return <div className="page-gradient">
+	return <>
 		<PaletteContext.Provider value={palette}>
 			{/*<AppTitleBar title="Gradient Editor">*/}
 				<label>
@@ -156,5 +156,5 @@ export function Gradient() {
 		<LazyDialog open={helpOpen} onClose={() => setHelpOpen(false)}>
 			<GradientHelpContent />
 		</LazyDialog>
-	</div>;
+	</>;
 }

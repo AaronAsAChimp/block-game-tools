@@ -3,11 +3,9 @@ import Layout from '../../layouts/Layout.astro';
 import AppTitleBar from '../../components/AppTitleBar.astro';
 import {Gradient} from '../../components/page-gradient/index'
 ---
-<Layout title="Gradient">
-	<div class="page-home">
-		<Gradient client:only="react" />
-		<AppTitleBar title="Gradient">
-		</AppTitleBar>
-	</div>
+<Layout title="Gradient" class="page-gradient">
+	<Gradient client:only="react" />
+	<AppTitleBar title="Gradient">
+	</AppTitleBar>
 </Layout>
 

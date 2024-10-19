@@ -4,11 +4,9 @@ import AppTitleBar from '../../components/AppTitleBar.astro';
 import {ColorMap} from '../../components/page-color-map/index'
 ---
 
-<Layout title="Block Game Color Map">
-	<div class="page-home">
-		<ColorMap client:only="react" />
-		<AppTitleBar title="Block Game Color Map">
-		</AppTitleBar>
-	</div>
+<Layout title="Block Game Color Map" class="page-map">
+	<ColorMap client:only="react" />
+	<AppTitleBar title="Block Game Color Map">
+	</AppTitleBar>
 </Layout>
 

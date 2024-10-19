@@ -12,7 +12,6 @@ class Writer {
 	}
 
 	write(chunk) {
-		console.log('chunk', chunk);
 		if (typeof chunk.type === 'undefined') {
 			this.#buffer += chunk;
 		}

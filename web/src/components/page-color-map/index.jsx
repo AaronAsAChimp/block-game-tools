@@ -18,25 +18,28 @@ export function ColorMap() {
 	const [palette, setPalette] = useState('mostCommon');
 	const [selection, setSelection] = useState(null);
 	const [helpOpen, setHelpOpen] = useState(false);
+	/** @type {React.MutableRefObject<HTMLDivElement>} */
 	const rootRef = useRef(null);
 	const [blocks, setBlocks] = useState([]);
 	const [labels, setLabels] = useState([]);
 
 	const initialColors = useMemo(function () {
-		const root = rootRef.current;
+		let color = null;
+		let inverse = null;
 
-		if (!root) {
-			return {
-				color: null,
-				inverse: null
+		if (rootRef.current) {
+			const root = rootRef.current.closest('.page-map');
+			const props = window.getComputedStyle(root);
+
+			if (root) {
+				color = props['background-color'];
+				inverse = props['color'];
 			}
 		}
 
-		const props = window.getComputedStyle(root);
-
 		return {
-			color: props['background-color'],
-			inverse: props['color']
+			color,
+			inverse
 		}
 	}, [rootRef.current]);
 	const [colors, setColors] = useState(null);
@@ -103,7 +106,7 @@ export function ColorMap() {
 	}
 
 	function alphaChange(alpha) {
-		const root = rootRef.current;
+		const root = rootRef.current.closest('.page-map');
 		const colors = {
 			color: alpha > 0.5 ? initialColors.color : initialColors.inverse,
 			inverse: alpha > 0.5 ? initialColors.inverse : initialColors.color
@@ -111,13 +114,13 @@ export function ColorMap() {
 
 		setColors(colors);
 
-		if (root) {
+		if (root instanceof HTMLElement) {
 			root.style.setProperty('--background-color', colors.color);
 			root.style.setProperty('--inverse-color', colors.inverse);
 		}
 	}
 
-	return <div className="page-map" ref={rootRef}>
+	return <div ref={rootRef}>
 		<PaletteContext.Provider value={palette}>
 			<ContrastContext.Provider value={colors}>
 				<BlockMap

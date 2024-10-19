@@ -266,7 +266,7 @@ export function Texturizer() {
 		setGradientUpdateToken(buildGradientParam(gradient, 0));
 	}, [])
 
-	return <div className="page-texturizer">
+	return <>
 		<PaletteContext.Provider value={palette}>
 			{/*<AppTitleBar title="Texturizer">*/}
 				<label>
@@ -332,5 +332,5 @@ export function Texturizer() {
 		<LazyDialog open={helpOpen} onClose={() => setHelpOpen(false)}>
 			<GradientHelpContent />
 		</LazyDialog>
-	</div>;
+	</>;
 }

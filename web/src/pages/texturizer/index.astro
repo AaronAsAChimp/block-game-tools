@@ -3,11 +3,9 @@ import Layout from '../../layouts/Layout.astro';
 import AppTitleBar from '../../components/AppTitleBar.astro';
 import {Texturizer} from '../../components/page-texturizer/index'
 ---
-<Layout title="Texturizer">
-	<div class="page-home">
-		<Texturizer client:only="react" />
-		<AppTitleBar title="Texturizer">
-		</AppTitleBar>
-	</div>
+<Layout title="Texturizer" class="page-texturizer">
+	<Texturizer client:only="react" />
+	<AppTitleBar title="Texturizer">
+	</AppTitleBar>
 </Layout>
 

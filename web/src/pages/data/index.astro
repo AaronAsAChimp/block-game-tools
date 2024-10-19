@@ -3,11 +3,9 @@ import Layout from '../../layouts/Layout.astro';
 import AppTitleBar from '../../components/AppTitleBar.astro';
 import {Data} from '../../components/page-data/index'
 ---
-<Layout title="Data Editor">
-	<div class="page-home">
-		<Data client:only="react" />
-		<AppTitleBar title="Data Editor">
-		</AppTitleBar>
-	</div>
+<Layout title="Data Editor" class="page-data">
+	<Data client:only="react" />
+	<AppTitleBar title="Data Editor">
+	</AppTitleBar>
 </Layout>
 

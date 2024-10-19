@@ -198,7 +198,7 @@ export function Data() {
 		setValid(selectedBlockIds && selectedBlockIds.length > 0);
 	}, [selectedBlockIds])
 
-	return <div className="page-data">
+	return <>
 		<div className="page-container">
 			<div className="texture-queue">
 				<div className="textures-left">Textures left: { queue.length } ({computePercent(queue.length, blocks.length)}%)</div>
@@ -251,5 +251,5 @@ export function Data() {
 			</a>
 			<textarea className="file-output" readOnly value={JSON.stringify(buildBlockTexturesFile(blocks), null, '    ')}></textarea>
 		</div>
-	</div>;
+	</>;
 }
