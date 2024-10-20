@@ -1,9 +1,5 @@
 /**
- * @typedef {import('../../jsx/server.d.ts').Block} Block
- */
-
-/**
- * @typedef {import('../../jsx/server.d.ts').Label} Label
+ * @typedef {import('shared/src/block').Block} Block
  */
 
 import { animated, useSpring } from '@react-spring/three';
@@ -152,7 +148,7 @@ const AnimatedBillboard = animated(Billboard);
  */
 function SelectionMesh({block}) {
 	const palette = useContext(PaletteContext);
-	/** @type {import('../../jsx/server.d.ts').Color} */
+	/** @type {import('shared/src/block').Color} */
 	const color = block.palette[palette];
 	const contrast = useContext(ContrastContext);
 
@@ -180,7 +176,7 @@ function SelectionMesh({block}) {
 
 /**
  * @typedef {Object} LabelsProps
- * @property {Label[]} labels The label to make into a mesh.
+ * @property {import('../../jsx/server.d.ts').Label[]} labels The label to make into a mesh.
  */
 
 /**
@@ -190,17 +186,17 @@ function SelectionMesh({block}) {
 function Labels({labels}) {
 	return <group>
 		{ labels.map((label) => {
-			const pos = [
+			const pos = new THREE.Vector3(
 				label.pos.a,
 				label.pos.l,
 				label.pos.b,
-			];
+			);
 
-			const lightPos = [
+			const lightPos = new THREE.Vector3(
 				label.pos.a + 2.2,
 				label.pos.l,
 				label.pos.b + 5,
-			]
+			)
 
 			return <group key={label.name}>
 				<Text3D font={droidSansRegular} size={2.5} height={1} position={pos}>
@@ -348,7 +344,7 @@ export function BlockMap({labels, blocks, selected, onSelected, onAlphaChange}) 
 	}
 
 	return <TooltipWrapper title={hovered?.name}>
-		<Canvas linear flat ref={canvasRef} style={{width: '100vw', height: '100vh'}} onPointerDown={cursorGrab} onPointerUp={cursorRelease} onPointerMove={cursorMove}>
+		<Canvas linear flat ref={canvasRef} style={{width: '100%', height: '100vh'}} onPointerDown={cursorGrab} onPointerUp={cursorRelease} onPointerMove={cursorMove}>
 			<Centerer boundsObj={boundsRef} onChange={(camera) => updateAlpha(camera) }>
 				<ambientLight intensity={0.8} />
 				<BoundsMesh ref={boundsRef} />

@@ -2,11 +2,13 @@
 import RightNavLayout from '../../layouts/RightNavLayout.astro';
 import AppSideBar from '../../components/AppSideBar.astro';
 import {ColorMap} from '../../components/page-color-map/index'
+import {BlockMapSelection} from '../../components/block-map-selection/index'
 ---
 
 <RightNavLayout title="Block Game Color Map" class="page-map">
 	<ColorMap client:only="react" slot="main" />
 	<AppSideBar title="Color Map" slot="nav">
+		<BlockMapSelection client:only="react" />
 	</AppSideBar>
 </RightNavLayout>
 

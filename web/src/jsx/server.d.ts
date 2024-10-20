@@ -1,4 +1,6 @@
 
+import type { LabColor, RGBColor, Block } from 'shared'
+
 type Label = {
 	name: string,
 	rgb: RGBColor,
@@ -9,5 +11,5 @@ type Label = {
 export type BlocksResponse = {
 	minecraft_version: string,
 	labels: Label[],
-	blocks: Blocks[],
+	blocks: Block[],
 }

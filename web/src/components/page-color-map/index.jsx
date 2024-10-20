@@ -6,22 +6,22 @@ import { BlockMap } from "../block-map/index.jsx";
 import { BlockSearch } from "../block-search/index.jsx";
 import { MapHelpContent } from "../content/index.jsx";
 import { LazyDialog } from "../lazy-dialog/index.jsx";
-import { SelectedBlock } from "../selected-block/index.jsx";
 import { ContrastContext } from "../../context/contrast-context.js";
 import { PaletteContext } from "../../context/palette-context.js";
 import { findNearest, loadBlocks } from "../../blocks.js";
 import './styles.css';
+import { useStore } from '@nanostores/react';
+import { blockMapOptionsStore } from '../../context/block-map-store.js';
 
 
 export function ColorMap() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [palette, setPalette] = useState('mostCommon');
-	const [selection, setSelection] = useState(null);
 	const [helpOpen, setHelpOpen] = useState(false);
 	/** @type {React.MutableRefObject<HTMLDivElement>} */
 	const rootRef = useRef(null);
-	const [blocks, setBlocks] = useState([]);
 	const [labels, setLabels] = useState([]);
+	const blockMapOptions = useStore(blockMapOptionsStore);
 
 	const initialColors = useMemo(function () {
 		let color = null;
@@ -47,13 +47,17 @@ export function ColorMap() {
 	useEffect(() => {
 		loadBlocks('blocks')
 			.then((blocks) => {
-				setBlocks(blocks.blocks)
+				blockMapOptionsStore.set({
+					...blockMapOptions,
+					blocks: blocks.blocks
+				})
 				setLabels(blocks.labels)
 			});
 	}, [])
 
 	const blockNameMap = useMemo(() => {
 		const result = {};
+		const blocks = blockMapOptions.blocks;
 
 		if (blocks) {
 			for (const block of blocks) {
@@ -62,7 +66,7 @@ export function ColorMap() {
 		}
 
 		return result;
-	}, [blocks]);
+	}, [blockMapOptions.blocks]);
 
 	function searchHandler(e) {
 		const term = e.target.value.trim();
@@ -77,7 +81,7 @@ export function ColorMap() {
 		// This logic is for special search types
 		if (color !== null) {
 			const lab = color.toLabColor();
-			const block = findNearest(blocks, palette, lab);
+			const block = findNearest(blockMapOptions.blocks, palette, lab);
 
 			// TODO: consider refactoring this code to not use the name to look up
 			//       the cube from the block.
@@ -92,7 +96,10 @@ export function ColorMap() {
 		// console.log('selected', cube);
 
 		if (cube) {
-			setSelection(cube);
+			blockMapOptionsStore.set({
+				...blockMapOptions,
+				selected: cube
+			});
 		}
 	}
 
@@ -102,7 +109,10 @@ export function ColorMap() {
 	}
 
 	function selectionChange(selection) {
-		setSelection(selection);
+		blockMapOptionsStore.set({
+			...blockMapOptions,
+			selected: selection
+		});
 	}
 
 	function alphaChange(alpha) {
@@ -125,13 +135,13 @@ export function ColorMap() {
 			<ContrastContext.Provider value={colors}>
 				<BlockMap
 					labels={labels}
-					blocks={blocks}
-					selected={selection}
+					blocks={blockMapOptions.blocks}
+					selected={blockMapOptions.selected}
 					onSelected={selectionChange}
 					onAlphaChange={alphaChange} />
 
 				{/*<AppTitleBar title="Block Game Color Map">*/}
-					<BlockSearch value={searchTerm} onChange={searchHandler} blocks={blocks} />
+					<BlockSearch value={searchTerm} onChange={searchHandler} blocks={blockMapOptions.blocks} />
 					<label>
 						Color Extraction:
 						<select className="pallette-select" onInput={paletteChange} value={palette}>
@@ -142,9 +152,6 @@ export function ColorMap() {
 					</label>
 					<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>
 				{/*</AppTitleBar>*/}
-				{ selection
-					? <SelectedBlock selected={selection} blocks={blocks} />
-					: null}
 				
 			</ContrastContext.Provider>
 		</PaletteContext.Provider>
