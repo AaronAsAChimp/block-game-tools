@@ -7,7 +7,7 @@ import { loadSchematic } from '../utils.js';
 test('Can build an empty schematic', async t => {
 	// Arrange
 	const file = await loadSchematic('empty.lightmatic', false);
-	const schematic = new LitematicaSchematic(null);
+	const schematic = new LitematicaSchematic(null, 3578);
 
 	// Act
 	const result = schematic.toNbt();
