@@ -189,6 +189,10 @@ export function Data() {
 	}
 
 	function computePercent(queueLength, blocksLength) {
+		if (!blocksLength) {
+			return 0;
+		}
+
 		return Math.floor(((blocksLength - queueLength) / blocksLength) * 100);
 	}
 

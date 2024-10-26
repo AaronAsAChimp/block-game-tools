@@ -271,7 +271,7 @@ bounds.add(magenta);
 const EXIT_CODE_NO_JAR = 1;
 
 const dirPath = `./jars/${ MC_VERSION }/assets/minecraft/textures/block/`;
-const extractPath = `./web/data/${ MC_VERSION }/`;
+const extractPath = `./web/public/data/${ MC_VERSION }/`;
 const extractedTexturesPath = path.join(extractPath, 'textures');
 const json = [];
 const labels = [
