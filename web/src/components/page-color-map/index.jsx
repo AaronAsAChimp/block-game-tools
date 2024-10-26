@@ -131,30 +131,20 @@ export function ColorMap() {
 	}
 
 	return <div ref={rootRef}>
-		<PaletteContext.Provider value={palette}>
-			<ContrastContext.Provider value={colors}>
-				<BlockMap
-					labels={labels}
-					blocks={blockMapOptions.blocks}
-					selected={blockMapOptions.selected}
-					onSelected={selectionChange}
-					onAlphaChange={alphaChange} />
+		<ContrastContext.Provider value={colors}>
+			<BlockMap
+				labels={labels}
+				blocks={blockMapOptions.blocks}
+				selected={blockMapOptions.selected}
+				onSelected={selectionChange}
+				onAlphaChange={alphaChange} />
 
-				{/*<AppTitleBar title="Block Game Color Map">*/}
-					<BlockSearch value={searchTerm} onChange={searchHandler} blocks={blockMapOptions.blocks} />
-					<label>
-						Color Extraction:
-						<select className="pallette-select" onInput={paletteChange} value={palette}>
-							<option value="average">Average</option>
-							<option value="mostSaturated">Most Saturated</option>
-							<option value="mostCommon">Most Common</option>
-						</select>
-					</label>
-					<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>
-				{/*</AppTitleBar>*/}
-				
-			</ContrastContext.Provider>
-		</PaletteContext.Provider>
+			{/*<AppTitleBar title="Block Game Color Map">*/}
+				<BlockSearch value={searchTerm} onChange={searchHandler} blocks={blockMapOptions.blocks} />
+				<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>
+			{/*</AppTitleBar>*/}
+			
+		</ContrastContext.Provider>
 		<LazyDialog open={helpOpen} onClose={() => setHelpOpen(false)}>
 			<MapHelpContent />
 		</LazyDialog>

@@ -11,9 +11,10 @@ import droidSansRegular from 'three/examples/fonts/droid/droid_sans_regular.type
 
 import { OBJLoader as ThreeOBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { ContrastContext } from '../../context/contrast-context.js';
-import { PaletteContext } from '../../context/palette-context.js';
 import { DATA_DIR, SELECTION_RADIUS } from '../../consts.js';
 import { TooltipWrapper } from '../tooltip/index.jsx';
+import { paletteStore } from '../../context/palette-store.js';
+import { useStore } from '@nanostores/react';
 
 const BLOCK_SIZE = SELECTION_RADIUS / 8;
 
@@ -147,7 +148,7 @@ const AnimatedBillboard = animated(Billboard);
  * @param {SelectionMeshProps} props
  */
 function SelectionMesh({block}) {
-	const palette = useContext(PaletteContext);
+	const palette = useStore(paletteStore);
 	/** @type {import('shared/src/block').Color} */
 	const color = block.palette[palette];
 	const contrast = useContext(ContrastContext);
@@ -230,7 +231,7 @@ const LabelsMemoized = memo(Labels);
  * @param {BlockMeshProps} props
  */
 function BlockMesh({block, onSelect, onMouseEnter, onMouseLeave}) {
-	const palette = useContext(PaletteContext);
+	const palette = useStore(paletteStore);
 	const color = block.palette[palette];
 	const {position} = useSpring({
 		position: [

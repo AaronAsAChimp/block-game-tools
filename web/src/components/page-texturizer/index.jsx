@@ -10,6 +10,7 @@ import { LitematicaSchematic } from "../../schematic/schematic.js";
 import { SchematicRegion } from "../../schematic/schematic-region.js";
 import { BlockLookup, loadBlocks } from "../../blocks";
 import { coordToIndex, dither, ordered } from "../../dithering";
+import { paletteStore } from '../../context/palette-store';
 
 import styles from './styles.module.css';
 import { useStore } from '@nanostores/react';
@@ -85,17 +86,12 @@ export function Texturizer() {
 	const [textureBlocks, setTextureBlocks] = useState(null);
 	const texturizerOptions = useStore(texturizerOptionsStore);
 
-	const [gradientUpdateToken, setGradientUpdateToken] = useState(null);
 	const [redraws, setRedraws] = useState(0);
 	const [blocks, setBlocks] = useState([]);
 
-	const [palette, setPalette] = useState('average');
-	const [helpOpen, setHelpOpen] = useState(false);
+	const palette = useStore(paletteStore);
 
-	function paletteChange(e) {
-		const select = e.target;
-		setPalette(select.options[select.selectedIndex].value);
-	}
+	const [helpOpen, setHelpOpen] = useState(false);
 
 	function resetNoiser() {
 		noiserRef.current = createNoise2D();
@@ -170,6 +166,10 @@ export function Texturizer() {
 
 	const blockLookup = useMemo(() => {
 		if (!(blocks && blocks.length)) {
+			return null;
+		}
+
+		if (!texturizerOptions.gradient) {
 			return null;
 		}
 
@@ -260,17 +260,6 @@ export function Texturizer() {
 
 	return <>
 		<PaletteContext.Provider value={palette}>
-			{/*<AppTitleBar title="Texturizer">*/}
-				<label>
-					Color Extraction:
-					<select className="pallette-select" onInput={paletteChange} value={palette}>
-						<option value="average">Average</option>
-						<option value="mostSaturated">Most Saturated</option>
-						<option value="mostCommon">Most Common</option>
-					</select>
-				</label>
-				{/*<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>*/}
-			{/*</AppTitleBar>*/}
 			<div className={styles['texturizer-controls']}>
 				<button type="button" onClick={resetNoiser}>Randomize</button>
 				<button ref={downloadSchematicRef} onClick={downloadSchematic}>Download Litematica Schematic</button>

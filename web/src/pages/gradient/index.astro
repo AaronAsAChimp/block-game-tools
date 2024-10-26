@@ -1,11 +1,16 @@
 ---
-import RightNavLayout from '../../layouts/RightNavLayout.astro';
-import AppSideBar from '../../components/AppSideBar.astro';
-import {Gradient} from '../../components/page-gradient/index'
+import TopNavLayout from '../../layouts/TopNavLayout.astro';
+import AppTopBar from '../../components/AppTopBar.astro';
+import {Gradient} from '../../components/page-gradient/index';
+import {HelpButton} from '../../components/help-button/index';
+import * as help from '../../md/help/gradient.md';
+
+const content = help.compiledContent()
 ---
-<RightNavLayout title="Gradient" class="page-gradient">
+<TopNavLayout title="Gradient" class="page-gradient">
 	<Gradient client:only="react" slot="main" />
-	<AppSideBar title="Gradient" slot="nav">
-	</AppSideBar>
-</RightNavLayout>
+	<AppTopBar title="Gradient Editor" slot="nav">
+		<HelpButton client:only="react" content={content} />
+	</AppTopBar>
+</TopNavLayout>
 

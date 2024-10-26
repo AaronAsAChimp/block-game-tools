@@ -1,0 +1,28 @@
+---
+import {AppMenu} from './app-menu/index.jsx';
+const {title} = Astro.props;
+const hasOptions = Astro.slots.has('default');
+---
+<div class={`app-top-bar ${ hasOptions ? 'top-bar-w-options' : null }`}>
+		<div class="app-title">
+			{ title }
+		</div>
+
+		<slot />
+		<AppMenu client:only="react" />
+</div>
+<style>
+.app-top-bar {
+	font-weight: 200;
+	font-size: 1.5em;
+	letter-spacing: 0.06em;
+
+	display: flex;
+	padding: 1em 0;
+	gap: 0.6em;
+
+	& .app-title {
+		flex: 1 0 auto;
+	}
+}
+</style>

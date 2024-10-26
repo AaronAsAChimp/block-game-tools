@@ -1,0 +1,19 @@
+.form-controls > label {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1.3em;
+
+	& > select,
+	& > input,
+	& > .custom-input {
+		margin-top: 0.6em;
+	}
+}
+
+.form-controls > .checkbox-control {
+	flex-direction: row;
+
+	& > input {
+		margin: 0 0 0 0.6em;
+	}
+}

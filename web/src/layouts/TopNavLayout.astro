@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+	title: string;
+	class: string;
+}
+
+const { title, class: className } = Astro.props;
+---
+
+<BaseLayout title={ title }>
+	<div class="top-nav-layout">
+		<nav class="top-nav">
+			<div class="top-nav-center">
+				<slot name="nav" />
+			<div>
+		</nav>
+		<div class={`main ${ className }`}>
+			<slot name="main" />
+		</div>
+	</div>
+</BaseLayout>
+<style>
+	.top-nav-layout {
+/*		display: flex;*/
+/*		height: 100vh;*/
+		width: 100vw;
+
+		& .main {
+/*			flex: 1 1 auto;*/
+/*			overflow: auto;*/
+		}
+
+		& .top-nav {
+/*			flex: 0 0 auto;*/
+/*			width: 20em;*/
+			border-bottom: 1px solid var(--layer1-color);
+		}
+
+		& .top-nav-center {
+			width: calc(100vw - 40px);
+			max-width: 60em;
+			margin: 0 auto;
+		}
+	}
+</style>

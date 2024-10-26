@@ -2,6 +2,7 @@ import { useStore } from '@nanostores/react';
 import { texturizerOptionsStore } from '../../context/texturizer-store';
 import { GradientDisplay } from "../gradient-display";
 import { RGBColor } from "shared";
+import { PaletteSelector } from '../palette-selector/index.jsx';
 import styles from './styles.module.css';
 
 const DEFAULT_START = 0x000000;
@@ -62,8 +63,9 @@ export function TexturizerControls() {
 		})
 	}
 
-	return <div className={styles['texturizer-controls']}>
-		<label>
+	return <div className={styles['texturizer-controls'] + ' ' + styles['form-controls']}>
+		<PaletteSelector />
+		<label className={styles['checkbox-control']}>
 			Monochrome:
 			<input type="checkbox" checked={texturizerOptions.isMonochrome} onChange={ updateIsMonochrome } />
 		</label>
@@ -78,7 +80,7 @@ export function TexturizerControls() {
 		</label>
 		<label>
 			Size:
-			<span>
+			<span className={styles['custom-input']}>
 				<input type="number" value={texturizerOptions.width} min={1} size={3} onInput={ updateWidth } /> &times; <input type="number" value={texturizerOptions.height} min={1} size={3} onInput={ updateHeight } />
 			</span>
 		</label>

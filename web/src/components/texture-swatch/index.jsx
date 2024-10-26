@@ -1,10 +1,10 @@
-import { useContext } from 'react';
 import { RGBColor } from 'shared/src/color';
-import { PaletteContext } from '../../context/palette-context';
 import { DATA_DIR } from '../../consts';
 
 import { TooltipWrapper } from '../tooltip/index';
 import styles from './styles.module.css';
+import { useStore } from '@nanostores/react';
+import { paletteStore } from '../../context/palette-store.js';
 
 /**
  * @typedef {import('../../jsx/server.d.ts').Block} Block
@@ -64,7 +64,7 @@ export function TextureAnimation({block}) {
  * @param {TextureSwatchProps} props
  */
 export function TextureSwatch({block, title, showColor}) {
-	const palette = useContext(PaletteContext);
+	const palette = useStore(paletteStore);
 	const ext = block.animated ? '.webp' : '.png';
 	let tooltip = block.name;
 

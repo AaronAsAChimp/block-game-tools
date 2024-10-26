@@ -1,20 +1,19 @@
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { SELECTION_RADIUS } from '../../consts.js';
 import { TextureSwatch } from '../texture-swatch/index.jsx';
-import { PaletteContext } from '../../context/palette-context.js';
 import { findNear } from '../../blocks.js';
 
-import styles from './styles.module.css';
 import { useStore } from '@nanostores/react';
 import { blockMapOptionsStore } from '../../context/block-map-store.js';
+import { paletteStore } from '../../context/palette-store.js';
 
 
 /**
  * A component to show the selected block.
  */
 export function BlockMapSelection() {
-	const palette = useContext(PaletteContext);
+	const palette = useStore(paletteStore);
 	const blockMapOptions = useStore(blockMapOptionsStore);
 
 	const nearest = useMemo(() => {
@@ -24,17 +23,28 @@ export function BlockMapSelection() {
 
 		const inRange = findNear(blockMapOptions.selected, blockMapOptions.blocks, palette, SELECTION_RADIUS);
 
+		for (let i = 0; i < inRange.length; i++) {
+			if (inRange[i].candidate.name === blockMapOptions.selected.name) {
+				inRange.splice(i, 1);
+				break;
+			}
+		}
+
 		return inRange;
 	}, [blockMapOptions.selected, blockMapOptions.blocks, palette]);
 
 	return 	(blockMapOptions.selected ?
-		<div className={styles['selected-block']}>
-			<div className="name">{blockMapOptions.selected.name}</div>
+		<div>
+			<h3>Selected</h3>
+			<div>{blockMapOptions.selected.name}</div>
+			<TextureSwatch block={blockMapOptions.selected} />
 
 			<h3>Similar Blocks</h3>
 			<div className="similar">
 				{ nearest.map(block => <TextureSwatch block={block.candidate} key={block.candidate.name} />) }
 			</div>
 		</div> :
-		null);
+		<p>
+			Select a colored block on the map to view information on it and blocks with similar colors.
+		</p>);
 }
