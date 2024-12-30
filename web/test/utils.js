@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import { promisify } from 'util';
 import { gunzip as gz } from 'zlib';
-import { readTagged, sortKeys, writeTagged} from 'nbt/low-level.js';
+import { readTagged, sortKeys} from 'nbt-zero/low-level.js';
 
 
 const gunzip = promisify(gz);

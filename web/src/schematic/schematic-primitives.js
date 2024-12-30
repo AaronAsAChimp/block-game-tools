@@ -1,6 +1,6 @@
-import * as NBT from 'nbt';
+import * as NBT from 'nbt-zero';
 
-/** @type {import('nbt').NBTSchema} */
+/** @type {import('nbt-zero').NBTSchema} */
 export const POSITION_SCHEMA = {
 	x: NBT.int,
 	y: NBT.int,

@@ -1,7 +1,7 @@
 import { POSITION_SCHEMA, SchematicPosition } from './schematic-primitives.js';
-import * as NBT from 'nbt';
+import * as NBT from 'nbt-zero';
 
-/** @type {import('nbt').NBTSchema} */
+/** @type {import('nbt-zero').NBTSchema} */
 export const LITEMATICA_REGION_SCHEMA = {
 	BlockStatePalette: [
 		{

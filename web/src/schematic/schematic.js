@@ -1,13 +1,13 @@
 import { MC_DATA_VERSION } from 'shared';
 import { LITEMATICA_REGION_SCHEMA, SchematicRegion } from './schematic-region.js';
 import { streamToUint8Array } from './stream-to-array.js';
-import * as NBT from 'nbt';
+import * as NBT from 'nbt-zero';
 
 
 const SCHEMATIC_VERSION = 6;
 const SCHEMATIC_MINOR_VERSION = 1;
 
-/** @type {import('nbt').NBTSchema} */
+/** @type {import('nbt-zero').NBTSchema} */
 const LITEMATICA_SCHEMA = {
 	MinecraftDataVersion: NBT.int,
 	Regions: NBT.record(LITEMATICA_REGION_SCHEMA),
