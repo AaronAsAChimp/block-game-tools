@@ -142,7 +142,7 @@ export function Texturizer() {
 		schematic.addRegion('region', region);
 
 		const blob = await LitematicaSchematic.writeCompressed(schematic);
-		const url = URL.createObjectURL(blob);
+		const url = URL.createObjectURL(new Blob([blob]));
 		const anchor = document.createElement('a');
 
 		anchor.href = url.toString();

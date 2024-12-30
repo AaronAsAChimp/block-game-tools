@@ -1,0 +1,16 @@
+{
+  "name": "nbt-zero",
+  "version": "1.0.0",
+  "description": "A NBT parser in pure javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "author": "",
+  "type": "module",
+  "types": "./types.d.ts",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^6.2.0"
+  }
+}

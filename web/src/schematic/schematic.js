@@ -1,10 +1,34 @@
-import nbt from 'prismarine-nbt';
 import { MC_DATA_VERSION } from 'shared';
-import { SchematicRegion } from './schematic-region.js';
-import { streamToBlob } from './stream-to-blob.js';
+import { LITEMATICA_REGION_SCHEMA, SchematicRegion } from './schematic-region.js';
+import { streamToUint8Array } from './stream-to-array.js';
+import * as NBT from 'nbt';
+
 
 const SCHEMATIC_VERSION = 6;
 const SCHEMATIC_MINOR_VERSION = 1;
+
+/** @type {import('nbt').NBTSchema} */
+const LITEMATICA_SCHEMA = {
+	MinecraftDataVersion: NBT.int,
+	Regions: NBT.record(LITEMATICA_REGION_SCHEMA),
+	SubVersion: NBT.int,
+	Version: NBT.int,
+	Metadata: {
+		Author: NBT.string,
+		Description: NBT.string,
+		EnclosingSize: {
+			x: NBT.int,
+			y: NBT.int,
+			z: NBT.int
+		},
+		Name: NBT.string,
+		RegionCount: NBT.int,
+		TimeCreated: NBT.long,
+		TimeModified: NBT.long,
+		TotalBlocks: NBT.int,
+		TotalVolume: NBT.int
+	}
+};
 
 export class LitematicaSchematic {
 	#metadata;
@@ -27,7 +51,7 @@ export class LitematicaSchematic {
 	/**
 	 * Convert the metadata into NBT
 	 * @param  {SchematicMetadata} metadata The metadata to convert
-	 * @return {ReturnType<import('prismarine-nbt').comp>}
+	 * @return {any}
 	 */
 	#buildMetadataNbt(metadata) {
 		if (!metadata) {
@@ -36,57 +60,56 @@ export class LitematicaSchematic {
 
 		const bounds = SchematicRegion.getBoundsForRegions(Object.values(this.#regions));
 
-		return nbt.comp({
-			Author: nbt.string(metadata.author),
-			Description: nbt.string(metadata.description),
+		return {
+			Author: metadata.author,
+			Description: metadata.description,
 			EnclosingSize: this.#buildCuboid(bounds),
-			Name: nbt.string(metadata.name),
-			RegionCount: nbt.int(Object.keys(this.#regions).length),
+			Name: metadata.name,
+			RegionCount: Object.keys(this.#regions).length,
 			TimeCreated: this.#buildDate(metadata.timeCreated),
 			TimeModified: this.#buildDate(metadata.timeModified),
-			TotalBlocks: nbt.int(bounds.x * bounds.y * bounds.z),
-			TotalVolume: nbt.int(bounds.x * bounds.y * bounds.z)
-		});
+			TotalBlocks: bounds.x * bounds.y * bounds.z,
+			TotalVolume: bounds.x * bounds.y * bounds.z
+		};
 	}
 
 	/**
 	 * Turn a Date into NBT
 	 * @param  {Date} date The date object
-	 * @return {ReturnType<import('prismarine-nbt').long>}
+	 * @return {bigint}
 	 */
 	#buildDate(date) {
-		return nbt.long(BigInt(Math.round(date.getTime() / 1000)));
+		return BigInt(Math.round(date.getTime() / 1000));
 	}
 
 	/**
 	 * Convert the metadata into NBT
 	 * @param  {SchematicCuboid} enclosingSize The metadata to convert
-	 * @return {ReturnType<import('prismarine-nbt').comp>}
+	 * @return {BasicPosition}
 	 */
 	#buildCuboid(enclosingSize) {
 
-		return nbt.comp({
-			x: nbt.int(enclosingSize.x),
-			y: nbt.int(enclosingSize.y),
-			z: nbt.int(enclosingSize.z)
-		})
+		return {
+			x: enclosingSize.x,
+			y: enclosingSize.y,
+			z: enclosingSize.z
+		};
 	}
 
 	#buildRegions(regions) {
-		/** @type {Record<string, import('prismarine-nbt').NBT>} */
 		const regionBuffers = {};
 
 		for (const key in regions) {
 			regionBuffers[key] = regions[key].toNbt();
 		}
 
-		const regionsNbt = nbt.comp(regionBuffers);
+		// const regionsNbt = regionBuffers;
 
 		// Schematics don't have a name property on the regions property, but
 		// there is no way of doing this with prismarine-nbt.
-		delete regionsNbt.name;
+		// delete regionsNbt.name;
 
-		return regionsNbt;
+		return regionBuffers;
 	}
 
 	/**
@@ -100,38 +123,37 @@ export class LitematicaSchematic {
 	}
 
 	toNbt() {
-		const metadata = this.#buildMetadataNbt(this.#metadata);
 		const schematic = {
-			MinecraftDataVersion: nbt.int(this.#minecraft_version),
-			Version: nbt.int(SCHEMATIC_VERSION),
-			SubVersion: nbt.int(SCHEMATIC_MINOR_VERSION),
+			MinecraftDataVersion: this.#minecraft_version,
+			Version: SCHEMATIC_VERSION,
+			SubVersion: SCHEMATIC_MINOR_VERSION,
 			Regions: this.#buildRegions(this.#regions),
 		};
 
-		if (metadata) {
+		if (this.#metadata) {
 			schematic.Metadata = this.#buildMetadataNbt(this.#metadata);
 		}
 
-		return nbt.comp(schematic, '');
+		return schematic;
 	}
 
 	/**
      * @param {LitematicaSchematic} schematic
-     * @return {Blob}
+     * @return {Uint8Array}
      */
 	static writeUncompressed(schematic) {
-		return new Blob([nbt.writeUncompressed(schematic.toNbt())]);
+		return NBT.bufferify(schematic.toNbt(), LITEMATICA_SCHEMA);
 	}
 
 	/**
      * @param {LitematicaSchematic} schematic
-     * @return {Promise<Blob>}
+     * @return {Promise<Uint8Array>}
      */
 	static async writeCompressed(schematic) {
-		const blob = LitematicaSchematic.writeUncompressed(schematic);
+		const buffer = LitematicaSchematic.writeUncompressed(schematic);
 
-		const gzip = blob.stream().pipeThrough(new CompressionStream('gzip'));
+		const gzip = new Blob([buffer]).stream().pipeThrough(new CompressionStream('gzip'));
 
-		return await streamToBlob(gzip);
+		return await streamToUint8Array(gzip);
 	}
 }

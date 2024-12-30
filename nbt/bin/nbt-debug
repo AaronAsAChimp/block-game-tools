@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+import { inspect } from 'util';
+import { readFile } from 'fs/promises';
+
+import { readTagged } from '../low-level.js';
+
+
+function toDebugString(arr) {
+	if (!Array.isArray(arr)) {
+		return inspect(arr, false, null, true);
+	} else {
+		// TODO: make better debuggin output.
+		return inspect(arr, false, null, true);
+	}
+}
+
+if (process.argv.length >= 3) {
+	const buf = await readFile(process.argv[2]);
+	const result = []
+
+	try {
+		readTagged(new DataView(buf.buffer), result);
+	} finally {
+		console.log(toDebugString(result));
+	}
+
+} else {
+	throw new Error('Missing file argument.');
+}

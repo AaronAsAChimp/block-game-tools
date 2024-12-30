@@ -1,6 +1,22 @@
-import nbt from 'prismarine-nbt';
-import { SchematicPosition } from './schematic-primitives.js';
-import { emptyList } from './nbt.js';
+import { POSITION_SCHEMA, SchematicPosition } from './schematic-primitives.js';
+import * as NBT from 'nbt';
+
+/** @type {import('nbt').NBTSchema} */
+export const LITEMATICA_REGION_SCHEMA = {
+	BlockStatePalette: [
+		{
+			Name: NBT.string,
+			Properties: NBT.record(NBT.string)
+		}
+	],
+	BlockStates: NBT.longArray,
+	Entities: [], // TODO
+	PendingBlockTicks: [], // TODO
+	PendingFluidTicks: [], // TODO
+	Position: POSITION_SCHEMA,
+	Size: POSITION_SCHEMA,
+	TileEntities: [] // TODO
+};
 
 /**
  * Pack the list of block states.
@@ -76,48 +92,28 @@ export class SchematicRegion {
 		];
 	}
 
-	#jsonToNbt(json) {
-		const nbtEntry = {};
-
-		for (let key in json) {
-			let value = null;
-
-			switch (typeof json[key]) {
-				case 'string':
-					value = nbt.string(json[key]);
-					break;
-				default:
-					throw new Error('Unknown type');
-			}
-
-			nbtEntry[key] = value;
-		}
-
-		return nbt.comp(nbtEntry);
-	}
-
 	#buildPalette() {
-		const palette = [];
+		const palette = new Array(this.#palette.length);
 
 		for (let i = 0; i < this.#palette.length; i++) {
 			const entry = this.#palette[i];
 			const nbtEntry = {
-				Name: nbt.string(this.#palette[i].name),
+				Name: this.#palette[i].name,
 			};
 
 			if (entry.properties && Object.keys(entry.properties).length) {
-				nbtEntry.Properties = this.#jsonToNbt(this.#palette[i].properties);
+				nbtEntry.Properties = this.#palette[i].properties;
 			}
 
 			palette[i] = nbtEntry;
 		}
 
-		return nbt.list(nbt.comp(palette));
+		return palette;
 	}
 
 	#buildStates() {
-		return nbt.longArray(packBlockStates(this.#states, this.#palette.length));
-		// return nbt.longArray(packBlockStates([1, 1], this.#palette.length));
+		return packBlockStates(this.#states, this.#palette.length);
+		// packBlockStates([1, 1], this.#palette.length);
 	}
 
 	/**
@@ -204,19 +200,19 @@ export class SchematicRegion {
 
 	/**
 	 * Convert this to NBT
-	 * @return {import('prismarine-nbt').NBT}
+	 * @return {any}
 	 */
 	toNbt() {
-		return nbt.comp({
+		return {
 			BlockStatePalette: this.#buildPalette(),
 			BlockStates: this.#buildStates(),
-			Entities: emptyList(),
-			PendingBlockTicks: emptyList(),
-			PendingFluidTicks: emptyList(),
+			Entities: [],
+			PendingBlockTicks: [],
+			PendingFluidTicks: [],
 			Position: this.#position.toNbt(),
 			Size: this.#bounds.toNbt(),
-			TileEntities: emptyList()
-		});
+			TileEntities: []
+		};
 	}
 
 

@@ -1,8 +1,8 @@
 import test from 'ava';
-import nbt from 'prismarine-nbt';
 import { LitematicaSchematic } from '../../src/schematic/schematic.js';
 import { SchematicRegion } from '../../src/schematic/schematic-region.js';
-import { loadSchematic } from '../utils.js';
+import { compareNbt, loadSchematic } from '../utils.js';
+import { streamToUint8Array } from '../../src/schematic/stream-to-array.js';
 
 test('Can build an empty schematic', async t => {
 	// Arrange
@@ -10,10 +10,10 @@ test('Can build an empty schematic', async t => {
 	const schematic = new LitematicaSchematic(null, 3578);
 
 	// Act
-	const result = schematic.toNbt();
+	const result = LitematicaSchematic.writeUncompressed(schematic);
 
 	// Assert
-	t.deepEqual(result, file, "are the buffers the same");
+	compareNbt(t, result, file, "are the buffers the same");
 });
 
 test('Can build a schematic for a single block of cobblestone', async t => {
@@ -32,11 +32,10 @@ test('Can build a schematic for a single block of cobblestone', async t => {
 	region.setBlock('minecraft:cobblestone', null, {x: 0, y: 0, z: 0});
 	schematic.addRegion('Cobblestone', region);
 	// Serialize and deserialize the the NBT to normalize the values
-	const buffer = await LitematicaSchematic.writeUncompressed(schematic).arrayBuffer();
-	const result = nbt.parseUncompressed(Buffer.from(buffer));
+	const buffer = LitematicaSchematic.writeUncompressed(schematic);
 
 	// Assert
-	t.deepEqual(result, file, "is the NBT same");
+	compareNbt(t, buffer, file, "is the NBT same");
 });
 
 
@@ -56,10 +55,24 @@ test('Can build a schematic for a single block of oak wood pointed in the Y dire
 	region.setBlock('minecraft:oak_log', {axis: 'y'}, {x: 0, y: 0, z: 0});
 	schematic.addRegion('Oak wood', region);
 	// Serialize and deserialize the the NBT to normalize the values
-	const buffer = await LitematicaSchematic.writeUncompressed(schematic).arrayBuffer();
-	const result = nbt.parseUncompressed(Buffer.from(buffer));
-	// const result = schematic.toNbt();
+	const buffer = LitematicaSchematic.writeUncompressed(schematic);
 
 	// Assert
-	t.deepEqual(result, file, "is the NBT the same");
+	compareNbt(t, buffer, file, "is the NBT the same");
+});
+
+test('Can write to a stream', async t => {
+	// Arrange
+	const bytes = Buffer.from('This is a test string', 'utf8');
+	const bytesIterable = (function* () {
+		yield bytes.slice(0, 10);
+		yield bytes.slice(10, 21);
+	})();
+	const stream = ReadableStream.from(bytesIterable);
+
+	// Act
+	const region = await streamToUint8Array(stream);
+
+	// Assert
+	t.deepEqual(new Uint8Array(bytes), region, "Was stream written properly.")
 });

@@ -1,4 +1,11 @@
-import nbt from 'prismarine-nbt';
+import * as NBT from 'nbt';
+
+/** @type {import('nbt').NBTSchema} */
+export const POSITION_SCHEMA = {
+	x: NBT.int,
+	y: NBT.int,
+	z: NBT.int
+};
 
 export class SchematicPosition {
 	/** @type {number} */
@@ -17,10 +24,10 @@ export class SchematicPosition {
 	}
 
 	toNbt() {
-		return nbt.comp({
-			x: nbt.int(this.x),
-			y: nbt.int(this.y),
-			z: nbt.int(this.z)
-		});
+		return {
+			x: this.x,
+			y: this.y,
+			z: this.z
+		};
 	}
 }
