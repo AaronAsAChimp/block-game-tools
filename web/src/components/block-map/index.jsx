@@ -187,17 +187,17 @@ function SelectionMesh({block}) {
 function Labels({labels}) {
 	return <group>
 		{ labels.map((label) => {
-			const pos = new THREE.Vector3(
+			const pos = [
 				label.pos.a,
 				label.pos.l,
 				label.pos.b,
-			);
+			];
 
-			const lightPos = new THREE.Vector3(
+			const lightPos = [
 				label.pos.a + 2.2,
 				label.pos.l,
 				label.pos.b + 5,
-			)
+			];
 
 			return <group key={label.name}>
 				<Text3D font={droidSansRegular} size={2.5} height={1} position={pos}>
