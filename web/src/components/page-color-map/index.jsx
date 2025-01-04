@@ -7,7 +7,7 @@ import { BlockSearch } from "../block-search/index.jsx";
 import { MapHelpContent } from "../content/index.jsx";
 import { LazyDialog } from "../lazy-dialog/index.jsx";
 import { ContrastContext } from "../../context/contrast-context.js";
-import { PaletteContext } from "../../context/palette-context.js";
+import { paletteStore } from '../../context/palette-store.js';
 import { findNearest, loadBlocks } from "../../blocks.js";
 import './styles.css';
 import { useStore } from '@nanostores/react';
@@ -16,7 +16,7 @@ import { blockMapOptionsStore } from '../../context/block-map-store.js';
 
 export function ColorMap() {
 	const [searchTerm, setSearchTerm] = useState('');
-	const [palette, setPalette] = useState('mostCommon');
+	const palette = useStore(paletteStore);
 	const [helpOpen, setHelpOpen] = useState(false);
 	/** @type {React.MutableRefObject<HTMLDivElement>} */
 	const rootRef = useRef(null);
@@ -103,11 +103,6 @@ export function ColorMap() {
 		}
 	}
 
-	function paletteChange(e) {
-		const select = e.target;
-		setPalette(select.options[select.selectedIndex].value);
-	}
-
 	function selectionChange(selection) {
 		blockMapOptionsStore.set({
 			...blockMapOptions,
@@ -139,10 +134,8 @@ export function ColorMap() {
 				onSelected={selectionChange}
 				onAlphaChange={alphaChange} />
 
-			{/*<AppTitleBar title="Block Game Color Map">*/}
-				<BlockSearch value={searchTerm} onChange={searchHandler} blocks={blockMapOptions.blocks} />
-				<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>
-			{/*</AppTitleBar>*/}
+			<BlockSearch value={searchTerm} onChange={searchHandler} blocks={blockMapOptions.blocks} />
+			<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>
 			
 		</ContrastContext.Provider>
 		<LazyDialog open={helpOpen} onClose={() => setHelpOpen(false)}>
