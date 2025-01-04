@@ -6,6 +6,8 @@ import { Share } from "../share";
 import { TextureSwatch } from "../texture-swatch";
 import { BlockLookup, loadBlocks } from "../../blocks";
 import './styles.css';
+import { useStore } from '@nanostores/react';
+import { paletteStore } from '../../context/palette-store';
 
 const MIN_STEPS = 0;
 const DEFAULT_STEPS = 5;
@@ -52,9 +54,11 @@ export function Gradient() {
 
 	// const navigate = useNavigate();
 
-	const [palette, setPalette] = useState('average');
+	const palette = useStore(paletteStore);
 
 	useEffect(() => {
+		paletteStore.set('average');
+
 		loadBlocks('gradient-blocks')
 			.then((blocks) => {
 				setBlocks(blocks.blocks)

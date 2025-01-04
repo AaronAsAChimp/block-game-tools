@@ -157,6 +157,8 @@ export function Texturizer() {
 	}
 
 	useEffect(() => {
+		paletteStore.set('average');
+
 		loadBlocks('gradient-blocks')
 			.then((blocks) => {
 				setBlocks(blocks.blocks)
