@@ -1,9 +1,11 @@
 .multi-select-item {
-	display: inline-block;
+	display: inline-flex;
 	background: var(--layer1-color);
 	color: var(--layer1-contrast-color);
 	border-radius: .5em;
 	padding: .5em;
+	gap: 0.5em;
+	align-items: center;
 }
 
 .multi-select-item-delete {

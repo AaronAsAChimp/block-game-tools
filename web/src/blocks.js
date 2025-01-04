@@ -1,6 +1,6 @@
 import { DATA_DIR } from './consts.js';
 /**
- * @typedef {import('shared/src/block').Block} Block
+ * @typedef {import('shared/src/block.js').Block} Block
  */
 
 

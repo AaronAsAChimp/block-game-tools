@@ -206,7 +206,13 @@ function writeBlockSet(version, blocks, path, filter) {
 		blocks,
 	}, null, '    '));
 
-	jsonOutput.close();
+	jsonOutput.close((err) => {
+		if (err) {
+			console.error(`There was a problem writing block set "${ path }": `, err);
+		} else {
+			console.log(`Block set "${ path }" successfully written.`);
+		}
+	});
 }
 
 /**
@@ -241,6 +247,8 @@ function writeGimpPalette(name, blocks, path, filter) {
 	gplOut.close();
 }
 
+console.log(`Generating data for ${ MC_VERSION }`)
+
 //
 // Primaries
 // 
@@ -273,6 +281,7 @@ const EXIT_CODE_NO_JAR = 1;
 const dirPath = `./jars/${ MC_VERSION }/assets/minecraft/textures/block/`;
 const extractPath = `./web/public/data/${ MC_VERSION }/`;
 const extractedTexturesPath = path.join(extractPath, 'textures');
+/** @type {import('shared/src/block').Block[]} */
 const json = [];
 const labels = [
 	buildLabel('R', red, bounds),

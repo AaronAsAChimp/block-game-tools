@@ -1,5 +1,5 @@
 import { useState } from "react";
-import * as styles from './styles.module.css';
+import styles from './styles.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -32,7 +32,7 @@ export function MultiSelect({selected, setSelected, options}) {
 		{ selected ? selected.map(item => <span className={styles['multi-select-item']} key={item}>{item} <FontAwesomeIcon className={ styles['multi-select-item-delete'] } onClick={() => onDeleted(item)} icon={faXmark} /></span>) : null }
 		</div>
 		<form onSubmit={ onSelected }>
-			<input type="text" list="block-id-list" value={selectedItem ?? ''} onInput={ e => { console.log(e); setSelectedItem(e.currentTarget.value) }}/>
+			<input type="text" list="block-id-list" value={selectedItem ?? ''} onInput={ e => { setSelectedItem(e.currentTarget.value) }}/>
 			<datalist id="block-id-list">
 				{ options.map(option => <option key={option}>{option}</option>) }
 			</datalist>

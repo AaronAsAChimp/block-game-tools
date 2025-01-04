@@ -34,6 +34,14 @@ const TEXTURE_TAGS = [
 	"direction:side"
 ];
 
+/**
+ * Create a reactive queue.
+ *
+ * @param  {T[]} initialItems The initial items for the queue.
+ *
+ * @return {[T[], T, (item: T) => void, () => T, (items: T[]) => void]} The queue, current item, enqueue method, and dequeue method.
+ * @template T
+ */
 function useQueue(initialItems) {
 	const [current, setCurrent] = useState(null);
 	const [queue, setQueue] = useState(initialItems ?? []);
@@ -46,6 +54,10 @@ function useQueue(initialItems) {
 				...queue,
 				item
 			]);
+
+			if (!current) {
+				setCurrent(queue[0]);
+			}
 		},
 		function dequeue() {
 			const current = queue[0];
@@ -54,6 +66,10 @@ function useQueue(initialItems) {
 			setQueue(queue.slice(1));
 
 			return current;
+		},
+		function init(items) {
+			setQueue(items);
+			setCurrent(items[0]);
 		}
 	];
 }
@@ -97,13 +113,10 @@ export function Data() {
 	const [blocks, setBlocks] = useState([]);
 	const [textureTagsFile, setTextureTagsFile] = useState({});
 
-	const todos = useMemo(() => {
-		return blocks.filter((block) => {
-			return !block.tags || !block.blockIds;
-		})
-	}, [blocks]);
+	/** @type {import('shared/src/block.js').Block[]} */
+	const init = [];
 
-	const [queue, current,, dequeue] = useQueue(todos);
+	const [queue, current,, dequeue, initQueue] = useQueue(init);
 
 	/** @type {React.MutableRefObject<HTMLAnchorElement>} */
 	const blockTexturesRef = useRef(null);
@@ -115,6 +128,12 @@ export function Data() {
 		loadBlocks('all-blocks')
 			.then((blocks) => {
 				setBlocks(blocks.blocks)
+
+				const todos = blocks.blocks.filter((/** @type {import('shared/src/block.js').Block} */ block) => {
+					return !block.tags || !block.blockIds;
+				});
+
+				initQueue(todos);
 			});
 	}, [])
 
@@ -138,7 +157,7 @@ export function Data() {
 
 		setTextureTagsFile(toSortedRecord(newTags));
 
-		onDoneChoosing();
+		// onDoneChoosing();
 	}, [blocks]);
 
 	const [selectedTags, setSelectedTags] = useState({});
