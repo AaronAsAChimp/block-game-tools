@@ -761,6 +761,10 @@
         "direction:side",
         "model:block"
     ],
+    "chiseled_resin_bricks": [
+        "direction:any",
+        "model:block"
+    ],
     "chiseled_sandstone": [
         "direction:side",
         "model:block"
@@ -797,6 +801,10 @@
     "clay": [
         "direction:any",
         "model:block"
+    ],
+    "closed_eyeblossom": [
+        "direction:side",
+        "model:flower"
     ],
     "coal_block": [
         "direction:any",
@@ -1011,6 +1019,24 @@
     "crafting_table_top": [
         "direction:top",
         "model:block"
+    ],
+    "creaking_heart": [
+        "direction:any",
+        "model:block"
+    ],
+    "creaking_heart_active": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "creaking_heart_top": [
+        "direction:any",
+        "model:block"
+    ],
+    "creaking_heart_top_active": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
     ],
     "crimson_door_bottom": [
         "direction:side",
@@ -2363,6 +2389,14 @@
         "direction:any",
         "model:block"
     ],
+    "open_eyeblossom": [
+        "direction:side",
+        "model:flower"
+    ],
+    "open_eyeblossom_emissive": [
+        "direction:side",
+        "model:other"
+    ],
     "orange_candle": [
         "model:candle"
     ],
@@ -2465,6 +2499,60 @@
     "packed_mud": [
         "direction:any",
         "model:block"
+    ],
+    "pale_hanging_moss": [
+        "direction:side",
+        "model:other"
+    ],
+    "pale_hanging_moss_tip": [
+        "direction:side",
+        "model:other"
+    ],
+    "pale_moss_block": [
+        "direction:any",
+        "model:block"
+    ],
+    "pale_moss_carpet": [
+        "direction:top",
+        "model:on-ground"
+    ],
+    "pale_moss_carpet_side_small": [
+        "model:other"
+    ],
+    "pale_moss_carpet_side_tall": [
+        "direction:side",
+        "model:other"
+    ],
+    "pale_oak_door_bottom": [
+        "direction:east",
+        "model:door"
+    ],
+    "pale_oak_door_top": [
+        "model:door"
+    ],
+    "pale_oak_leaves": [
+        "direction:any",
+        "model:block",
+        "transparent"
+    ],
+    "pale_oak_log": [
+        "direction:any",
+        "model:block"
+    ],
+    "pale_oak_log_top": [
+        "direction:any",
+        "model:block"
+    ],
+    "pale_oak_planks": [
+        "direction:any",
+        "model:block"
+    ],
+    "pale_oak_sapling": [
+        "model:flower"
+    ],
+    "pale_oak_trapdoor": [
+        "direction:any",
+        "model:trapdoor"
     ],
     "pearlescent_froglight_side": [
         "direction:any",
@@ -3012,6 +3100,20 @@
         "direction:side",
         "model:block"
     ],
+    "resin_block": [
+        "direction:any",
+        "model:block"
+    ],
+    "resin_bricks": [
+        "direction:any",
+        "model:block",
+        "model:slab",
+        "model:stair"
+    ],
+    "resin_clump": [
+        "direction:any",
+        "model:other"
+    ],
     "respawn_anchor_bottom": [
         "direction:bottom",
         "model:block"
@@ -3504,6 +3606,14 @@
         "model:block"
     ],
     "stripped_oak_log_top": [
+        "direction:any",
+        "model:block"
+    ],
+    "stripped_pale_oak_log": [
+        "direction:any",
+        "model:block"
+    ],
+    "stripped_pale_oak_log_top": [
         "direction:any",
         "model:block"
     ],

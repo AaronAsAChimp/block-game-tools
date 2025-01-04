@@ -94,6 +94,12 @@
         "pitcher_crop_top_stage_3",
         "pitcher_crop_top_stage_4"
     ],
+    "pale_moss_carpet": [
+        "pale_moss_carpet_side_small",
+        "pale_moss_block",
+        "pale_moss_carpet",
+        "pale_moss_carpet_side_tall"
+    ],
     "amethyst_cluster": [
         "amethyst_cluster"
     ],
@@ -108,6 +114,10 @@
         "lightning_rod",
         "lightning_rod_on"
     ],
+    "pale_oak_door": [
+        "pale_oak_door_top",
+        "pale_oak_door_bottom"
+    ],
     "crafting_table": [
         "crafting_table_top",
         "crafting_table_front",
@@ -117,6 +127,10 @@
         "calibrated_sculk_sensor_amethyst",
         "calibrated_sculk_sensor_input_side",
         "calibrated_sculk_sensor_top"
+    ],
+    "open_eyeblossom": [
+        "open_eyeblossom",
+        "open_eyeblossom_emissive"
     ],
     "purple_glazed_terracotta": [
         "purple_glazed_terracotta"
@@ -291,6 +305,9 @@
     "smooth_stone_slab": [
         "smooth_stone_slab_side"
     ],
+    "pale_moss_block": [
+        "pale_moss_block"
+    ],
     "sandstone": [
         "sandstone",
         "sandstone_bottom",
@@ -362,6 +379,9 @@
     ],
     "stripped_mangrove_wood": [
         "stripped_mangrove_log"
+    ],
+    "resin_block": [
+        "resin_block"
     ],
     "loom": [
         "loom_front",
@@ -577,6 +597,9 @@
     "lodestone": [
         "lodestone_side",
         "lodestone_top"
+    ],
+    "closed_eyeblossom": [
+        "closed_eyeblossom"
     ],
     "quartz_block": [
         "quartz_block_top",
@@ -914,6 +937,12 @@
     "diorite": [
         "diorite"
     ],
+    "creaking_heart": [
+        "creaking_heart_top",
+        "creaking_heart_top_active",
+        "creaking_heart_active",
+        "creaking_heart"
+    ],
     "tall_seagrass": [
         "tall_seagrass_top",
         "tall_seagrass_bottom"
@@ -1079,6 +1108,10 @@
         "end_portal_frame_top",
         "end_portal_frame_eye"
     ],
+    "stripped_pale_oak_log": [
+        "stripped_pale_oak_log_top",
+        "stripped_pale_oak_log"
+    ],
     "white_tulip": [
         "white_tulip"
     ],
@@ -1208,6 +1241,10 @@
         "composter_compost",
         "composter_top"
     ],
+    "pale_hanging_moss": [
+        "pale_hanging_moss_tip",
+        "pale_hanging_moss"
+    ],
     "smithing_table": [
         "smithing_table_side",
         "smithing_table_top",
@@ -1248,6 +1285,9 @@
     "redstone_lamp": [
         "redstone_lamp_on",
         "redstone_lamp"
+    ],
+    "resin_clump": [
+        "resin_clump"
     ],
     "turtle_egg": [
         "turtle_egg_slightly_cracked",
@@ -1432,6 +1472,9 @@
     ],
     "warped_trapdoor": [
         "warped_trapdoor"
+    ],
+    "pale_oak_trapdoor": [
+        "pale_oak_trapdoor"
     ],
     "magenta_terracotta": [
         "magenta_terracotta"
@@ -1913,6 +1956,18 @@
     "blue_glazed_terracotta": [
         "blue_glazed_terracotta"
     ],
+    "resin_brick_slab": [
+        "resin_bricks"
+    ],
+    "resin_brick_stairs": [
+        "resin_bricks"
+    ],
+    "resin_brick_wall": [
+        "resin_bricks"
+    ],
+    "resin_bricks": [
+        "resin_bricks"
+    ],
     "target": [
         "target_side",
         "target_top"
@@ -2007,6 +2062,9 @@
     ],
     "black_wool": [
         "black_wool"
+    ],
+    "chiseled_resin_bricks": [
+        "chiseled_resin_bricks"
     ],
     "dead_bush": [
         "dead_bush"
@@ -2138,6 +2196,9 @@
         "comparator",
         "comparator_on"
     ],
+    "stripped_pale_oak_wood": [
+        "stripped_pale_oak_log"
+    ],
     "dead_brain_coral": [
         "dead_brain_coral"
     ],
@@ -2227,6 +2288,10 @@
     ],
     "packed_ice": [
         "packed_ice"
+    ],
+    "pale_oak_log": [
+        "pale_oak_log_top",
+        "pale_oak_log"
     ],
     "blue_stained_glass": [
         "blue_stained_glass"
@@ -2339,6 +2404,9 @@
     "soul_fire": [
         "soul_fire_1",
         "soul_fire_0"
+    ],
+    "pale_oak_sapling": [
+        "pale_oak_sapling"
     ],
     "red_tulip": [
         "red_tulip"
@@ -2677,6 +2745,9 @@
     "chipped_anvil": [
         "chipped_anvil_top"
     ],
+    "pale_oak_planks": [
+        "pale_oak_planks"
+    ],
     "flower_pot": [
         "flower_pot"
     ],
@@ -2727,6 +2798,9 @@
     ],
     "light_gray_shulker_box": [
         "light_gray_shulker_box"
+    ],
+    "pale_oak_leaves": [
+        "pale_oak_leaves"
     ],
     "tube_coral": [
         "tube_coral"
