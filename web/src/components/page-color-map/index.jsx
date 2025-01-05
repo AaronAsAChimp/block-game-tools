@@ -1,11 +1,7 @@
-import { faQuestion } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { RGBColor } from "shared";
 import { BlockMap } from "../block-map/index.jsx";
 import { BlockSearch } from "../block-search/index.jsx";
-import { MapHelpContent } from "../content/index.jsx";
-import { LazyDialog } from "../lazy-dialog/index.jsx";
 import { ContrastContext } from "../../context/contrast-context.js";
 import { paletteStore } from '../../context/palette-store.js';
 import { findNearest, loadBlocks } from "../../blocks.js";
@@ -17,7 +13,6 @@ import { blockMapOptionsStore } from '../../context/block-map-store.js';
 export function ColorMap() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const palette = useStore(paletteStore);
-	const [helpOpen, setHelpOpen] = useState(false);
 	/** @type {React.MutableRefObject<HTMLDivElement>} */
 	const rootRef = useRef(null);
 	const [labels, setLabels] = useState([]);
@@ -134,12 +129,7 @@ export function ColorMap() {
 				onSelected={selectionChange}
 				onAlphaChange={alphaChange} />
 
-			<BlockSearch value={searchTerm} onChange={searchHandler} blocks={blockMapOptions.blocks} />
-			<button onClick={() => setHelpOpen(true)}><FontAwesomeIcon icon={faQuestion} /></button>
-			
+			<BlockSearch value={searchTerm} onChange={searchHandler} blocks={blockMapOptions.blocks} />			
 		</ContrastContext.Provider>
-		<LazyDialog open={helpOpen} onClose={() => setHelpOpen(false)}>
-			<MapHelpContent />
-		</LazyDialog>
 	</div>;
 }

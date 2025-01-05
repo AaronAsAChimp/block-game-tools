@@ -4,13 +4,20 @@ import AppSideBar from '../../components/AppSideBar.astro';
 import {ColorMap} from '../../components/page-color-map/index'
 import {PaletteSelector} from '../../components/palette-selector/index'
 import {BlockMapSelection} from '../../components/block-map-selection/index'
+import {HelpButton} from '../../components/help-button/index';
+import * as help from '../../md/help/map.md';
+
+const content = help.compiledContent()
 ---
 
 <RightNavLayout title="Block Game Color Map" class="page-map">
 	<ColorMap client:only="react" slot="main" />
 	<AppSideBar title="Color Map" slot="nav">
-		<PaletteSelector client:only="react" />
-		<BlockMapSelection client:only="react" />
+		<HelpButton client:only="react" content={content} slot="buttons" />
+		<div slot="default">
+			<PaletteSelector client:only="react" />
+			<BlockMapSelection client:only="react" />
+		</div>
 	</AppSideBar>
 </RightNavLayout>
 

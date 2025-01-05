@@ -33,33 +33,3 @@ export const AboutContent = lazy(async () => {
 		}
 	}
 });
-
-export const MapHelpContent = lazy(async () => {
-	const markdownContent = await import('../../md/help/map.md');
-	const content = new Writer();
-	
-	await markdownContent.default({}, null, null).render(content);
-
-	return {
-		default: function () {
-			return <div dangerouslySetInnerHTML={{
-				__html: content.getBuffer()
-			}}></div>
-		}
-	}
-});
-
-export const GradientHelpContent = lazy(async () => {
-	const markdownContent = await import('../../md/help/gradient.md');
-	const content = new Writer();
-	
-	await markdownContent.default({}, null, null).render(content);
-
-	return {
-		default: function () {
-			return <div dangerouslySetInnerHTML={{
-				__html: content.getBuffer()
-			}}></div>
-		}
-	}
-});

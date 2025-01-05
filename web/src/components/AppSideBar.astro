@@ -8,6 +8,9 @@ const hasOptions = Astro.slots.has('default');
 		<div class="app-title">
 			{ title }
 		</div>
+		{ Astro.slots.has('buttons')
+			? <slot name="buttons" />
+			: null }
 		<AppMenu client:only="react" />
 	</div>
 
@@ -30,7 +33,7 @@ const hasOptions = Astro.slots.has('default');
 	display: flex;
 	border-bottom: 1px solid var(--layer1-color);
 	padding: 1em 1.5em;
-	gap: 1.2em;
+	gap: 0.6em;
 
 	& .app-title {
 		flex: 1 0 auto;
