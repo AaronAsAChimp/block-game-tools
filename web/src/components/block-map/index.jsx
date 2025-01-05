@@ -1,7 +1,3 @@
-/**
- * @typedef {import('shared/src/block').Block} Block
- */
-
 import { animated, useSpring } from '@react-spring/three';
 import { Billboard, OrbitControls, Text3D } from '@react-three/drei';
 import { Canvas, useLoader, useThree } from '@react-three/fiber';
@@ -140,7 +136,7 @@ const AnimatedBillboard = animated(Billboard);
 
 /**
  * @typedef {Object} SelectionMeshProps
- * @property {Block} block The block to highlight with the mesh.
+ * @property {import('shared/src/block').Block} block The block to highlight with the mesh.
  */
 
 /**
@@ -220,7 +216,7 @@ const LabelsMemoized = memo(Labels);
 
 /**
  * @typedef {Object} BlockMeshProps
- * @property {Block} block The block to make into a mesh.
+ * @property {import('shared/src/block').Block} block The block to make into a mesh.
  * @property {SelectedCallback} onSelect An event handler fired when the block is clicked.
  * @property {() => void} onMouseEnter
  * @property {() => void} onMouseLeave
@@ -287,14 +283,14 @@ function Centerer({boundsObj, onChange, children}) {
 
 /**
  * @callback SelectedCallback
- * @param {Block | null} selected The name of the selected block 
+ * @param {import('shared/src/block').Block | null} selected The name of the selected block 
  */
 
 /**
  * @typedef {Object} BlockMapProps
- * @property {Label[]} labels
- * @property {Block[]} blocks
- * @property {Block | null} selected
+ * @property {import('../../jsx/server.d.ts').Label[]} labels
+ * @property {import('shared/src/block').Block[]} blocks
+ * @property {import('shared/src/block').Block | null} selected
  *   The name of the selected block or null if no selection.
  * @property {SelectedCallback} onSelected
  *   This event is fired when the blockmap changes the selection.

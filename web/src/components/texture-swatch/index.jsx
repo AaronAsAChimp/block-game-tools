@@ -1,4 +1,4 @@
-import { RGBColor } from 'shared/src/color';
+import { RGBColor } from 'shared/src/color.js';
 import { DATA_DIR } from '../../consts';
 
 import { TooltipWrapper } from '../tooltip/index';
@@ -7,12 +7,8 @@ import { useStore } from '@nanostores/react';
 import { paletteStore } from '../../context/palette-store.js';
 
 /**
- * @typedef {import('../../jsx/server.d.ts').Block} Block
- */
-
-/**
  * Make the CSS color from the block.
- * @param  {Block} block The block
+ * @param  {import('shared/src/block').Block} block The block
  * @param  {string} palette The palette
  * @return {string}      THe color
  */
@@ -25,7 +21,7 @@ function cssColor(block, palette) {
 
 /**
  * @typedef {Object} TextureImageProps
- * @property {Block} block The block to display.
+ * @property {import('shared/src/block').Block} block The block to display.
  */
 
 /**
@@ -40,7 +36,7 @@ export function TextureImage({block}) {
 
 /**
  * @typedef {Object} TextureAnimationProps
- * @property {Block} block The block to display.
+ * @property {import('shared/src/block').Block} block The block to display.
  */
 
 /**
@@ -53,7 +49,7 @@ export function TextureAnimation({block}) {
 
 /**
  * @typedef {Object} TextureSwatchProps
- * @property {Block} block The block to display.
+ * @property {import('shared/src/block').Block} block The block to display.
  * @property {string} [title] Additional information
  * @property {boolean} [showColor]
  *   Show the extracted color overlaid on the texture.

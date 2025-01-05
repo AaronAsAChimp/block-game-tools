@@ -1,9 +1,15 @@
-/**
- * @typedef {import('../../jsx/server.d').Block} Block
- */
-
 import { memo } from 'react';
 
+/**
+ * @typedef {Object} BlockListProps
+ * @property {import('shared/src/block').Block[]} blocks The textures to list
+ */
+
+/**
+ * The datalist of texture names.
+ *
+ * @param {BlockListProps} options.blocks [description]
+ */
 function BlockList({blocks}) {
 	return <datalist id="block-list">
 		{ blocks.map((block) => {
@@ -16,7 +22,7 @@ const BlockListMemoized = memo(BlockList);
 
 /**
  * @typedef {Object} BlockSearchProps
- * @property {Block[]} blocks
+ * @property {import('shared/src/block').Block[]} blocks
  * @property {string} value
  * @property {(e: React.ChangeEvent<HTMLInputElement>) => void} onChange
  */

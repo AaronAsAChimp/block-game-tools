@@ -3,6 +3,17 @@ import { createPortal } from "react-dom";
 import { useRef, useState } from "react";
 import styles from './styles.module.css';
 
+/**
+ * @typedef {Object} TooltipWrapperProps
+ * @property {string} title
+ * @property {string} [className]
+ */
+
+/**
+ * A wrapper component that will add a tooltip to the wrapped component.
+ *
+ * @param {import('react').PropsWithChildren<TooltipWrapperProps>} props
+ */
 export function TooltipWrapper({title, className='', children}) {
 	const [xy, setXy] = useState({x: 0, y: 0});
 	const [visible, setVisible] = useState(false);
@@ -26,6 +37,18 @@ export function TooltipWrapper({title, className='', children}) {
 	</div>
 }
 
+/**
+ * @typedef {Object} TooltipProps
+ * @property {string} title
+ * @property {number} x
+ * @property {number} y
+ */
+
+/**
+ * A tooltip.
+ *
+ * @param {TooltipProps} props
+ */
 export function Tooltip({title, x, y}) {
 	return <>{
 		createPortal(

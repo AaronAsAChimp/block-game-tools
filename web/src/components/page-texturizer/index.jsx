@@ -21,14 +21,10 @@ const TextureSwatchMemo = memo(TextureSwatch);
 
 
 /**
- * @typedef {import('shared/src/block').Block} Block
- */
-
-/**
  * @typedef {Object} SwatchGridProps
  * @property {number} width  The width of the grid
  * @property {number} height The height of the grid
- * @property {Block[]} blocks The blocks to display.
+ * @property {import('shared/src/block').Block[]} blocks The blocks to display.
  */
 
 /**
@@ -116,7 +112,7 @@ export function Texturizer() {
 		const region = new SchematicRegion({x: 0, y: 0, z: 0}, {x: width, y: 1, z: height});
 
 		for (let idx = 0; idx < textureBlocks.length; idx++) {
-			/** @type {Block} */
+			/** @type {import('shared/src/block').Block} */
 			const block = textureBlocks[idx];
 			const properties = {};
 

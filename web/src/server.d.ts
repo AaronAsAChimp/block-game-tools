@@ -1,3 +1,4 @@
+import {Block} from 'shared/src/block';
 
 type Label = {
 	name: string,
@@ -9,5 +10,5 @@ type Label = {
 export type BlocksResponse = {
 	minecraft_version: string,
 	labels: Label[],
-	blocks: Blocks[],
+	blocks: Block[],
 }
