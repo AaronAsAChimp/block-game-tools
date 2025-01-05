@@ -14,10 +14,8 @@ const content = help.compiledContent()
 	<ColorMap client:only="react" slot="main" />
 	<AppSideBar title="Color Map" slot="nav">
 		<HelpButton client:only="react" content={content} slot="buttons" />
-		<div slot="default">
-			<PaletteSelector client:only="react" />
-			<BlockMapSelection client:only="react" />
-		</div>
+		<PaletteSelector client:only="react" />
+		<BlockMapSelection client:only="react" />
 	</AppSideBar>
 </RightNavLayout>
 

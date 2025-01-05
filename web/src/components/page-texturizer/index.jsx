@@ -1,9 +1,6 @@
 import { memo, useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { RGBColor } from "shared";
 import { createNoise2D } from "simplex-noise";
-// import { AppTitleBar } from "../app-title-bar";
-import { GradientHelpContent } from "../content";
-import { LazyDialog } from "../lazy-dialog";
 import { TextureSwatch } from "../texture-swatch";
 import { PaletteContext } from "../../context/palette-context";
 import { LitematicaSchematic } from "../../schematic/schematic.js";
@@ -265,8 +262,5 @@ export function Texturizer() {
 			<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={texturizerOptions.width} height={texturizerOptions.height} />
 			<SwatchGrid width={texturizerOptions.width} height={texturizerOptions.height} blocks={textureBlocks} />
 		</PaletteContext.Provider>
-		<LazyDialog open={helpOpen} onClose={() => setHelpOpen(false)}>
-			<GradientHelpContent />
-		</LazyDialog>
 	</>;
 }
