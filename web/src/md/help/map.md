@@ -47,5 +47,4 @@ that will be viewed up close.
 ## Similar Blocks
 
 This section will be populated when inspecting a block. It shows the textures
-that are the most similar in color. If there is a lot of blocks that are
-similar, you can "More..." to see any additional blocks.
+that are the most similar in color.
