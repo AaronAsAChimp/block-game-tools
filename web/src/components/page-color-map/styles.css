@@ -9,3 +9,13 @@
 	background: var(--background-color);
 	transition: background 0.5s;
 }
+
+.map-content {
+	position: relative;
+}
+
+.map-overlay {
+	position: absolute;
+	right: 0;
+	top: 0;
+}

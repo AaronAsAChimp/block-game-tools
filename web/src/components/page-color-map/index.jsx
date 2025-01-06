@@ -120,7 +120,7 @@ export function ColorMap() {
 		}
 	}
 
-	return <div ref={rootRef}>
+	return <div ref={rootRef} className="map-content">
 		<ContrastContext.Provider value={colors}>
 			<BlockMap
 				labels={labels}
@@ -128,8 +128,9 @@ export function ColorMap() {
 				selected={blockMapOptions.selected}
 				onSelected={selectionChange}
 				onAlphaChange={alphaChange} />
-
-			<BlockSearch value={searchTerm} onChange={searchHandler} blocks={blockMapOptions.blocks} />			
+			<div className="map-overlay">
+				<BlockSearch value={searchTerm} onChange={searchHandler} blocks={blockMapOptions.blocks} />
+			</div>
 		</ContrastContext.Provider>
 	</div>;
 }
