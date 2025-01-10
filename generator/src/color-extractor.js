@@ -1,4 +1,4 @@
-import { printQuantizedImage, quantize } from './quantizer.js';
+import { printImage, quantize, quantizedImageBuffer } from './quantizer.js';
 import chalk from 'chalk';
 
 import {RGBColor, RGBAColor, Color} from 'shared';
@@ -115,12 +115,6 @@ export class SaturatedColorExtractor extends ColorExtractor {
 }
 
 
-function toPixel(color) {
-	const {r, g, b} = color;
-
-	return chalk.rgb(r, g, b)('\u2588\u2588')
-}
-
 export class QuantizerColorExtractor extends ColorExtractor {
 	async extract(filename, file) {
 		const mostCommon = quantize(file.data, file.width, file.height)
@@ -130,7 +124,8 @@ export class QuantizerColorExtractor extends ColorExtractor {
 
 		// if (filename.includes('bookshelf')) {
 		// if (filename.includes('rail')) {
-		// 	printQuantizedImage(file.data, file.width, file.height);
+			// const image = quantizedImageBuffer(file.data, file.width, file.height);
+			// printImage(image, file.width, file.height);
 		// 	console.log(mostCommon.map(c => {
 		// 		return `${toPixel(c.color)} - ${toHex(c.color)} - ${c.population}`
 		// 	}).join('\n'));

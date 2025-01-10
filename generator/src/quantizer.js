@@ -317,9 +317,9 @@ export function quantize(pixels, width, height, splits = NUMBER_OF_SPLITS) {
 		.map(vbox => vbox.getRepresentitveColor());
 }
 
-export function printQuantizedImage(pixels, width, height, splits = NUMBER_OF_SPLITS) {
+export function quantizedImageBuffer(pixels, width, height, splits = NUMBER_OF_SPLITS) {
 	const vboxes = splitVBoxes(pixels, width, height, splits);
-	const reconstructed = [];
+	const imageBuffer = new Uint8Array(width * height * 4);
 
 	for (const vbox of vboxes) {
 		const color = vbox.getRepresentitveColor();
@@ -328,32 +328,86 @@ export function printQuantizedImage(pixels, width, height, splits = NUMBER_OF_SP
 
 		for (const pixel of pixels) {
 			const {x, y} = pixel.pos;
-			let row = reconstructed[y];
 
-			if (!row) {
-				row = [];
-				reconstructed[y] = row;
-			}
+			const pos = ((y * width) + x) * 4;
 
-			row[x] = chalk.rgb(rgb.r, rgb.g, rgb.b)('\u2588\u2588')
+			imageBuffer[pos] = rgb.r;
+			imageBuffer[pos + 1] = rgb.g;
+			imageBuffer[pos + 2] = rgb.b;
+			imageBuffer[pos + 3] = 255;
 		}
 
 		// console.table(pixels);
 		// console.log('Average: ' + chalk.rgb(color.color.r, color.color.g, color.color.b)('\u2588') + `(${color.color.r}, ${color.color.g}, ${color.color.b})`)
 	}
 
-	for (const row of reconstructed) {
-		if (row) {
-			for (let x = 0; x < row.length; x++) {
-				if (!row[x]) {
-					row[x] = '  ';
-				}
-			}
+	return imageBuffer;
+}
 
-			console.log(row.join(''));
-		} else {
-			console.log('\n');
+export function printImage(pixels, width, height) {
+	console.log();
+	let lines = '';
+	const scanLines = Math.floor(height / 2) * 2;
+
+	for (let y = 0; y < scanLines; y += 2) {
+		for (let x = 0; x < width; x++) {
+			const posTop = ((y * width) + x) * 4;
+			const posBottom = posTop + (width * 4);
+			const transparentTop = pixels[posTop + 3] < 128;
+			const transparentBottom = pixels[posBottom + 3] < 128;
+
+			if (transparentTop && transparentBottom) {
+				lines += ' ';
+			} else if (transparentBottom) {
+				lines += chalk
+					.rgb(
+						pixels[posTop],
+						pixels[posTop + 1],
+						pixels[posTop + 2]
+					)('\u2580');
+			} else if (transparentTop) {
+				lines += chalk
+					.rgb(
+						pixels[posBottom],
+						pixels[posBottom + 1],
+						pixels[posBottom + 2]
+					)('\u2584');
+			} else {
+				lines += chalk
+					.rgb(
+						pixels[posTop],
+						pixels[posTop + 1],
+						pixels[posTop + 2]
+					)
+					.bgRgb(
+						pixels[posBottom],
+						pixels[posBottom + 1],
+						pixels[posBottom + 2]
+					)('\u2580');
+			}
+		}
+
+		lines += '\n';
+	}
+
+	if (!((height % 2) === 0)) {
+		for (let x = 0; x < width; x++) {
+			const posTop = (((height - 1) * width) + x) * 4;
+			const transparentTop = pixels[posTop + 3] < 128;
+
+			if (transparentTop) {
+				lines += chalk
+						.rgb(
+							pixels[posTop],
+							pixels[posTop + 1],
+							pixels[posTop + 2]
+						)('\u2580');
+			} else {
+				lines += ' '
+			}
 		}
 	}
+
+	console.log(lines);
 }
 
