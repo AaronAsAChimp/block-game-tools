@@ -1,4 +1,7 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { memo } from 'react';
+import styles from './styles.module.css';
 
 /**
  * @typedef {Object} BlockListProps
@@ -31,8 +34,9 @@ const BlockListMemoized = memo(BlockList);
  * @param {BlockSearchProps} options
  */
 export function BlockSearch({blocks, value, onChange}) {
-	return <div>
+	return <label className={styles['block-search']}>
+		<FontAwesomeIcon icon={faMagnifyingGlass} />
 		<input list="block-list" className="block-search" type="search" placeholder="Search texture or hex code" value={value} onChange={onChange} />
 		<BlockListMemoized blocks={blocks} />
-	</div>
+	</label>
 }

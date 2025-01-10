@@ -1,0 +1,24 @@
+.block-search {
+	background: var(--layer1-color);
+	color: var(--layer1-contrast-color);
+	display: flex;
+	font-size: 1.2em;
+	gap: 0.5em;
+	padding: 0.5em 0.8em;
+}
+
+.block-search:focus-within {
+	outline: 4px solid var(--layer1-color);
+	background: var(--layer1-hover);
+	color: var(--layer1-contrast-hover);
+}
+
+.block-search input {
+	background: transparent;
+	border: none;
+	color: inherit;
+}
+
+.block-search input:focus {
+	outline: none;
+}
