@@ -5,7 +5,7 @@ import {Gradient} from '../../components/page-gradient/index';
 import {HelpButton} from '../../components/help-button/index';
 import * as help from '../../md/help/gradient.md';
 
-const content = help.compiledContent()
+const content = await help.compiledContent();
 ---
 <TopNavLayout title="Gradient" class="page-gradient">
 	<Gradient client:only="react" slot="main" />

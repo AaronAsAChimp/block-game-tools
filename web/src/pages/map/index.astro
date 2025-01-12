@@ -7,7 +7,7 @@ import {BlockMapSelection} from '../../components/block-map-selection/index'
 import {HelpButton} from '../../components/help-button/index';
 import * as help from '../../md/help/map.md';
 
-const content = help.compiledContent()
+const content = await help.compiledContent();
 ---
 
 <RightNavLayout title="Block Game Color Map" class="page-map">
