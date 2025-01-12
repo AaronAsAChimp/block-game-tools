@@ -8,6 +8,7 @@ import { BlockLookup, loadBlocks } from "../../blocks";
 import './styles.css';
 import { useStore } from '@nanostores/react';
 import { paletteStore } from '../../context/palette-store';
+import { useThrottle } from '@uidotdev/usehooks';
 
 const MIN_STEPS = 0;
 const DEFAULT_STEPS = 5;
@@ -73,9 +74,12 @@ export function Gradient() {
 		return null;
 	}, [blocks]);
 
+
+	const throttledGradientSteps = useThrottle(gradientSteps, 100);
+
 	useEffect(() => {
 		window.history.replaceState(null, null, '?g=' + buildGradientParam(gradientRef.current, numSteps));
-	}, [gradientSteps])
+	}, [throttledGradientSteps])
 
 	function gradientChange(gradient) {
 		gradientRef.current = gradient;
