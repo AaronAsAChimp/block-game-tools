@@ -20,35 +20,35 @@ export function TexturizerControls() {
 
 	function updateIsMonochrome(e) {
 		texturizerOptionsStore.set({
-			...texturizerOptions,
+			...texturizerOptionsStore.value,
 			isMonochrome: e.target.checked
 		})
 	}
 
 	function updateNoiseScale(e) {
 		texturizerOptionsStore.set({
-			...texturizerOptions,
+			...texturizerOptionsStore.value,
 			noiseScale: +e.target.value
 		})
 	}
 
 	function updateWidth(e) {
 		texturizerOptionsStore.set({
-			...texturizerOptions,
+			...texturizerOptionsStore.value,
 			width: +e.target.value
 		})
 	}
 
 	function updateHeight(e) {
 		texturizerOptionsStore.set({
-			...texturizerOptions,
+			...texturizerOptionsStore.value,
 			height: +e.target.value
 		})
 	}
 
 	function updateDitheringAlgo(e) {
 		texturizerOptionsStore.set({
-			...texturizerOptions,
+			...texturizerOptionsStore.value,
 			ditheringAlgo: e.target.value
 		})
 	}
@@ -58,8 +58,8 @@ export function TexturizerControls() {
      */
 	function updateGradient(gradient) {
 		texturizerOptionsStore.set({
-			...texturizerOptions,
-			gradient: gradient
+			...texturizerOptionsStore.value,
+			gradient: gradient,
 		})
 	}
 

@@ -12,6 +12,7 @@ import { atom } from 'nanostores';
 
 const DEFAULT_SIZE = 16;
 
+/** @type {TexturizerOptions} */
 const TEXTURIZER_DEFAULTS = {
 	isMonochrome: false,
 	noiseScale: 1,
