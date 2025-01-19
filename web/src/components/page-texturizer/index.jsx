@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState, useCallback } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { RGBColor } from "shared";
 import { createNoise2D } from "simplex-noise";
 import { TextureSwatch } from "../texture-swatch";
@@ -83,8 +83,6 @@ export function Texturizer() {
 	const [blocks, setBlocks] = useState([]);
 
 	const palette = useStore(paletteStore);
-
-	const [helpOpen, setHelpOpen] = useState(false);
 
 	function resetNoiser() {
 		noiserRef.current = createNoise2D();
@@ -237,7 +235,7 @@ export function Texturizer() {
 			dither(ditheringAlgo, pixels, palette, blockLookup);
 		}
 
-		console.log(redraws);
+		// console.log(redraws);
 
 		const textureBlocks = new Array(pixels.data.length / 4);
 
