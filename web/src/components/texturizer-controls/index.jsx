@@ -32,6 +32,13 @@ export function TexturizerControls() {
 		})
 	}
 
+	function updateNoiseVersion() {
+		texturizerOptionsStore.set({
+			...texturizerOptionsStore.value,
+			noiseVersion: texturizerOptionsStore.value.noiseVersion + 1
+		})
+	}
+
 	function updateWidth(e) {
 		texturizerOptionsStore.set({
 			...texturizerOptionsStore.value,
@@ -112,5 +119,7 @@ export function TexturizerControls() {
 		<div className={styles['texturizer-gradient']}>
 			<GradientDisplay onGradientChange={updateGradient} initialGradientStops={INITIAL_GRADIENT} />
 		</div>
+
+		<button type="button" onClick={updateNoiseVersion}>Randomize</button>
 	</div>
 }

@@ -4,6 +4,7 @@ import { atom } from 'nanostores';
  * @typedef {Object} TexturizerOptions
  * @property {boolean} isMonochrome
  * @property {number} noiseScale
+ * @property {number} noiseVersion
  * @property {number} width
  * @property {number} height
  * @property {string} ditheringAlgo
@@ -16,6 +17,7 @@ const DEFAULT_SIZE = 16;
 const TEXTURIZER_DEFAULTS = {
 	isMonochrome: false,
 	noiseScale: 1,
+	noiseVersion: 0,
 	width: DEFAULT_SIZE,
 	height: DEFAULT_SIZE,
 	ditheringAlgo: 'floydSteinberg',

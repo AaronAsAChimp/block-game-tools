@@ -79,16 +79,9 @@ export function Texturizer() {
 	const [textureBlocks, setTextureBlocks] = useState(null);
 	const texturizerOptions = useStore(texturizerOptionsStore);
 
-	const [redraws, setRedraws] = useState(0);
 	const [blocks, setBlocks] = useState([]);
 
 	const palette = useStore(paletteStore);
-
-	function resetNoiser() {
-		noiserRef.current = createNoise2D();
-
-		setRedraws(redraws + 1);
-	}
 
 	const downloadSchematicRef = useRef(null);
 
@@ -156,6 +149,10 @@ export function Texturizer() {
 			});
 	}, [])
 
+	useEffect(() => {
+		noiserRef.current = createNoise2D();
+	}, [texturizerOptions.noiseVersion])
+
 
 	const blockLookup = useMemo(() => {
 		if (!(blocks && blocks.length)) {
@@ -202,10 +199,6 @@ export function Texturizer() {
 			return;
 		}
 
-		if (!noiserRef.current) {
-			resetNoiser();
-		}
-
 		const ctx = canvasRef.current.getContext('2d');
 		const pixels = ctx.getImageData(0, 0, width, height);
 		const noiseScale = texturizerOptions.noiseScale;
@@ -249,12 +242,11 @@ export function Texturizer() {
 		setTextureBlocks(textureBlocks);
 
 		ctx.putImageData(pixels, 0, 0);
-	}, [redraws, texturizerOptions, palette, blockLookup])
+	}, [texturizerOptions, palette, blockLookup])
 
 	return <>
 		<PaletteContext.Provider value={palette}>
 			<div className={styles['texturizer-controls']}>
-				<button type="button" onClick={resetNoiser}>Randomize</button>
 				<button ref={downloadSchematicRef} onClick={downloadSchematic}>Download Litematica Schematic</button>
 			</div>
 			<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={texturizerOptions.width} height={texturizerOptions.height} />
