@@ -4,14 +4,11 @@ import { Gradient } from "shared/src/gradient";
 import { GradientKnob } from "../gradient-knob";
 import styles from './styles.module.css';
 
-/**
- * @typedef {[import("shared/src/color").Color, number?]} GradientStop
- */
 
 /**
  * @typedef {Object} GradientDisplayProps
  * @prop {(gradient: Gradient) => void} onGradientChange An event fired when the gradient changes
- * @prop {GradientStop[]} initialGradientStops The gradient stops to initialize the editor with.
+ * @prop {import('shared/src/gradient').SimpleGradientStop[]} initialGradientStops The gradient stops to initialize the editor with.
  */
 
 

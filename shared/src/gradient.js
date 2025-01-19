@@ -1,10 +1,14 @@
 import {Color, GAMMA, RGBColor, LinearRGBColor} from './color.js';
 
 /**
- * @typedef {Object} GradientStop
+ * @typedef {Object} GradientStop The internal representation of a gradient stop.
  * @property {number} offset
  * @property {Color} color
  * @property {LinearRGBColor} linearColor
+ */
+
+/**
+ * @typedef {[Color, number?]} SimpleGradientStop The external representation of a gradient stop.
  */
 
 function clamp(val) {
@@ -253,7 +257,7 @@ function parseSteps(steps) {
  * FFFFFF@20-000000@40-12
  * 
  * @param  {string} colorsParam 
- * @returns {{steps: number, stops: import("../../../components/gradient-display").GradientStop[]}}
+ * @returns {{steps: number, stops: SimpleGradientStop[]}}
  */
 export function parseGradientParam(colorsParam) {
 	if (!colorsParam) {

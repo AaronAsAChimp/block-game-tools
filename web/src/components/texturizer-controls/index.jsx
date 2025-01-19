@@ -8,7 +8,7 @@ import styles from './styles.module.css';
 const DEFAULT_START = 0x000000;
 const DEFAULT_END = 0xFFFFFF;
 
-/** @type {import('..//gradient-display/index.jsx').GradientStop[]} [description] */
+/** @type {import('shared/src/gradient').SimpleGradientStop[]} [description] */
 const INITIAL_GRADIENT = [
 	[RGBColor.fromInteger(DEFAULT_START), 0],
 	[RGBColor.fromInteger(DEFAULT_END), 1]
