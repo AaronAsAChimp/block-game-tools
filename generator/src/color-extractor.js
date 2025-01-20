@@ -1,5 +1,4 @@
 import { printImage, quantize, quantizedImageBuffer } from './quantizer.js';
-import chalk from 'chalk';
 
 import {RGBColor, RGBAColor, Color} from 'shared';
 

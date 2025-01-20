@@ -4,11 +4,50 @@ import { GradientDisplay } from "../gradient-display";
 import { RGBColor } from "shared";
 import { PaletteSelector } from '../palette-selector/index.jsx';
 import styles from './styles.module.css';
+import { useEffect, useState } from 'react';
 
 const DEFAULT_START = 0x000000;
 const DEFAULT_END = 0xFFFFFF;
 
-/** @type {import('shared/src/gradient').SimpleGradientStop[]} [description] */
+
+const BUILTIN_GRADIENTS = {
+	"grayscale": {
+		"display": "Grayscale",
+		"gradient": [
+			{
+				"offset": 0,
+				"color": 0x000000
+			},
+			{
+				"offset": 1,
+				"color": 0xFFFFFF
+			}
+		]
+	},
+	"goldenSunrise": {
+		"display": "Golden Sunrise",
+		"gradient": [
+			{
+				"offset": 0,
+				"color": 0x33252e
+			},
+			{
+				"offset": 0.4437,
+				"color": 0xff9b1b
+			},
+			{
+				"offset": 0.7281,
+				"color": 0xfbd26f
+			},
+			{
+				"offset": 1,
+				"color": 0xffe1b8
+			}
+		]
+	},
+};
+
+/** @type {import('shared/src/gradient').SimpleGradientStop[]}  */
 const INITIAL_GRADIENT = [
 	[RGBColor.fromInteger(DEFAULT_START), 0],
 	[RGBColor.fromInteger(DEFAULT_END), 1]
@@ -17,6 +56,8 @@ const INITIAL_GRADIENT = [
 export function TexturizerControls() {
 
 	const texturizerOptions = useStore(texturizerOptionsStore);
+	const [gradientName, setGradientName] = useState('grayscale');
+	const [presetGradient, setPresetGradient] = useState(INITIAL_GRADIENT);
 
 	function updateIsMonochrome(e) {
 		texturizerOptionsStore.set({
@@ -70,6 +111,25 @@ export function TexturizerControls() {
 		})
 	}
 
+	useEffect(() => {
+		if (gradientName) {
+			const gradientPreset = BUILTIN_GRADIENTS[gradientName];
+			const stops = new Array(gradientPreset.gradient.length);
+
+			for (let i = 0; i < gradientPreset.gradient.length; i++) {
+				const stop = gradientPreset.gradient[i];
+
+				stops[i] = [
+					RGBColor.fromInteger(stop.color),
+					stop.offset
+				]
+			}
+
+			setPresetGradient(stops);
+		}
+
+	}, [gradientName])
+
 	return <div className={styles['texturizer-controls'] + ' ' + styles['form-controls']}>
 		<PaletteSelector />
 		<label className={styles['checkbox-control']}>
@@ -110,14 +170,15 @@ export function TexturizerControls() {
 		</label>
 		<label>
 			Gradient:
-{/*					<select value={gradientName} onInput={(e) => setGradientName(e.target.value)}>
+			<select value={gradientName ?? ''} onInput={(e) => setGradientName(e.target.value)}>
+				<option value="" key=""></option>
 				{ Object.entries(BUILTIN_GRADIENTS).map(([name, gradient]) => {
 					return <option value={name} key={name}>{ gradient.display }</option>
 				}) }
-			</select>*/}
+			</select>
 		</label>
 		<div className={styles['texturizer-gradient']}>
-			<GradientDisplay onGradientChange={updateGradient} initialGradientStops={INITIAL_GRADIENT} />
+			<GradientDisplay onGradientChange={updateGradient} initialGradientStops={presetGradient} />
 		</div>
 
 		<button type="button" onClick={updateNoiseVersion}>Randomize</button>
