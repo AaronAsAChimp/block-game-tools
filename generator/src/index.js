@@ -14,6 +14,8 @@ import { BasicColorExtractor, QuantizerColorExtractor, SaturatedColorExtractor }
 import { buildTintMap, tintTexture } from './color-shift.js';
 import { OBJFile } from './objfile.js';
 import { createAnimatedTexture } from "./animated-texture.js";
+import { Tetrahedralization, writeTetrahedron } from './delaunay.js';
+import chalk from 'chalk';
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
@@ -310,6 +312,13 @@ await fs.promises.mkdir(extractedTexturesPath, {
 });
 
 //
+// Generate the voids
+// 
+
+const voidsBbox = bounds.toBoundingBox3d();
+const tetrahedralization = new Tetrahedralization(voidsBbox);
+
+//
 // Build the block data
 //
 
@@ -371,6 +380,10 @@ for await (const filename of walk(dirPath)) {
 				mostSaturated: buildPaletteEntry(palette.mostSaturated),
 			}
 		});
+
+		const average = palette.average.toLabColor();
+
+		tetrahedralization.add([average.a, average.l, average.b]);
 
 	} else {
 		console.log('No color:', filename);
@@ -443,34 +456,62 @@ function drawLine(start, end, steps) {
 	return points;
 }
 
-const objFile = new OBJFile();
+const boundsObj = new OBJFile();
 const STEPS = 32;
 
 // Front Face
 
-objFile.line(drawLine(black, red, STEPS));
-objFile.line(drawLine(red, yellow, STEPS));
-objFile.line(drawLine(yellow, green, STEPS));
-objFile.line(drawLine(green, black, STEPS));
+boundsObj.line(drawLine(black, red, STEPS));
+boundsObj.line(drawLine(red, yellow, STEPS));
+boundsObj.line(drawLine(yellow, green, STEPS));
+boundsObj.line(drawLine(green, black, STEPS));
 
 // Back Face
 
-objFile.line(drawLine(blue, magenta, STEPS));
-objFile.line(drawLine(magenta, white, STEPS));
-objFile.line(drawLine(white, cyan, STEPS));
-objFile.line(drawLine(cyan, blue, STEPS));
+boundsObj.line(drawLine(blue, magenta, STEPS));
+boundsObj.line(drawLine(magenta, white, STEPS));
+boundsObj.line(drawLine(white, cyan, STEPS));
+boundsObj.line(drawLine(cyan, blue, STEPS));
 
 // Side Faces
 
-objFile.line(drawLine(black, blue, STEPS));
-objFile.line(drawLine(red, magenta, STEPS));
-objFile.line(drawLine(yellow, white, STEPS));
-objFile.line(drawLine(green, cyan, STEPS));
+boundsObj.line(drawLine(black, blue, STEPS));
+boundsObj.line(drawLine(red, magenta, STEPS));
+boundsObj.line(drawLine(yellow, white, STEPS));
+boundsObj.line(drawLine(green, cyan, STEPS));
 
 
-const objOutput = fs.createWriteStream(path.join(extractPath, `bounds.obj`));
+const boundsObjOutput = fs.createWriteStream(path.join(extractPath, `bounds.obj`));
 
-objOutput.write(objFile.toString());
-objOutput.close();
+boundsObjOutput.write(boundsObj.toString());
+boundsObjOutput.close();
 
+// Write out voids
 
+const tetras = tetrahedralization.getTetrahedrons();
+const meshDir = path.join(extractPath, '/meshes');
+
+fs.promises.mkdir(meshDir, {
+	recursive: true
+});
+
+tetras.sort((a, b) => {
+	return b.volume() - a.volume();
+});
+
+const topTetras = tetras.slice(0, 5);
+
+for (let i = 0; i < topTetras.length; i++) {
+	const objfile = new OBJFile();
+	writeTetrahedron(objfile, topTetras[i]);
+	const centroid = topTetras[i].centroid();
+	const missingColor = new LabColor(centroid[1], centroid[0], centroid[2]);
+	const missingColorRgb = missingColor.toRGBColor();
+
+	// console.log(missingColorRgb);
+
+	console.log(chalk.rgb(Math.floor(missingColorRgb.r), Math.floor(missingColorRgb.g), Math.floor(missingColorRgb.b))('\u2588'));
+	console.log('Missing color', missingColorRgb.toCSS());
+
+	await fs.promises.writeFile(path.join(meshDir, `void-${i}.obj`), objfile.toString());
+}

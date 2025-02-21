@@ -379,5 +379,35 @@ export class LabColor extends Color {
 		this.a = a;
 		this.b = b;
 	}
+
+	toXYZColor() {
+		const l = ( this.l + 16 ) / 116;
+		const a = this.a / 500 + l;
+		const b = l - this.b / 200;
+
+		const [x, y, z] = [l, a, b].map((v, i) => {
+			return D65[i] * (Math.pow(v, 3) > 0.008856 ? Math.pow(v, 3) : ( v - 16 / 116 ) / 7.787);
+		});
+
+		return new XYZColor(
+			x / 100,
+			y / 100,
+			z / 100
+		);
+	}
+
+	toRGBColor() {
+		const xyz = this.toXYZColor();
+
+		const rLinear = xyz.x *  3.2406 + xyz.y * -1.5372 + xyz.z * -0.4986;
+		const gLinear = xyz.x * -0.9689 + xyz.y *  1.8758 + xyz.z *  0.0415;
+		const bLinear = xyz.x *  0.0557 + xyz.y * -0.2040 + xyz.z *  1.0570;
+
+		const r = transfer(rLinear) * 255;
+		const g = transfer(gLinear) * 255;
+		const b = transfer(bLinear) * 255;
+
+		return new RGBColor(r, g, b);
+	}
 }
 
