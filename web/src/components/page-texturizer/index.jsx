@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { RGBColor } from "shared";
 import { createNoise2D } from "simplex-noise";
 import { TextureSwatch } from "../texture-swatch";
@@ -6,8 +6,9 @@ import { PaletteContext } from "../../context/palette-context";
 import { LitematicaSchematic } from "../../schematic/schematic.js";
 import { SchematicRegion } from "../../schematic/schematic-region.js";
 import { BlockLookup, loadBlocks } from "../../blocks";
-import { coordToIndex, dither, ordered } from "../../dithering";
+import { coordToIndex } from "../../dithering";
 import { paletteStore } from '../../context/palette-store';
+import { imageAsBlocks } from '../../image.js';
 
 import styles from './styles.module.css';
 import { useStore } from '@nanostores/react';
@@ -216,28 +217,7 @@ export function Texturizer() {
 			}
 		}
 
-		const ditheringAlgo = texturizerOptions.ditheringAlgo;
-
-		if (ditheringAlgo === 'ordered2') {
-			ordered(2, pixels, palette, blockLookup);
-		} else if (ditheringAlgo === 'ordered4') {			
-			ordered(4, pixels, palette, blockLookup);
-		} else if (ditheringAlgo === 'ordered8') {			
-			ordered(8, pixels, palette, blockLookup);
-		} else {
-			dither(ditheringAlgo, pixels, palette, blockLookup);
-		}
-
-		// console.log(redraws);
-
-		const textureBlocks = new Array(pixels.data.length / 4);
-
-		for (let pixelIdx = 0; pixelIdx < pixels.data.length / 4; pixelIdx++) {
-			const red = pixelIdx * 4;
-			const blockColor = new RGBColor(pixels.data[red], pixels.data[red + 1], pixels.data[red + 2]);
-
-			textureBlocks[pixelIdx] = blockLookup.find(blockColor, palette).block;
-		}
+		const textureBlocks = imageAsBlocks(pixels, palette, texturizerOptions.ditheringAlgo, blockLookup);
 
 		setTextureBlocks(textureBlocks);
 

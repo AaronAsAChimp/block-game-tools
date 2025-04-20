@@ -1,0 +1,13 @@
+---
+import RightNavLayout from '../../layouts/RightNavLayout.astro';
+import AppSideBar from '../../components/AppSideBar.astro';
+import {ArtBlocker} from '../../components/page-art/index'
+import {ArtControls} from '../../components/controls-art/index'
+---
+<RightNavLayout title="Art Generator" class="page-texturizer">
+	<ArtBlocker client:only="react" slot="main" />
+	<AppSideBar title="Art Generator" slot="nav">
+		<ArtControls client:only="react" />
+	</AppSideBar>
+</RightNavLayout>
+

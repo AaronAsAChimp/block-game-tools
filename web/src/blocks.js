@@ -1,8 +1,11 @@
 import { DATA_DIR } from './consts.js';
-/**
- * @typedef {import('shared/src/block.js').Block} Block
- */
 
+
+/**
+ * @typedef {Object} BlockMatch
+ * @property {number} magnitude How close is the match, the distance squared.
+ * @property {import('shared/src/block.js').Block} block The matched block
+ */
 
 
 /**
@@ -31,6 +34,16 @@ function distanceSquared(pos1, pos2) {
 		(delta.b * delta.b);
 }
 
+
+/**
+ * Finds blocks that are close in color to the supplied block.
+ *
+ * @param {import('shared/src/block.js').Block} block The block to search for.
+ * @param {import('shared/src/block.js').Block[]} blocks The blocks to search.
+ * @param {string} paletteEntry The palette name
+ * @param {number} radius the color to find in `blocks`
+ * @returns {BlockMatch[]}
+ */
 export function findNear(block, blocks, paletteEntry, radius) {
 	const radiusSquared = radius * radius;
 	const pos = block.palette[paletteEntry].lab;
@@ -44,15 +57,15 @@ export function findNear(block, blocks, paletteEntry, radius) {
 
 			if (dist < radiusSquared) {
 				near.push({
-					distSquared: dist,
-					candidate
+					magnitude: dist,
+					block: candidate
 				});
 			}
 		}
 	}
 
 	near.sort((a, b) => {
-		return a.distSquared - b.distSquared;
+		return a.magnitude - b.magnitude;
 	});
 
 	return near;
@@ -62,7 +75,10 @@ export function findNear(block, blocks, paletteEntry, radius) {
  * Like findNear but finds the one block that is the closest or null if there
  * are none.
  *
- * @returns {Block}
+ * @param {import('shared/src/block.js').Block[]} blocks The blocks to search.
+ * @param {string} paletteEntry The palette name
+ * @param {import('shared/src/color.js').LabColor} pos the color to find in `blocks`
+ * @returns {import('shared/src/block.js').Block}
  */
 export function findNearest(blocks, paletteEntry, pos) {
 	let nearest = null;
@@ -84,24 +100,18 @@ export function findNearest(blocks, paletteEntry, pos) {
 	return nearest;
 }
 
-/**
- * @typedef {Object} BlockMatch
- * @property {number} magnitude How close is the match
- * @property {Block} block The matched block
- */
-
 
 export class BlockLookup {
 	/** @type {{[key: string]: BlockMatch[]}} The blocks organized for fast look up based on RGB */
 	#cache = {};
 
-	/** @type {Block[]} The unprocessed blocks */
+	/** @type {import('shared/src/block.js').Block[]} The unprocessed blocks */
 	#blocks = [];
 
 	/**
 	 * Construct a new BlockLookup
 	 *
-	 * @param  {Block[]} blocks The initial set of blocks.
+	 * @param  {import('shared/src/block.js').Block[]} blocks The initial set of blocks.
 	 */
 	constructor(blocks) {
 		if (blocks.length === 0) {
@@ -111,6 +121,14 @@ export class BlockLookup {
 		this.#blocks = blocks;
 	}
 
+	/**
+	 * Find a block in the lookup, uncached
+	 *
+	 * @param  {import('shared').Color} color   The color to look up
+	 * @param  {string} palette The palette to use
+	 *
+	 * @return {BlockMatch}
+	 */
 	#findBlock(color, palette) {
 		const lab = color.toLabColor();
 		const block = findNearest(this.#blocks, palette, lab);
@@ -123,7 +141,7 @@ export class BlockLookup {
 
 	/**
 	 * Find the closest block for the given color.
-	 * @param  {import('shared/src/color').Color} color The color.
+	 * @param  {import('shared').Color} color The color.
 	 * @param  {string} palette The palette for the chosen block.
 	 * @return {BlockMatch}       The block.
 	 */
@@ -137,7 +155,6 @@ export class BlockLookup {
 
 		let block = this.#cache[palette][colorInt];
 
-
 		if (!block) {
 			block = this.#findBlock(color, palette);
 			this.#cache[palette][colorInt] = block;
@@ -149,7 +166,7 @@ export class BlockLookup {
 	/**
 	 * Get all of the colors for the given palette.
 	 * @param  {string} palette The palette.
-	 * @return {import('shared/src/color').Color[]}  The colors
+	 * @return {import('shared').Color[]}  The colors
 	 */
 	getPaletteColors(palette) {
 		return this.#blocks.map(block => block.palette[palette]);

@@ -1,4 +1,4 @@
-import { faBars, faCircleInfo, faCubes, faGears, faHouse, faRulerHorizontal, faXmark, faWater } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCircleInfo, faCubes, faGears, faHouse, faRulerHorizontal, faXmark, faWater, faPaintbrush } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { createPortal } from "react-dom";
@@ -46,6 +46,7 @@ export function AppMenu() {
 				<AppMenuLink href="/map/">Color Map <FontAwesomeIcon icon={faCubes} /></AppMenuLink>
 				<AppMenuLink href="/gradient/">Gradient Editor <FontAwesomeIcon icon={faRulerHorizontal} /></AppMenuLink>
 				<AppMenuLink href="/texturizer/">Texturizer <FontAwesomeIcon icon={faWater} /></AppMenuLink>
+				<AppMenuLink href="/art/">Art Generator <FontAwesomeIcon icon={faPaintbrush} /></AppMenuLink>
 				<AppMenuLink href="/data/">Data Manager <FontAwesomeIcon icon={faGears} /></AppMenuLink>
 				<AppMenuButton onClick={openAboutDialog}>About <FontAwesomeIcon icon={faCircleInfo} /></AppMenuButton>
 			</AppMenuSlideout>,

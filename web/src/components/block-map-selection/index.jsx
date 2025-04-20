@@ -24,7 +24,7 @@ export function BlockMapSelection() {
 		const inRange = findNear(blockMapOptions.selected, blockMapOptions.blocks, palette, SELECTION_RADIUS);
 
 		for (let i = 0; i < inRange.length; i++) {
-			if (inRange[i].candidate.name === blockMapOptions.selected.name) {
+			if (inRange[i].block.name === blockMapOptions.selected.name) {
 				inRange.splice(i, 1);
 				break;
 			}
@@ -41,7 +41,7 @@ export function BlockMapSelection() {
 
 			<h3>Similar Blocks</h3>
 			<div className="similar">
-				{ nearest.map(block => <TextureSwatch block={block.candidate} key={block.candidate.name} />) }
+				{ nearest.map(block => <TextureSwatch block={block.block} key={block.block.name} />) }
 			</div>
 		</div> :
 		<p>
