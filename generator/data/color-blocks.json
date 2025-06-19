@@ -1,32 +1,32 @@
 {
 	"constant": [
-		"birch_leaves",
-		"spruce_leaves",
-		"lily_pad",
 		"attached_melon_stem",
-		"attached_pumpkin_stem"
-	],
-	"grass": [
-		"grass_block",
-		"grass",
-		"fern",
-		"tall_grass",
-		"short_grass",
-		"large_fern",
-		"potted_fern",
-		"sugar_cane"
+		"attached_pumpkin_stem",
+		"birch_leaves",
+		"lily_pad",
+		"spruce_leaves"
 	],
 	"foliage": [
-		"oak_leaves",
-		"jungle_leaves",
 		"acacia_leaves",
 		"dark_oak_leaves",
+		"jungle_leaves",
 		"mangrove_leaves",
+		"oak_leaves",
 		"vine"
 	],
+	"grass": [
+		"fern",
+		"grass",
+		"grass_block",
+		"large_fern",
+		"potted_fern",
+		"short_grass",
+		"sugar_cane",
+		"tall_grass"
+	],
 	"stem": [
-		"pumpkin_stem",
-		"melon_stem"
+		"melon_stem",
+		"pumpkin_stem"
 	],
 	"water": [
 		"water"
