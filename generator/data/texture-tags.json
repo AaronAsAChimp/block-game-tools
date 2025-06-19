@@ -526,8 +526,16 @@
         "model:block",
         "unobtainable"
     ],
+    "bush": [
+        "direction:side",
+        "model:flower"
+    ],
     "cactus_bottom": [
         "direction:bottom",
+        "model:other"
+    ],
+    "cactus_flower": [
+        "direction:side",
         "model:other"
     ],
     "cactus_side": [
@@ -1024,19 +1032,28 @@
         "direction:any",
         "model:block"
     ],
-    "creaking_heart_active": [
+    "creaking_heart_awake": [
         "direction:any",
         "model:block",
         "unobtainable"
+    ],
+    "creaking_heart_dormant": [
+        "direction:any",
+        "direction:side",
+        "model:block"
     ],
     "creaking_heart_top": [
         "direction:any",
         "model:block"
     ],
-    "creaking_heart_top_active": [
+    "creaking_heart_top_awake": [
         "direction:any",
         "model:block",
         "unobtainable"
+    ],
+    "creaking_heart_top_dormant": [
+        "direction:any",
+        "model:block"
     ],
     "crimson_door_bottom": [
         "direction:side",
@@ -1363,6 +1380,114 @@
     "dragon_egg": [
         "model:other"
     ],
+    "dried_ghast_hydration_0_bottom": [
+        "direction:bottom",
+        "model:other"
+    ],
+    "dried_ghast_hydration_0_east": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_0_north": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_0_south": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_0_tentacles": [
+        "model:other"
+    ],
+    "dried_ghast_hydration_0_top": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_0_west": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_1_bottom": [
+        "direction:bottom",
+        "model:other"
+    ],
+    "dried_ghast_hydration_1_east": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_1_north": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_1_south": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_1_tentacles": [
+        "model:other"
+    ],
+    "dried_ghast_hydration_1_top": [
+        "direction:top",
+        "model:other"
+    ],
+    "dried_ghast_hydration_1_west": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_2_bottom": [
+        "direction:bottom",
+        "model:other"
+    ],
+    "dried_ghast_hydration_2_east": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_2_north": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_2_south": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_2_tentacles": [
+        "model:other"
+    ],
+    "dried_ghast_hydration_2_top": [
+        "direction:top",
+        "model:other"
+    ],
+    "dried_ghast_hydration_2_west": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_3_bottom": [
+        "direction:bottom",
+        "model:other"
+    ],
+    "dried_ghast_hydration_3_east": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_3_north": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_3_south": [
+        "direction:side",
+        "model:other"
+    ],
+    "dried_ghast_hydration_3_tentacles": [
+        "model:other"
+    ],
+    "dried_ghast_hydration_3_top": [
+        "direction:top",
+        "model:other"
+    ],
+    "dried_ghast_hydration_3_west": [
+        "direction:side",
+        "model:other"
+    ],
     "dried_kelp_bottom": [
         "direction:bottom",
         "model:block"
@@ -1507,6 +1632,14 @@
     "fire_coral_fan": [
         "direction:side",
         "model:other"
+    ],
+    "firefly_bush": [
+        "direction:side",
+        "model:flower"
+    ],
+    "firefly_bush_emissive": [
+        "model:flower",
+        "transparent"
     ],
     "fletching_table_front": [
         "direction:side",
@@ -1929,6 +2062,10 @@
     "lava_still": [
         "direction:any",
         "model:farmland"
+    ],
+    "leaf_litter": [
+        "direction:top",
+        "model:on-ground"
     ],
     "lectern_base": [
         "model:other"
@@ -3269,6 +3406,10 @@
         "direction:side",
         "model:flower"
     ],
+    "short_dry_grass": [
+        "direction:side",
+        "model:flower"
+    ],
     "short_grass": [
         "direction:side",
         "model:flower"
@@ -3730,6 +3871,10 @@
         "direction:side",
         "model:flower"
     ],
+    "tall_dry_grass": [
+        "direction:side",
+        "model:flower"
+    ],
     "tall_grass_bottom": [
         "model:flower",
         "direction:side"
@@ -3757,6 +3902,29 @@
     "terracotta": [
         "direction:any",
         "model:block"
+    ],
+    "test_block_accept": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "test_block_fail": [
+        "direction:any",
+        "model:block"
+    ],
+    "test_block_log": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "test_block_start": [
+        "direction:any",
+        "model:block",
+        "unobtainable"
+    ],
+    "test_instance_block": [
+        "direction:any",
+        "model:other"
     ],
     "tinted_glass": [
         "direction:any",
@@ -4181,6 +4349,14 @@
     "white_wool": [
         "direction:any",
         "model:block"
+    ],
+    "wildflowers": [
+        "direction:top",
+        "model:on-ground"
+    ],
+    "wildflowers_stem": [
+        "direction:side",
+        "model:on-ground"
     ],
     "wither_rose": [
         "direction:side",
