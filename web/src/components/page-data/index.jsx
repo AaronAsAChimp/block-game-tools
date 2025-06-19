@@ -68,7 +68,7 @@ function useQueue(initialItems) {
 			return current;
 		},
 		function init(items) {
-			setQueue(items);
+			setQueue(items.slice(1));
 			setCurrent(items[0]);
 		}
 	];
