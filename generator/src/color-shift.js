@@ -11,6 +11,7 @@ const BLOCK_COLORS = {
     // most common biome.
 	'grass': RGBColor.fromInteger(0x79C05A),
 	'foliage': RGBColor.fromInteger(0x59AE30),
+    'dry_foliage': RGBColor.fromInteger(0xA36D46),
 	'water': RGBColor.fromInteger(0x3F76E4),
 
     // The color for the stem at growth stage 7, the stage it will stay

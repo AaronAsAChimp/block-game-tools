@@ -14,7 +14,11 @@
 		"oak_leaves",
 		"vine"
 	],
+	"dry_foliage": [
+		"leaf_litter"	
+	],
 	"grass": [
+		"bush",
 		"fern",
 		"grass",
 		"grass_block",
