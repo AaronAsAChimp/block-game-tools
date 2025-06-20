@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@astrojs/react": "4.2",
+    "@astrojs/sitemap": "^3.4.1",
     "@fontsource-variable/bitter": "^5.2.6",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
