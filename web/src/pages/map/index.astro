@@ -10,7 +10,7 @@ import * as help from '../../md/help/map.md';
 const content = await help.compiledContent();
 ---
 
-<RightNavLayout title="Block Game Color Map" class="page-map">
+<RightNavLayout title="Color Map - Block Game Tools - See all the colors of Minecraft" class="page-map">
 	<ColorMap client:only="react" slot="main" />
 	<AppSideBar title="Color Map" slot="nav">
 		<HelpButton client:only="react" content={content} slot="buttons" />
