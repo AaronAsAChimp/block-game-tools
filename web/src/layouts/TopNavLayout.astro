@@ -1,5 +1,6 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from './BaseLayout.astro';
+import AppFooter from '../components/AppFooter.astro';
 
 interface Props {
 	title: string;
@@ -19,22 +20,22 @@ const { title, class: className } = Astro.props;
 		<div class={`main ${ className }`}>
 			<slot name="main" />
 		</div>
+		<div class="footer">
+			<AppFooter />
+		</div>
 	</div>
 </BaseLayout>
 <style>
 	.top-nav-layout {
-/*		display: flex;*/
-/*		height: 100vh;*/
+		display: grid;
+		grid-template-rows: auto 1fr auto;
 		width: 100vw;
+		height: 100vw;
 
 		& .main {
-/*			flex: 1 1 auto;*/
-/*			overflow: auto;*/
 		}
 
 		& .top-nav {
-/*			flex: 0 0 auto;*/
-/*			width: 20em;*/
 			border-bottom: 1px solid var(--layer1-color);
 		}
 
