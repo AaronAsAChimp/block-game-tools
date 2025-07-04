@@ -2,20 +2,37 @@
 import NoNavLayout from '../layouts/NoNavLayout.astro';
 import AppTitleBar from '../components/AppTitleBar.astro';
 import AppTiles from '../components/AppTiles.astro';
+import AppFooter from '../components/AppFooter.astro';
 ---
 
 <NoNavLayout title="Block Game Tools - A selection of tools for Minecraft builders" class="page-home">
-	<AppTitleBar title=""></AppTitleBar>
-	<div class="home-title">
-		<h1>Block Game Tools</h1>
-		<p>A selection of tools for Minecraft builders. </p>
-		<AppTiles />
+	<div class="home-layout">
+		<div class="hero">
+			<AppTitleBar title=""></AppTitleBar>
+			<div class="home-title">
+				<h1>Block Game Tools</h1>
+				<p>A selection of tools for Minecraft builders.</p>
+				<AppTiles />
+			</div>
+		</div>
+		<div class="footer">
+			<AppFooter />
+		</div>
 	</div>
 </NoNavLayout>
 
 <style>
-.home-title {
-	width: 80vw;
-	margin: auto;
+.home-layout {
+	display: grid;
+	height: 100vh;
+	grid-template-rows: 1fr auto;
+
+	& .hero {
+	}
+
+	& .home-title {
+		width: 80vw;
+		margin: 0 auto 4em;
+	}
 }
 </style>
