@@ -1,4 +1,5 @@
 ---
+import AppFooter from '../components/AppFooter.astro';
 import BaseLayout from './BaseLayout.astro';
 
 interface Props {
@@ -16,11 +17,13 @@ const { title, class: className } = Astro.props;
 		</div>
 		<nav class="right-nav">
 			<slot name="nav" />
+			<AppFooter layout="vertical" />
 		</nav>
 	</div>
 </BaseLayout>
 <style>
 	.right-nav-layout {
+		container-type: size;
 		display: flex;
 		height: 100vh;
 		width: 100vw;
@@ -31,9 +34,16 @@ const { title, class: className } = Astro.props;
 		}
 
 		& .right-nav {
+			display: grid;
+			grid-template-rows: 1fr auto;
+			overflow: auto;			
 			flex: 0 0 auto;
 			width: 20em;
 			border-left: 1px solid var(--layer1-color);
+
+			& div {
+				color: red;
+			}
 		}
 	}
 </style>

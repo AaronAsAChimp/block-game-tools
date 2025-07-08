@@ -1,12 +1,12 @@
 ---
-import {AppMenu} from './app-menu/index.jsx';
 import {MC_VERSION} from 'shared';
 import FontAwesomeIcon from './FontAwesomeIcon.astro';
 import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
 
-const {title} = Astro.props;
+const {layout} = Astro.props;
+
 ---
-<div class="app-footer">
+<div class={['app-footer', 'layout-' + (layout ?? 'horizontal' )].join(' ')}>
 	<div class="community-links">
 		<div class="community-icon">
 			<FontAwesomeIcon icon={faGithubAlt} />
@@ -14,26 +14,26 @@ const {title} = Astro.props;
 		<a href="https://github.com/AaronAsAChimp/block-game-tools" class="app-src">Source</a>
 		<a href="https://github.com/AaronAsAChimp/block-game-tools/issues" class="app-issues">Issues</a>
 	</div>
-	<div class="version">Data and textures from Minecraft { MC_VERSION }</div>
+	<div class="version">Data and textures from Minecraft&nbsp;{ MC_VERSION }</div>
 	<div class="disclaimer">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</div>
 </div>
 <style>
 .app-footer {
-	display: flex;
-	flex-direction: row;
+	display: grid;
 	gap: 2em;
 	margin: 2em;
 	align-items: center;
-
 	color: color-mix(in srgb, var(--layer1-contrast-color), transparent 70%);
+	grid-template-areas: "community version disc";
 
 	& .community-links {
+		grid-area: community;
 		display: grid;
 		grid-template-areas:
 			"icon srclink"
-			"icon issuelink"
-			"version version";
+			"icon issuelink";
 		align-items: center;
+		grid-template-columns: 4em auto;
 	}
 
 	& .community-links a {
@@ -62,10 +62,19 @@ const {title} = Astro.props;
 	}
 
 	& .version {
+		grid-area: version;
 	}
 
 	& .disclaimer {
-		/*opacity: 0.4;*/
+		grid-area: disc;
 	}
 }
+
+.app-footer.layout-vertical {
+	grid-template-areas:
+		"community version"
+		"disc disc";
+	gap: 0.6em;
+}
+
 </style>
