@@ -4,9 +4,14 @@ Starting the server:
 npm -w web start
 ```
 
-Minecraft JAR files should be placed in `jars/[version]/minecraft-[version]-client.jar`.
+Load the JAR files with:
+
+```bash
+npm run load-versions
+```
 
 Generating the data:
+
 ```bash
 npm run generator
 ```

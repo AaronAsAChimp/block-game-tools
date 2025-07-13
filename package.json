@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"load-versions": "node loader/src/index.js",
+		"load-versions": "node loader/src/index.ts",
 		"generator": "node generator/src/index.js"
 	},
 	"workspaces": [
