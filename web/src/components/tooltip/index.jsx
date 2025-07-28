@@ -15,12 +15,25 @@ import styles from './styles.module.css';
  * @param {import('react').PropsWithChildren<TooltipWrapperProps>} props
  */
 export function TooltipWrapper({title, className='', children}) {
-	const [xy, setXy] = useState({x: 0, y: 0});
 	const [visible, setVisible] = useState(false);
-	const wrapperRef = useRef();
+	/** @type {import('react').MutableRefObject<HTMLDivElement>} */
+	const tooltipRef = useRef();
 
 	function updateXy(e) {
-		setXy({x: e.pageX, y: e.pageY});
+		if (tooltipRef.current && tooltipRef.current instanceof HTMLElement) {
+			const bodyRect = tooltipRef.current.getBoundingClientRect();
+			const windowWidth = window.innerWidth;
+
+			tooltipRef.current.style.top = e.pageY + 'px';
+
+			if ((e.pageX + bodyRect.width) > windowWidth) {
+				tooltipRef.current.style.right = (windowWidth - e.pageX + 20) + 'px';
+				tooltipRef.current.style.left = null;
+			} else {
+				tooltipRef.current.style.right = null;	
+				tooltipRef.current.style.left = e.pageX + 'px';	
+			}
+		}
 	}
 
 	function showTooltip() {
@@ -28,32 +41,14 @@ export function TooltipWrapper({title, className='', children}) {
 	}
 
 	function hideTooltip() {
-		setVisible(false)
+		setVisible(false);
 	}
 
-	return <div className={className} ref={wrapperRef} onMouseEnter={showTooltip} onMouseLeave={hideTooltip} onMouseMove={updateXy}>
+	return <div className={className} onMouseEnter={showTooltip} onMouseLeave={hideTooltip} onMouseMove={updateXy}>
 		{ children }
-		{ (title && visible) ? <Tooltip title={title} x={xy.x} y={xy.y} /> : null }
-	</div>
-}
-
-/**
- * @typedef {Object} TooltipProps
- * @property {string} title
- * @property {number} x
- * @property {number} y
- */
-
-/**
- * A tooltip.
- *
- * @param {TooltipProps} props
- */
-export function Tooltip({title, x, y}) {
-	return <>{
-		createPortal(
-			<div className={styles['info-tooltip']} style={{top: y + 'px', left: x + 'px'}}>{ title }</div>,
+		{ (title && visible) ? createPortal(
+			<div ref={tooltipRef} className={styles['info-tooltip']}>{title}</div>,
 			document.body
-		)
-	}</>
+		) : null }
+	</div>
 }
