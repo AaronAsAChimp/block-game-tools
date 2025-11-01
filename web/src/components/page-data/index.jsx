@@ -24,6 +24,7 @@ const TEXTURE_TAGS = [
 	"model:trapdoor",
 	"model:farmland",
 	"model:candle",
+	"model:shelf",
 	"direction:any",
 	"direction:top",
 	"direction:bottom",

@@ -148,6 +148,9 @@
         "chorus_flower_dead",
         "chorus_flower"
     ],
+    "acacia_shelf": [
+        "acacia_shelf"
+    ],
     "chiseled_quartz_block": [
         "chiseled_quartz_block",
         "chiseled_quartz_block_top"
@@ -302,6 +305,12 @@
         "crafter_east",
         "crafter_east_triggered"
     ],
+    "copper_bars": [
+        "copper_bars"
+    ],
+    "waxed_copper_bars": [
+        "copper_bars"
+    ],
     "deepslate_copper_ore": [
         "deepslate_copper_ore"
     ],
@@ -361,6 +370,12 @@
         "dried_ghast_hydration_2_north",
         "dried_ghast_hydration_1_bottom"
     ],
+    "exposed_copper_chain": [
+        "exposed_copper_chain"
+    ],
+    "waxed_exposed_copper_chain": [
+        "exposed_copper_chain"
+    ],
     "campfire": [
         "campfire_fire",
         "campfire_log",
@@ -412,6 +427,9 @@
     "magenta_stained_glass_pane": [
         "magenta_stained_glass_pane_top",
         "magenta_stained_glass"
+    ],
+    "crimson_shelf": [
+        "crimson_shelf"
     ],
     "stripped_mangrove_log": [
         "stripped_mangrove_log",
@@ -629,6 +647,9 @@
     "purple_shulker_box": [
         "purple_shulker_box"
     ],
+    "mangrove_shelf": [
+        "mangrove_shelf"
+    ],
     "cactus": [
         "cactus_side",
         "cactus_top",
@@ -645,6 +666,9 @@
         "quartz_block_top",
         "quartz_block_side",
         "quartz_block_bottom"
+    ],
+    "birch_shelf": [
+        "birch_shelf"
     ],
     "red_candle": [
         "red_candle_lit",
@@ -967,6 +991,12 @@
     "redstone_ore": [
         "redstone_ore"
     ],
+    "waxed_weathered_copper_chain": [
+        "weathered_copper_chain"
+    ],
+    "weathered_copper_chain": [
+        "weathered_copper_chain"
+    ],
     "light_blue_wool": [
         "light_blue_wool"
     ],
@@ -1009,11 +1039,26 @@
         "dark_oak_door_top",
         "dark_oak_door_bottom"
     ],
+    "iron_chain": [
+        "iron_chain"
+    ],
+    "weathered_copper_lantern": [
+        "weathered_copper_lantern"
+    ],
+    "waxed_weathered_copper_lantern": [
+        "weathered_copper_lantern"
+    ],
     "note_block": [
         "note_block"
     ],
     "cyan_wool": [
         "cyan_wool"
+    ],
+    "oxidized_copper_lantern": [
+        "oxidized_copper_lantern"
+    ],
+    "waxed_oxidized_copper_lantern": [
+        "oxidized_copper_lantern"
     ],
     "chiseled_polished_blackstone": [
         "chiseled_polished_blackstone"
@@ -1023,9 +1068,6 @@
         "carrots_stage2",
         "carrots_stage0",
         "carrots_stage1"
-    ],
-    "chain": [
-        "chain"
     ],
     "orange_glazed_terracotta": [
         "orange_glazed_terracotta"
@@ -1081,6 +1123,12 @@
     "orange_candle": [
         "orange_candle",
         "orange_candle_lit"
+    ],
+    "oxidized_copper_bars": [
+        "oxidized_copper_bars"
+    ],
+    "waxed_oxidized_copper_bars": [
+        "oxidized_copper_bars"
     ],
     "cut_sandstone": [
         "cut_sandstone",
@@ -1148,9 +1196,21 @@
     "azure_bluet": [
         "azure_bluet"
     ],
+    "weathered_lightning_rod": [
+        "weathered_lightning_rod"
+    ],
+    "waxed_weathered_lightning_rod": [
+        "weathered_lightning_rod"
+    ],
     "purple_candle": [
         "purple_candle_lit",
         "purple_candle"
+    ],
+    "exposed_copper_bars": [
+        "exposed_copper_bars"
+    ],
+    "waxed_exposed_copper_bars": [
+        "exposed_copper_bars"
     ],
     "end_portal_frame": [
         "end_portal_frame_side",
@@ -1247,6 +1307,12 @@
         "cave_vines_plant",
         "cave_vines_plant_lit"
     ],
+    "exposed_lightning_rod": [
+        "exposed_lightning_rod"
+    ],
+    "waxed_exposed_lightning_rod": [
+        "exposed_lightning_rod"
+    ],
     "cyan_shulker_box": [
         "cyan_shulker_box"
     ],
@@ -1267,6 +1333,9 @@
     "gray_stained_glass_pane": [
         "gray_stained_glass_pane_top",
         "gray_stained_glass"
+    ],
+    "oak_shelf": [
+        "oak_shelf"
     ],
     "cherry_planks": [
         "cherry_planks"
@@ -1357,6 +1426,9 @@
     ],
     "polished_deepslate_wall": [
         "polished_deepslate"
+    ],
+    "warped_shelf": [
+        "warped_shelf"
     ],
     "stripped_cherry_log": [
         "stripped_cherry_log_top",
@@ -1470,6 +1542,12 @@
         "dispenser_front_vertical",
         "dispenser_front"
     ],
+    "copper_chain": [
+        "copper_chain"
+    ],
+    "waxed_copper_chain": [
+        "copper_chain"
+    ],
     "green_candle": [
         "green_candle",
         "green_candle_lit"
@@ -1516,6 +1594,9 @@
     ],
     "mud": [
         "mud"
+    ],
+    "copper_torch": [
+        "copper_torch"
     ],
     "brown_stained_glass_pane": [
         "brown_stained_glass_pane_top",
@@ -1611,6 +1692,9 @@
     "mangrove_wood": [
         "mangrove_log"
     ],
+    "dark_oak_shelf": [
+        "dark_oak_shelf"
+    ],
     "yellow_concrete_powder": [
         "yellow_concrete_powder"
     ],
@@ -1683,6 +1767,9 @@
     ],
     "fire_coral_fan": [
         "fire_coral_fan"
+    ],
+    "bamboo_shelf": [
+        "bamboo_shelf"
     ],
     "polished_granite": [
         "polished_granite"
@@ -1803,6 +1890,9 @@
     "gray_glazed_terracotta": [
         "gray_glazed_terracotta"
     ],
+    "spruce_shelf": [
+        "spruce_shelf"
+    ],
     "jukebox": [
         "jukebox_top",
         "jukebox_side"
@@ -1862,6 +1952,9 @@
     ],
     "oak_trapdoor": [
         "oak_trapdoor"
+    ],
+    "pale_oak_shelf": [
+        "pale_oak_shelf"
     ],
     "blue_shulker_box": [
         "blue_shulker_box"
@@ -2570,6 +2663,12 @@
         "crimson_stem_top",
         "crimson_stem"
     ],
+    "copper_lantern": [
+        "copper_lantern"
+    ],
+    "waxed_copper_lantern": [
+        "copper_lantern"
+    ],
     "stripped_jungle_log": [
         "stripped_jungle_log_top",
         "stripped_jungle_log"
@@ -2597,6 +2696,12 @@
     ],
     "jungle_fence_gate": [
         "jungle_planks"
+    ],
+    "exposed_copper_lantern": [
+        "exposed_copper_lantern"
+    ],
+    "waxed_exposed_copper_lantern": [
+        "exposed_copper_lantern"
     ],
     "bone_block": [
         "bone_block_side",
@@ -2701,8 +2806,17 @@
     "damaged_anvil": [
         "damaged_anvil_top"
     ],
+    "cherry_shelf": [
+        "cherry_shelf"
+    ],
     "birch_sapling": [
         "birch_sapling"
+    ],
+    "oxidized_lightning_rod": [
+        "oxidized_lightning_rod"
+    ],
+    "waxed_oxidized_lightning_rod": [
+        "oxidized_lightning_rod"
     ],
     "dragon_egg": [
         "dragon_egg"
@@ -2757,6 +2871,9 @@
     ],
     "white_glazed_terracotta": [
         "white_glazed_terracotta"
+    ],
+    "jungle_shelf": [
+        "jungle_shelf"
     ],
     "lime_concrete_powder": [
         "lime_concrete_powder"
@@ -2860,6 +2977,12 @@
     "black_concrete": [
         "black_concrete"
     ],
+    "weathered_copper_bars": [
+        "weathered_copper_bars"
+    ],
+    "waxed_weathered_copper_bars": [
+        "weathered_copper_bars"
+    ],
     "light_gray_shulker_box": [
         "light_gray_shulker_box"
     ],
@@ -2895,6 +3018,12 @@
     ],
     "birch_fence_gate": [
         "birch_planks"
+    ],
+    "oxidized_copper_chain": [
+        "oxidized_copper_chain"
+    ],
+    "waxed_oxidized_copper_chain": [
+        "oxidized_copper_chain"
     ],
     "magenta_shulker_box": [
         "magenta_shulker_box"

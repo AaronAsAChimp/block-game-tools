@@ -29,6 +29,10 @@
         "direction:side",
         "model:flower"
     ],
+    "acacia_shelf": [
+        "block-entity",
+        "model:shelf"
+    ],
     "acacia_trapdoor": [
         "direction:any",
         "model:trapdoor"
@@ -141,6 +145,10 @@
     "bamboo_planks": [
         "direction:any",
         "model:block"
+    ],
+    "bamboo_shelf": [
+        "block-entity",
+        "model:shelf"
     ],
     "bamboo_singleleaf": [
         "direction:side",
@@ -305,6 +313,10 @@
     "birch_sapling": [
         "direction:side",
         "model:flower"
+    ],
+    "birch_shelf": [
+        "block-entity",
+        "model:shelf"
     ],
     "birch_trapdoor": [
         "direction:any",
@@ -663,10 +675,6 @@
         "direction:side",
         "model:other"
     ],
-    "chain": [
-        "direction:any",
-        "model:other"
-    ],
     "chain_command_block_back": [
         "direction:any",
         "model:block",
@@ -716,6 +724,10 @@
     "cherry_sapling": [
         "direction:side",
         "model:flower"
+    ],
+    "cherry_shelf": [
+        "block-entity",
+        "model:shelf"
     ],
     "cherry_trapdoor": [
         "direction:top",
@@ -900,6 +912,10 @@
         "direction:any",
         "model:other"
     ],
+    "copper_bars": [
+        "direction:any",
+        "model:pane"
+    ],
     "copper_block": [
         "direction:any",
         "model:block"
@@ -920,6 +936,10 @@
         "direction:any",
         "model:block"
     ],
+    "copper_chain": [
+        "direction:any",
+        "model:other"
+    ],
     "copper_door_bottom": [
         "direction:any",
         "model:door"
@@ -933,10 +953,17 @@
         "model:block",
         "transparent"
     ],
+    "copper_lantern": [
+        "model:other"
+    ],
     "copper_ore": [
         "direction:any",
         "model:block",
         "ore"
+    ],
+    "copper_torch": [
+        "direction:side",
+        "model:other"
     ],
     "copper_trapdoor": [
         "direction:any",
@@ -1087,6 +1114,10 @@
         "direction:side",
         "model:other"
     ],
+    "crimson_shelf": [
+        "block-entity",
+        "model:shelf"
+    ],
     "crimson_stem": [
         "direction:any",
         "model:block"
@@ -1193,6 +1224,10 @@
     "dark_oak_sapling": [
         "direction:side",
         "model:flower"
+    ],
+    "dark_oak_shelf": [
+        "block-entity",
+        "model:shelf"
     ],
     "dark_oak_trapdoor": [
         "direction:any",
@@ -1564,6 +1599,10 @@
         "direction:any",
         "model:block"
     ],
+    "exposed_copper_bars": [
+        "direction:side",
+        "model:pane"
+    ],
     "exposed_copper_bulb": [
         "direction:any",
         "model:block"
@@ -1580,6 +1619,10 @@
         "direction:any",
         "model:block"
     ],
+    "exposed_copper_chain": [
+        "direction:any",
+        "model:other"
+    ],
     "exposed_copper_door_bottom": [
         "direction:side",
         "model:door"
@@ -1593,6 +1636,9 @@
         "model:block",
         "transparent"
     ],
+    "exposed_copper_lantern": [
+        "model:other"
+    ],
     "exposed_copper_trapdoor": [
         "direction:any",
         "model:trapdoor"
@@ -1600,6 +1646,9 @@
     "exposed_cut_copper": [
         "direction:any",
         "model:block"
+    ],
+    "exposed_lightning_rod": [
+        "model:other"
     ],
     "farmland": [
         "direction:top",
@@ -1933,6 +1982,10 @@
         "direction:any",
         "model:block"
     ],
+    "iron_chain": [
+        "direction:any",
+        "model:other"
+    ],
     "iron_door_bottom": [
         "direction:side",
         "model:door"
@@ -2014,6 +2067,10 @@
     "jungle_sapling": [
         "direction:side",
         "model:flower"
+    ],
+    "jungle_shelf": [
+        "block-entity",
+        "model:shelf"
     ],
     "jungle_trapdoor": [
         "direction:any",
@@ -2341,6 +2398,10 @@
         "model:block",
         "transparent"
     ],
+    "mangrove_shelf": [
+        "block-entity",
+        "model:shelf"
+    ],
     "mangrove_trapdoor": [
         "direction:any",
         "model:trapdoor"
@@ -2486,6 +2547,10 @@
         "direction:side",
         "model:flower"
     ],
+    "oak_shelf": [
+        "block-entity",
+        "model:shelf"
+    ],
     "oak_trapdoor": [
         "direction:any",
         "model:trapdoor"
@@ -2590,6 +2655,10 @@
         "direction:any",
         "model:block"
     ],
+    "oxidized_copper_bars": [
+        "direction:side",
+        "model:pane"
+    ],
     "oxidized_copper_bulb": [
         "direction:any",
         "model:block"
@@ -2606,6 +2675,10 @@
         "direction:any",
         "model:block"
     ],
+    "oxidized_copper_chain": [
+        "direction:any",
+        "model:other"
+    ],
     "oxidized_copper_door_bottom": [
         "direction:side",
         "model:door"
@@ -2619,6 +2692,9 @@
         "model:block",
         "transparent"
     ],
+    "oxidized_copper_lantern": [
+        "model:other"
+    ],
     "oxidized_copper_trapdoor": [
         "direction:any",
         "model:trapdoor"
@@ -2628,6 +2704,10 @@
         "model:block",
         "model:slab",
         "model:stair"
+    ],
+    "oxidized_lightning_rod": [
+        "direction:any",
+        "model:other"
     ],
     "packed_ice": [
         "direction:any",
@@ -2686,6 +2766,10 @@
     ],
     "pale_oak_sapling": [
         "model:flower"
+    ],
+    "pale_oak_shelf": [
+        "block-entity",
+        "model:shelf"
     ],
     "pale_oak_trapdoor": [
         "direction:any",
@@ -3650,6 +3734,10 @@
         "direction:side",
         "model:flower"
     ],
+    "spruce_shelf": [
+        "block-entity",
+        "model:shelf"
+    ],
     "spruce_trapdoor": [
         "direction:any",
         "model:trapdoor"
@@ -4191,6 +4279,10 @@
         "direction:side",
         "model:other"
     ],
+    "warped_shelf": [
+        "block-entity",
+        "model:shelf"
+    ],
     "warped_stem": [
         "direction:any",
         "model:block"
@@ -4223,6 +4315,10 @@
         "direction:any",
         "model:block"
     ],
+    "weathered_copper_bars": [
+        "direction:side",
+        "model:pane"
+    ],
     "weathered_copper_bulb": [
         "direction:any",
         "model:block"
@@ -4239,6 +4335,10 @@
         "direction:any",
         "model:block"
     ],
+    "weathered_copper_chain": [
+        "direction:any",
+        "model:other"
+    ],
     "weathered_copper_door_bottom": [
         "direction:side",
         "model:door"
@@ -4252,6 +4352,10 @@
         "model:block",
         "transparent"
     ],
+    "weathered_copper_lantern": [
+        "direction:any",
+        "model:other"
+    ],
     "weathered_copper_trapdoor": [
         "direction:any",
         "model:trapdoor"
@@ -4260,6 +4364,9 @@
         "direction:any",
         "model:block",
         "model:slab"
+    ],
+    "weathered_lightning_rod": [
+        "model:other"
     ],
     "weeping_vines": [
         "direction:side",
