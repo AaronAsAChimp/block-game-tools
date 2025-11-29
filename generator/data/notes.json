@@ -1,0 +1,141 @@
+{
+	"$schema": "../schema/notes.json",
+	"banjo": {
+		"block_id": "hay_block",
+		"display": "Banjo",
+		"y": -1,
+		"clef": "treble"
+	},
+	"bass": {
+		"block_id": "oak_log",
+		"display": "Bass (String Bass)",
+		"y": -1,
+		"clef": "bass"
+	},
+	"bd": {
+		"block_id": "stone",
+		"display": "Bass Drum (Kick)",
+		"y": -1,
+		"clef": "bass"
+	},
+	"bell": {
+		"block_id": "gold_block",
+		"display": "Bells (Glockenspiel)",
+		"y": -1,
+		"clef": "treble"
+	},
+	"bit": {
+		"block_id": "emerald_block",
+		"display": "\"Bit\" (Synthesizer)",
+		"y": -1,
+		"clef": "treble"
+	},
+	"cow_bell": {
+		"block_id": "soul_sand",
+		"display": "Cow Bell",
+		"y": -1,
+		"clef": "treble"
+	},
+	"creeper-head": {
+		"block_id": "creeper_head",
+		"display": "Creeper",
+		"y": 1,
+		"clef": "neutral"
+	},
+	"didgeridoo": {
+		"block_id": "pumpkin",
+		"display": "Didgeridoo",
+		"y": -1,
+		"clef": "bass"
+	},
+	"dragon-head": {
+		"block_id": "dragon_head",
+		"display": "Ender Dragon",
+		"y": 1,
+		"clef": "neutral"
+	},
+	"flute": {
+		"block_id": "clay",
+		"display": "Flute",
+		"y": -1,
+		"clef": "treble"
+	},
+	"guitar": {
+		"block_id": "white_wool",
+		"display": "Guitar",
+		"y": -1,
+		"clef": "treble"
+	},
+	"harp": {
+		"block_id": "dirt",
+		"display": "Harp",
+		"y": -1,
+		"clef": "treble"
+	},
+	"hat": {
+		"block_id": "glass",
+		"display": "Clicks and Sticks (Hi-hat)",
+		"y": -1,
+		"clef": "bass"
+	},
+	"icechime": {
+		"block_id": "packed_ice",
+		"display": "Chimes",
+		"y": -1,
+		"clef": "treble"
+	},
+	"iron_xylophone": {
+		"block_id": "iron_block",
+		"display": "Iron Xylophone (Vibraphone)",
+		"y": -1,
+		"clef": "treble"
+	},
+	"piglin-head": {
+		"block_id": "piglin_head",
+		"display": "Piglin",
+		"y": 1,
+		"clef": "neutral"
+	},
+	"player-head": {
+		"block_id": "player_head",
+		"display": "Player head",
+		"y": 1,
+		"clef": "neutral"
+	},
+	"pling": {
+		"block_id": "glowstone",
+		"display": "\"Pling\" (Electric piano)",
+		"y": -1,
+		"clef": "treble"
+	},
+	"skeleton-skull": {
+		"block_id": "skeleton_skull",
+		"display": "Skeleton",
+		"y": 1,
+		"clef": "neutral"
+	},
+	"snare": {
+		"block_id": "sand",
+		"display": "Snare Drum",
+		"y": -1,
+		"clef": "bass"
+	},
+	"wither-skeleton-skull": {
+		"block_id": "wither_skeleton_skull",
+		"display": "Wither Skeleton",
+		"y": 1,
+		"clef": "neutral"
+	},
+	"xylobone": {
+		"block_id": "bone_block",
+		"display": "Xylophone",
+		"y": -1,
+		"clef": "treble"
+	},
+	"zombie-head": {
+		"block_id": "zombie_head",
+		"display": "Zombie",
+		"y": 1,
+		"clef": "neutral"
+	}
+}

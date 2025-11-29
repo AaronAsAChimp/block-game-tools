@@ -4,6 +4,7 @@ import { Readable } from 'stream';
 import { z } from 'zod';
 
 import type { MinecraftVersion } from './manifest.ts';
+import { download, downloadJson } from './download.ts';
 
 const EndpointReferenceSchema = z.object({
       sha1: z.string(),
@@ -34,8 +35,7 @@ export type VersionManifestJson = z.infer<typeof VersionManifestJsonSchema>;
  * @return {Promise<VersionManifestJson>} The manifest for this version.
  */
 export async function loadVersionManifesta(version: MinecraftVersion): Promise<VersionManifestJson> {
-	const res = await fetch(version.url);
-	const manifest = await res.json();
+	const manifest = await downloadJson(version.url, './cache');
 
 	// console.log(manifest);
 
@@ -52,25 +52,8 @@ export async function loadVersionManifesta(version: MinecraftVersion): Promise<V
  *                           been downloaded.
  */
 export async function downloadClient(manifest: VersionManifestJson, dest: string): Promise<void> {
-	const res = await fetch(manifest.downloads.client.url);
+	console.log('download path', dest);
 
-	await new Promise<void>((resolve, reject) => {
-		const readable = Readable.fromWeb(res.body);
-		const writable = fs.createWriteStream(path.join(dest, 'minecraft.jar'));
-
-		readable.pipe(writable);
-
-		readable.on('error', (err) => {
-			reject(err);
-		})
-
-		writable.on('error', (err) => {
-			reject(err);
-		});
-
-		writable.on('close', () => {
-			resolve();
-		})
-	});
+	await download(manifest.downloads.client.url, './cache', dest);
 }
 

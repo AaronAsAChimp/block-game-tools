@@ -3,6 +3,7 @@ import { Readable } from 'stream';
 import { z } from 'zod';
 
 import type { VersionManifestJson } from './versions.ts';
+import { download, downloadJson } from './download.ts';
 
 const AssetReferenceSchema = z.object({
 	hash: z.string(),
@@ -23,8 +24,7 @@ export type AssetIndexJson = z.infer<typeof AssetIndexJsonSchema>;
  * @return {Promise<AssetIndexJson>}  The asset index.
  */
 export async function loadAssetIndex(manifest: VersionManifestJson): Promise<AssetIndexJson> {
-	const res = await fetch(manifest.assetIndex.url);
-	const json = await res.json();
+	const json = await downloadJson(manifest.assetIndex.url, './cache');
 
 	// console.log(json);
 
@@ -40,26 +40,5 @@ export async function loadAssetIndex(manifest: VersionManifestJson): Promise<Ass
  * @return {Promise<void>}
  */
 export async function downloadResource(hash: string, dest: string): Promise<void> {
-	const res = await fetch(`https://resources.download.minecraft.net/${hash.slice(0, 2)}/${hash}`);
-
-	await new Promise<void>((resolve, reject) => {
-		const readable = Readable.fromWeb(res.body);
-		const writable = fs.createWriteStream(dest);
-
-		console.log(dest);
-
-		readable.pipe(writable);
-
-		readable.on('error', (err) => {
-			reject(err);
-		})
-
-		writable.on('error', (err) => {
-			reject(err);
-		});
-
-		writable.on('close', () => {
-			resolve();
-		})
-	});
+	await download(`https://resources.download.minecraft.net/${hash.slice(0, 2)}/${hash}`, './cache', dest);
 }

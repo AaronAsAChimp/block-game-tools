@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { downloadJson } from './download.ts';
 
 const VERSION_MANIFEST_ENDPOINT = 'https://piston-meta.mojang.com/mc/game/version_manifest_v2.json';
 
@@ -58,8 +59,7 @@ type Manifest = z.infer<typeof ManifestSchema>;
  * @return {Promise<AssetIndexJson>}  The manifest.
  */
 export async function loadManifest(): Promise<Manifest> {
-	const res = await fetch(VERSION_MANIFEST_ENDPOINT);
-	const json = await res.json();
+	const json = await downloadJson(VERSION_MANIFEST_ENDPOINT, './cache');
 
 	// console.log(json);
 

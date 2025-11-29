@@ -12,6 +12,7 @@ const TEXTURE_TAGS = [
 	"redstone",
 	"unobtainable",
 	"block-entity",
+	"ore",
 	"model:other",
 	"model:pane",
 	"model:crops",

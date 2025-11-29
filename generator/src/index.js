@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from 'path';
 import { PNG } from 'pngjs';
+import chalk from 'chalk';
 
 import blockTextures from '../data/block-textures.json' with { type: "json" };
 import colorBlocks from '../data/color-blocks.json' with { type: "json" };
@@ -8,39 +9,19 @@ import textureTags from '../data/texture-tags.json' with { type: "json" };
 
 import { MC_VERSION } from "shared";
 import { Color, LabColor, RGBColor, XYZColor } from "shared/src/color.js";
+import { createAnimatedTexture } from "./animated-texture.js";
 import { Animation } from './animation.js';
 import { BoundingBox } from "./bounding-box.js";
 import { BasicColorExtractor, QuantizerColorExtractor, SaturatedColorExtractor } from './color-extractor.js';
 import { buildTintMap, tintTexture } from './color-shift.js';
-import { OBJFile } from './objfile.js';
-import { createAnimatedTexture } from "./animated-texture.js";
 import { Tetrahedralization, writeTetrahedron } from './delaunay.js';
-import chalk from 'chalk';
+import { walk } from './file.js';
+import { OBJFile } from './objfile.js';
+import { copySounds } from './sounds.js';
 
 /**
  * @typedef {{[blockId: string]: string[] }} TextureMap
  */
-
-
-/**
- * Walk a directory and yield PNG files.
- * @param {string} dirPath       The directory to walk.
- * @yield {string} The path to the PNG file that was found
- */
-async function* walk(dirPath) {
-	const dirs = await fs.promises.opendir(dirPath);
-    for await (const dir of dirs) {
-        const entry = path.join(dirPath, dir.name);
-        
-        if (dir.isFile()) {
-        	const ext = path.extname(dir.name);
-
-        	if (ext === '.png') {
-        		yield entry;
-        	}
-        }
-    }
-}
 
 
 /**
@@ -280,9 +261,15 @@ bounds.add(magenta);
 
 const EXIT_CODE_NO_JAR = 1;
 
-const dirPath = `./jars/${ MC_VERSION }/assets/minecraft/textures/block/`;
+const assetsPath = `./jars/${ MC_VERSION }/assets/minecraft/`;
+
+const soundsPath = path.join(assetsPath, './sounds/note/');
+
+const dirPath = path.join(assetsPath, './textures/block/');
 const extractPath = `./web/public/data/${ MC_VERSION }/`;
 const extractedTexturesPath = path.join(extractPath, 'textures');
+const extractedSoundsPath = path.join(extractPath, 'sounds');
+
 /** @type {import('shared/src/block').Block[]} */
 const json = [];
 const labels = [
@@ -311,12 +298,22 @@ await fs.promises.mkdir(extractedTexturesPath, {
 	recursive: true
 });
 
+await fs.promises.mkdir(extractedSoundsPath, {
+	recursive: true
+});
+
 //
 // Generate the voids
 // 
 
 const voidsBbox = bounds.toBoundingBox3d();
 const tetrahedralization = new Tetrahedralization(voidsBbox);
+
+//
+// Build the note block data
+//
+
+copySounds(soundsPath, extractedSoundsPath);
 
 //
 // Build the block data
@@ -327,7 +324,7 @@ if (!fs.existsSync(dirPath)) {
 	process.exit(EXIT_CODE_NO_JAR)
 }
 
-for await (const filename of walk(dirPath)) {
+for await (const filename of walk(dirPath, '.png')) {
 	const name = path.basename(filename, '.png');
 
 	if (excludes.has(name)) {

@@ -2,6 +2,11 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "description": "A collection of block descriptions.",
   "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    }
+  },
   "additionalProperties": {
     "type": "array",
     "items": {
@@ -10,6 +15,8 @@
         "transparent",
         "redstone",
         "unobtainable",
+        "block-entity",
+        "ore",
         "model:other",
         "model:pane",
         "model:crops",
@@ -29,7 +36,7 @@
         "direction:south",
         "direction:east",
         "direction:west",
-        "direction:side",
+        "direction:side"
       ]
     }
   }

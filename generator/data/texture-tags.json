@@ -1,4 +1,5 @@
 {
+    "$schema": "../schema/texture-tags.json",
     "acacia_door_bottom": [
         "direction:side",
         "model:door"
