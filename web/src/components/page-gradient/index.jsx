@@ -1,6 +1,5 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { buildGradientParam, parseGradientParam } from "shared/src/gradient";
-// import { AppTitleBar } from "../../../components/app-title-bar";
 import { GradientDisplay } from "../gradient-display";
 import { Share } from "../share";
 import { TextureSwatch } from "../texture-swatch";

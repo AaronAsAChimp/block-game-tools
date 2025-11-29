@@ -7,13 +7,12 @@ import AppFooter from '../components/AppFooter.astro';
 
 <NoNavLayout title="Block Game Tools - A selection of tools for Minecraft builders" class="page-home">
 	<div class="home-layout">
-		<div class="hero">
-			<AppTitleBar title=""></AppTitleBar>
-			<div class="home-title">
-				<h1>Block Game Tools</h1>
-				<p>A selection of tools for Minecraft builders.</p>
-				<AppTiles />
-			</div>
+		<AppTitleBar>
+			<h1 class="home-title">Block Game Tools</h1>
+			<p>A selection of tools for Minecraft builders.</p>
+		</AppTitleBar>
+		<div class="home-content">
+			<AppTiles />
 		</div>
 		<div class="footer">
 			<AppFooter />
@@ -25,14 +24,12 @@ import AppFooter from '../components/AppFooter.astro';
 .home-layout {
 	display: grid;
 	height: 100vh;
-	grid-template-rows: 1fr auto;
+	width: 80vw;
+	margin: 0 auto 4em;
+	grid-template-rows: auto 1fr auto;
+}
 
-	& .hero {
-	}
-
-	& .home-title {
-		width: 80vw;
-		margin: 0 auto 4em;
-	}
+.home-title {
+	margin-bottom: 0.4em;
 }
 </style>
