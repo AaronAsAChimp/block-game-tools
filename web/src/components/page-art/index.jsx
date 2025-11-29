@@ -121,7 +121,7 @@ export function ArtBlocker() {
 						<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={texturizerOptions.width} height={texturizerOptions.height} />
 						<SwatchGrid width={texturizerOptions.width} height={texturizerOptions.height} blocks={textureBlocks} />
 					</> 
-					: <div>Select an image to begin.</div>
+					: <div className={styles['art-placeholder']}>Select an image to begin.</div>
 			}
 		</PaletteContext.Provider>
 	</>;
