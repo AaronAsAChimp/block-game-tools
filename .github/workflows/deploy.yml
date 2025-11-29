@@ -29,7 +29,7 @@ jobs:
     - name: Cache Mojang downloads
       uses: actions/cache@v4
       with:
-        key: ${{ hashFiles('**/cache.json') }}
+        key: ${{ hashFiles('**/cache.json') || 'initial-cache-key'}}
         path: ./cache
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
