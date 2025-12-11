@@ -3999,7 +3999,8 @@
     ],
     "test_block_fail": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "unobtainable"
     ],
     "test_block_log": [
         "direction:any",
@@ -4013,7 +4014,8 @@
     ],
     "test_instance_block": [
         "direction:any",
-        "model:other"
+        "model:other",
+        "unobtainable"
     ],
     "tinted_glass": [
         "direction:any",
