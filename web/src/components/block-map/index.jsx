@@ -149,20 +149,20 @@ function SelectionMesh({block}) {
 	const color = block.palette[palette];
 	const contrast = useContext(ContrastContext);
 
-	const {position} = useSpring({
+	const props = useSpring({
 		position: [
 			color.lab.a,
 			color.lab.l,
 			color.lab.b,
 		],
-		config: SPRING_CONFIG
+		// config: SPRING_CONFIG
 	});
 
 	return <AnimatedBillboard
 		follow={true}
 		lockX={false}
 		lockY={false}
-		position={position}> 
+		position={props.position}> 
 		<mesh>
 			<ringGeometry args={[SELECTION_RADIUS, SELECTION_RADIUS + 0.1, 32]} />
 			<meshBasicMaterial color={contrast.inverse} transparent={true} opacity={0.6} />
