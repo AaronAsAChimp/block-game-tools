@@ -1,9 +1,9 @@
 export {RGBColor, RGBAColor, LabColor, XYZColor, Color} from './src/color.js';
 
-export const MC_VERSION = '1.21.10';
+export const MC_VERSION = '1.21.11';
 
 // Can be looked up https://minecraft.wiki/w/Data_version
-export const MC_DATA_VERSION = 4556;
+export const MC_DATA_VERSION = 4671;
 
 // 
 // Don't forget to update the list of block IDs in `web/data/block-ids.json`,
