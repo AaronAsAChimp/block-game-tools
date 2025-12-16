@@ -55,14 +55,15 @@ export class Animation {
 
 	static fromMcmeta(json, name, path, width, height) {
 		const frameCount = Math.floor(height / width);
+		const animationJson = json.animation ?? {};
 		const animation = new Animation(name);
 
 		animation._path = path;
-		animation._interpolate = json.animation.interpolate ?? false;
-		animation._frametime = json.animation.frametime ? json.animation.frametime * MS_PER_TICK : MS_PER_TICK;
+		animation._interpolate = animationJson.interpolate ?? false;
+		animation._frametime = animationJson.frametime ? animationJson.frametime * MS_PER_TICK : MS_PER_TICK;
 
-		if (json.animation.frames) {
-			animation._frames = json.animation.frames;
+		if (animationJson.frames) {
+			animation._frames = animationJson.frames;
 		} else {
 			for (let i = 0; i < frameCount; i++) {
 				animation._frames.push(i);
