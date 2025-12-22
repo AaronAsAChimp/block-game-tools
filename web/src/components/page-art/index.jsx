@@ -6,7 +6,7 @@ import { paletteStore } from '../../context/palette-store';
 
 import styles from './styles.module.css';
 import { useStore } from '@nanostores/react';
-import { artGenOptionsStore } from '../../context/art-store.js';
+import { artGenOptionsStore, loadImageFromFile } from '../../context/art-store.js';
 import { imageAsBlocks } from '../../image.js';
 import { blockGrid } from '../../context/block-grid-store.js';
 
@@ -36,11 +36,16 @@ export function ArtBlocker() {
 	/** @type {React.MutableRefObject<HTMLCanvasElement>} */
 	const canvasRef = useRef(null);
 
+	/** @type {React.MutableRefObject<HTMLDivElement>} */
+	const dropperRef = useRef(null);
+
 	const texturizerOptions = useStore(artGenOptionsStore);
 	const textureBlocks = useStore(blockGrid);
 	const [imageData, setImageData] = useState(null);
 
 	const [blocks, setBlocks] = useState([]);
+	const [dragging, setDraggingg] = useState(false);
+	const [dragOver, setDragOver] = useState(false);
 
 	const palette = useStore(paletteStore);
 
@@ -51,6 +56,53 @@ export function ArtBlocker() {
 			.then((blocks) => {
 				setBlocks(blocks.blocks)
 			});
+
+		const dropperEl = dropperRef.current;
+
+		/**
+		 * @param  {DragEvent} e 
+		 */
+		function onDragOver(e) {
+			e.preventDefault();
+			e.dataTransfer.dropEffect = 'copy';
+		}
+
+		function initDragDrop(e) {
+			setDraggingg(true);
+			setDragOver(true);
+			dropperEl.addEventListener('dragover', onDragOver);
+			dropperEl.addEventListener('dragleave', onDragLeave);
+			dropperEl.addEventListener('drop', onDrop);
+		}
+
+		function onDragLeave() {
+			setDragOver(false);
+		}
+
+		/**
+		 * @param  {DragEvent} e 
+		 */
+		function onDrop(e) {
+			e.preventDefault();
+
+			if (e.dataTransfer.files.length) {
+				console.log('drop', e.dataTransfer.files[0]);
+
+				loadImageFromFile(e.dataTransfer.files[0]);
+			}
+
+			setDraggingg(false);
+			setDragOver(false);
+			dropperEl.removeEventListener('dragover', onDragOver);
+			dropperEl.removeEventListener('dragleave', onDragLeave);
+			dropperEl.removeEventListener('drop', onDrop);
+		}
+
+		dropperEl.addEventListener('dragenter', initDragDrop);
+
+		return () => {
+			dropperEl.removeEventListener('dragenter', initDragDrop)
+		}
 	}, [])
 
 
@@ -113,7 +165,7 @@ export function ArtBlocker() {
 	}, [texturizerOptions.image, texturizerOptions.width, texturizerOptions.height, texturizerOptions.ditheringAlgo])
 
 
-	return <>
+	return <div ref={dropperRef} className={ styles['art-container'] + (dragOver ? ' ' + styles['accepts-drop'] : '') }>
 		<PaletteContext.Provider value={palette}>
 			{
 				texturizerOptions.image
@@ -121,8 +173,8 @@ export function ArtBlocker() {
 						<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={texturizerOptions.width} height={texturizerOptions.height} />
 						<SwatchGrid width={texturizerOptions.width} height={texturizerOptions.height} blocks={textureBlocks} />
 					</> 
-					: <div className={styles['art-placeholder']}>Select an image to begin.</div>
+					: <div className={styles['art-placeholder']}>Drag and drop an image here to begin.</div>
 			}
 		</PaletteContext.Provider>
-	</>;
+	</div>;
 }

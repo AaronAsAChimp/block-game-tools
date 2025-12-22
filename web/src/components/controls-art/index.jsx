@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/react';
-import { artGenOptionsStore, aspectRatio } from '../../context/art-store.js';
+import { artGenOptionsStore, aspectRatio, loadImageFromFile } from '../../context/art-store.js';
 import { PaletteSelector } from '../palette-selector/index.jsx';
 import { LitematicaSchematic } from "../../schematic/schematic.js";
 import { SchematicRegion } from "../../schematic/schematic-region.js";
@@ -43,23 +43,7 @@ export function ArtControls() {
 		if (e.target instanceof HTMLInputElement) {
 			const file = e.target.files[0];
 
-			const image = new Image();
-			const reader = new FileReader();
-			reader.onload = (e) => {
-				image.src = reader.result;
-			};
-			reader.onerror = (e) => {
-				console.error('Error loading image:', e)
-			};
-
-			reader.readAsDataURL(file);
-
-			image.onload = (e) => {
-				artGenOptionsStore.set({
-					...artGenOptionsStore.value,
-					image
-				})
-			}
+			loadImageFromFile(file);
 		}
 	}
 

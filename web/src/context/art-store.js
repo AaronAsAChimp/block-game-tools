@@ -32,3 +32,26 @@ export const aspectRatio = computed(artGenOptionsStore, store => {
 
 	return store.image.width / store.image.height;
 });
+
+/**
+ * @param  {File} file
+ */
+export function loadImageFromFile(file) {
+	const image = new Image();
+	const reader = new FileReader();
+	reader.onload = (e) => {
+		image.src = reader.result;
+	};
+	reader.onerror = (e) => {
+		console.error('Error loading image:', e)
+	};
+
+	reader.readAsDataURL(file);
+
+	image.onload = (e) => {
+		artGenOptionsStore.set({
+			...artGenOptionsStore.value,
+			image
+		})
+	}
+}
