@@ -1,4 +1,5 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
+import classnames from 'classnames';
 import { TextureSwatch } from "../texture-swatch";
 import { PaletteContext } from "../../context/palette-context";
 import { BlockLookup, loadBlocks } from "../../blocks";
@@ -165,7 +166,13 @@ export function ArtBlocker() {
 	}, [texturizerOptions.image, texturizerOptions.width, texturizerOptions.height, texturizerOptions.ditheringAlgo])
 
 
-	return <div ref={dropperRef} className={ styles['art-container'] + (dragOver ? ' ' + styles['accepts-drop'] : '') }>
+	return <div ref={dropperRef} className={classnames([
+			styles['art-container'],
+			{
+				[styles['accepts-drop']]: dragOver,
+				[styles['no-image']]: !texturizerOptions.image
+			}
+		])}>
 		<PaletteContext.Provider value={palette}>
 			{
 				texturizerOptions.image
