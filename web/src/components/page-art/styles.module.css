@@ -25,3 +25,22 @@
 	align-items: center;
 	justify-content: center;
 }
+
+.minimap {
+	border: 2px solid red;
+	position: fixed;
+	z-index: 1;
+}
+
+.minimap.wide {
+	width: 6em;
+}
+
+.minimap.tall {
+	height: 6em;
+}
+
+.minimap-cursor {
+	position: absolute;
+	border: 2px solid white;
+}

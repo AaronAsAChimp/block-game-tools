@@ -33,11 +33,83 @@ function SwatchGrid({width, height, blocks}) {
 }
 
 
+function Minimap({naturalWidth, naturalHeight}) {
+	const imageAspectRatio = naturalWidth / naturalHeight;
+	const [viewWidth, setViewWidth] = useState(1);
+	const [viewHeight, setViewHeight] = useState(1);
+
+	/** @type {React.RefObject<HTMLDivElement>} */
+	const minimapRef = useRef();
+
+	const scrollParent = useMemo(() => {
+		/** @type {HTMLElement} */
+		let parentEl = minimapRef.current;
+		let scrollParentEl = null;
+
+		if (!parentEl) {
+			return;
+		}
+
+		while (parentEl.parentElement && !scrollParentEl) {
+			const style = getComputedStyle(parentEl);
+
+			if (style.overflow === 'auto' || style.overflow === 'scroll') {
+				scrollParentEl = parentEl;
+			}
+
+			parentEl = parentEl.parentElement;
+		}
+
+		const rect = scrollParentEl.getBoundingClientRect();
+
+		setViewWidth(rect.width);
+		setViewHeight(rect.height);
+
+		console.log('Rect', rect.width, rect.height);
+
+		return scrollParentEl;
+	}, [minimapRef.current]);
+
+	function onScrollHandler(e) {
+		const cursor = minimapRef.current.children[0];
+
+		if (cursor instanceof HTMLElement) {
+			const scroller = e.currentTarget;
+
+			cursor.style.top = ((scroller.scrollTop / scroller.scrollHeight) * 100) + '%';
+			cursor.style.left = ((scroller.scrollLeft / scroller.scrollWidth) * 100) + '%';
+
+			// console.log('top', e.currentTarget.scrollTop, ((naturalHeight * 64) - viewHeight));
+			console.log('left', (scroller.scrollLeft / scroller.scrollWidth));
+			// console.log('left', naturalWidth);
+		}
+	}
+
+	useEffect(() => {
+		if (!scrollParent) {
+			return;
+		}
+
+		scrollParent.addEventListener('scroll', onScrollHandler, {
+			passive: true
+		});
+
+		return () => {
+			scrollParent.removeEventListener('scroll', onScrollHandler);
+		}
+	}, [scrollParent, naturalHeight, naturalWidth]);
+
+	return <div ref={minimapRef} className={classnames(styles['minimap'], imageAspectRatio > 1 ? styles['wide'] : styles['tall'])} style={{ aspectRatio: imageAspectRatio }}>
+		<div className={styles['minimap-cursor']} style={{ aspectRatio: viewWidth / viewHeight, width: ((viewWidth / (naturalWidth * 64)) * 100) + '%' }}></div>
+	</div>
+}
+
+
 export function ArtBlocker() {
-	/** @type {React.MutableRefObject<HTMLCanvasElement>} */
+	/** @type {React.RefObject<HTMLCanvasElement>} */
 	const canvasRef = useRef(null);
 
-	/** @type {React.MutableRefObject<HTMLDivElement>} */
+	/** @type {React.RefObject<HTMLDivElement>} */
 	const dropperRef = useRef(null);
 
 	const texturizerOptions = useStore(artGenOptionsStore);
@@ -177,6 +249,9 @@ export function ArtBlocker() {
 			{
 				texturizerOptions.image
 					? <>
+						{ imageData
+							? <Minimap naturalWidth={imageData.width} naturalHeight={imageData.height} viewWidth={texturizerOptions.width * 64} viewHeight={texturizerOptions.height * 64} scale={64} />
+							: null }
 						<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={texturizerOptions.width} height={texturizerOptions.height} />
 						<SwatchGrid width={texturizerOptions.width} height={texturizerOptions.height} blocks={textureBlocks} />
 					</> 
