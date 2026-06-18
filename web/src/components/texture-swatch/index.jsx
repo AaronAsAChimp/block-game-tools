@@ -69,7 +69,7 @@ export function TextureSwatch({block, title, showColor}) {
 	}
 
 	return <TooltipWrapper className={styles['texture']} title={tooltip}>
-		<img className={styles['texture-image']} height="64" width="64" loading="lazy" src={DATA_DIR + 'textures/' + block.name + ext} />
+		<img className={styles['texture-image']} alt={tooltip} height="64" width="64" loading="lazy" src={DATA_DIR + 'textures/' + block.name + ext} />
 		{
 			showColor || typeof showColor === 'undefined' ?
 				<div className={styles['texture-image-swatch']} style={{ backgroundColor: cssColor(block, palette) }}></div> :
