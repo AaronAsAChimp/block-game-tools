@@ -33,3 +33,19 @@ export const AboutContent = lazy(async () => {
 		}
 	}
 });
+
+export const GreetingContent = lazy(async () => {
+	const markdownContent = await import('../../md/greeting.md');
+	const content = new Writer();
+	
+	await markdownContent.default({}, null, null).render(content);
+
+	return {
+		default: function () {
+
+			return <div dangerouslySetInnerHTML={{
+				__html: content.getBuffer()
+			}}></div>
+		}
+	}
+});

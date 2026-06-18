@@ -1,4 +1,6 @@
 ---
+import { GreetingPopper } from '../components/greeting-popper';
+
 interface Props {
 	title: string;
 }
@@ -19,6 +21,8 @@ import '@fontsource-variable/bitter';
 	</head>
 	<body>
 		<slot />
+
+		<GreetingPopper client:only="react" />
 	</body>
 </html>
 <style is:global>
