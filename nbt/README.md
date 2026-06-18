@@ -2,10 +2,10 @@
 
 ## A no-nonsense NBT reader and writer
 
-Specific types of nonsense:
+Specific types of nonsense not present:
 
 - ❎ Native modules
-- ❎ Platform APIs (Node.js, Browser, etc.)
+- ❎ Platform specific APIs (Node.js, Bun, Browser, etc.)
 - ❎ Dependencies
 - ❎ Bespoke build processes
 
