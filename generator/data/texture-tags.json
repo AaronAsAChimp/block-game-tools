@@ -8,6 +8,10 @@
         "direction:side",
         "model:door"
     ],
+    "acacia_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "acacia_leaves": [
         "transparent",
         "model:block",
@@ -33,6 +37,10 @@
     "acacia_shelf": [
         "block-entity",
         "model:shelf"
+    ],
+    "acacia_sign": [
+        "block-entity",
+        "model:sign"
     ],
     "acacia_trapdoor": [
         "direction:any",
@@ -134,6 +142,10 @@
     "bamboo_fence_particle": [
         "model:other"
     ],
+    "bamboo_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "bamboo_large_leaves": [
         "direction:side",
         "model:other"
@@ -150,6 +162,10 @@
     "bamboo_shelf": [
         "block-entity",
         "model:shelf"
+    ],
+    "bamboo_sign": [
+        "block-entity",
+        "model:sign"
     ],
     "bamboo_singleleaf": [
         "direction:side",
@@ -199,6 +215,14 @@
         "direction:any",
         "model:block",
         "transparent"
+    ],
+    "bed_down": [
+        "direction:bottom",
+        "model:bed"
+    ],
+    "bed_head_north": [
+        "direction:side",
+        "model:bed"
     ],
     "bedrock": [
         "direction:any",
@@ -293,6 +317,10 @@
         "direction:side",
         "model:door"
     ],
+    "birch_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "birch_leaves": [
         "direction:any",
         "model:block",
@@ -319,9 +347,42 @@
         "block-entity",
         "model:shelf"
     ],
+    "birch_sign": [
+        "block-entity",
+        "model:sign"
+    ],
     "birch_trapdoor": [
         "direction:any",
         "model:trapdoor"
+    ],
+    "black_bed_foot_east": [
+        "model:bed",
+        "direction:side",
+        "transparent"
+    ],
+    "black_bed_foot_south": [
+        "direction:side",
+        "model:bed"
+    ],
+    "black_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "black_bed_foot_west": [
+        "direction:side",
+        "model:bed"
+    ],
+    "black_bed_head_east": [
+        "direction:side",
+        "model:bed"
+    ],
+    "black_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "black_bed_head_west": [
+        "direction:side",
+        "model:bed"
     ],
     "black_candle": [
         "model:candle"
@@ -387,6 +448,35 @@
     "blast_furnace_top": [
         "direction:top",
         "model:block"
+    ],
+    "blue_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "blue_bed_foot_south": [
+        "direction:side",
+        "model:bed"
+    ],
+    "blue_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "blue_bed_foot_west": [
+        "direction:side",
+        "model:bed"
+    ],
+    "blue_bed_head_east": [
+        "direction:side",
+        "model:bed"
+    ],
+    "blue_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "blue_bed_head_west": [
+        "direction:side",
+        "model:bed"
     ],
     "blue_candle": [
         "model:candle"
@@ -472,6 +562,35 @@
     "bricks": [
         "direction:any",
         "model:block"
+    ],
+    "brown_bed_foot_east": [
+        "direction:side",
+        "model:bed"
+    ],
+    "brown_bed_foot_south": [
+        "direction:side",
+        "model:bed"
+    ],
+    "brown_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "brown_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "brown_bed_head_east": [
+        "direction:side",
+        "model:bed"
+    ],
+    "brown_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "brown_bed_head_west": [
+        "direction:side",
+        "model:bed"
     ],
     "brown_candle": [
         "model:candle"
@@ -704,6 +823,10 @@
         "direction:side",
         "model:door"
     ],
+    "cherry_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "cherry_leaves": [
         "direction:any",
         "model:door",
@@ -730,6 +853,10 @@
         "block-entity",
         "model:shelf"
     ],
+    "cherry_sign": [
+        "block-entity",
+        "model:sign"
+    ],
     "cherry_trapdoor": [
         "direction:top",
         "model:trapdoor"
@@ -752,6 +879,10 @@
     ],
     "chiseled_bookshelf_top": [
         "direction:top",
+        "model:block"
+    ],
+    "chiseled_cinnabar": [
+        "direction:any",
         "model:block"
     ],
     "chiseled_copper": [
@@ -794,6 +925,10 @@
         "direction:any",
         "model:block"
     ],
+    "chiseled_sulfur": [
+        "direction:any",
+        "model:block"
+    ],
     "chiseled_tuff": [],
     "chiseled_tuff_bricks": [
         "direction:side",
@@ -818,6 +953,16 @@
     "chorus_plant": [
         "direction:side",
         "model:other"
+    ],
+    "cinnabar": [
+        "direction:any",
+        "model:block"
+    ],
+    "cinnabar_bricks": [
+        "direction:any",
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "clay": [
         "direction:any",
@@ -1095,6 +1240,10 @@
         "direction:side",
         "model:flower"
     ],
+    "crimson_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "crimson_nylium": [
         "direction:top",
         "model:block"
@@ -1118,6 +1267,10 @@
     "crimson_shelf": [
         "block-entity",
         "model:shelf"
+    ],
+    "crimson_sign": [
+        "block-entity",
+        "model:sign"
     ],
     "crimson_stem": [
         "direction:any",
@@ -1146,6 +1299,37 @@
     "cut_sandstone": [
         "model:block",
         "model:slab"
+    ],
+    "cyan_bed_foot_east": [
+        "direction:side",
+        "model:bed"
+    ],
+    "cyan_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "cyan_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "cyan_bed_foot_west": [
+        "direction:side",
+        "model:bed"
+    ],
+    "cyan_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "cyan_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "cyan_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
     ],
     "cyan_candle": [
         "model:candle"
@@ -1204,6 +1388,10 @@
         "direction:side",
         "model:door"
     ],
+    "dark_oak_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "dark_oak_leaves": [
         "direction:any",
         "model:block",
@@ -1229,6 +1417,10 @@
     "dark_oak_shelf": [
         "block-entity",
         "model:shelf"
+    ],
+    "dark_oak_sign": [
+        "block-entity",
+        "model:sign"
     ],
     "dark_oak_trapdoor": [
         "direction:any",
@@ -1796,6 +1988,9 @@
         "model:block",
         "ore"
     ],
+    "golden_dandelion": [
+        "model:flower"
+    ],
     "granite": [
         "direction:any",
         "model:block"
@@ -1819,6 +2014,38 @@
     "gravel": [
         "direction:any",
         "model:block"
+    ],
+    "gray_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "gray_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "gray_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "gray_bed_foot_west": [
+        "direction:side",
+        "model:bed"
+    ],
+    "gray_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "gray_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "gray_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
     ],
     "gray_candle": [
         "model:candle"
@@ -1860,6 +2087,39 @@
     "gray_wool": [
         "direction:any",
         "model:block"
+    ],
+    "green_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "green_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "green_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "green_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "green_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "green_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "green_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
     ],
     "green_candle": [
         "model:candle"
@@ -2047,6 +2307,10 @@
         "direction:side",
         "model:door"
     ],
+    "jungle_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "jungle_leaves": [
         "direction:any",
         "model:block",
@@ -2072,6 +2336,10 @@
     "jungle_shelf": [
         "block-entity",
         "model:shelf"
+    ],
+    "jungle_sign": [
+        "block-entity",
+        "model:sign"
     ],
     "jungle_trapdoor": [
         "direction:any",
@@ -2143,6 +2411,39 @@
         "direction:any",
         "model:other"
     ],
+    "light_blue_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "light_blue_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "light_blue_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "light_blue_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "light_blue_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "light_blue_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "light_blue_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
     "light_blue_candle": [
         "model:candle"
     ],
@@ -2182,6 +2483,39 @@
     "light_blue_wool": [
         "direction:any",
         "model:block"
+    ],
+    "light_gray_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "light_gray_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "light_gray_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "light_gray_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "light_gray_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "light_gray_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "light_gray_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
     ],
     "light_gray_candle": [
         "model:candle"
@@ -2246,6 +2580,39 @@
     "lily_pad": [
         "direction:top",
         "model:on-ground"
+    ],
+    "lime_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "lime_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "lime_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "lime_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "lime_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "lime_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "lime_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
     ],
     "lime_candle": [
         "model:candle"
@@ -2312,6 +2679,39 @@
         "direction:top",
         "model:block"
     ],
+    "magenta_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "magenta_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "magenta_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "magenta_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "magenta_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "magenta_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "magenta_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
     "magenta_candle": [
         "model:candle"
     ],
@@ -2364,6 +2764,10 @@
         "direction:side",
         "model:door"
     ],
+    "mangrove_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "mangrove_leaves": [
         "direction:any",
         "model:block",
@@ -2402,6 +2806,10 @@
     "mangrove_shelf": [
         "block-entity",
         "model:shelf"
+    ],
+    "mangrove_sign": [
+        "block-entity",
+        "model:sign"
     ],
     "mangrove_trapdoor": [
         "direction:any",
@@ -2526,6 +2934,10 @@
         "direction:side",
         "model:door"
     ],
+    "oak_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "oak_leaves": [
         "direction:any",
         "model:block",
@@ -2551,6 +2963,10 @@
     "oak_shelf": [
         "block-entity",
         "model:shelf"
+    ],
+    "oak_sign": [
+        "block-entity",
+        "model:sign"
     ],
     "oak_trapdoor": [
         "direction:any",
@@ -2599,6 +3015,39 @@
     "open_eyeblossom_emissive": [
         "direction:side",
         "model:other"
+    ],
+    "orange_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "orange_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "orange_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "orange_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "orange_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "orange_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "orange_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
     ],
     "orange_candle": [
         "model:candle"
@@ -2748,6 +3197,10 @@
     "pale_oak_door_top": [
         "model:door"
     ],
+    "pale_oak_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "pale_oak_leaves": [
         "direction:any",
         "model:block",
@@ -2772,6 +3225,10 @@
         "block-entity",
         "model:shelf"
     ],
+    "pale_oak_sign": [
+        "block-entity",
+        "model:sign"
+    ],
     "pale_oak_trapdoor": [
         "direction:any",
         "model:trapdoor"
@@ -2791,6 +3248,39 @@
     "peony_top": [
         "direction:side",
         "model:flower"
+    ],
+    "pink_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "pink_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "pink_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "pink_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "pink_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "pink_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "pink_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
     ],
     "pink_candle": [
         "model:candle"
@@ -2974,6 +3464,12 @@
         "direction:any",
         "model:block"
     ],
+    "polished_cinnabar": [
+        "direction:any",
+        "model:block",
+        "model:slab",
+        "model:stair"
+    ],
     "polished_deepslate": [
         "direction:any",
         "model:block"
@@ -2985,6 +3481,12 @@
     "polished_granite": [
         "direction:any",
         "model:block"
+    ],
+    "polished_sulfur": [
+        "direction:any",
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "polished_tuff": [
         "direction:any",
@@ -3009,6 +3511,10 @@
     "potatoes_stage3": [
         "direction:any",
         "model:crops"
+    ],
+    "potent_sulfur": [
+        "direction:any",
+        "model:block"
     ],
     "potted_azalea_bush_plant": [
         "direction:side",
@@ -3066,6 +3572,39 @@
         "direction:top",
         "model:block"
     ],
+    "purple_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "purple_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "purple_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "purple_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "purple_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "purple_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "purple_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
     "purple_candle": [
         "model:candle"
     ],
@@ -3111,7 +3650,7 @@
         "direction:any",
         "model:block"
     ],
-    "purpur_pillar": [
+    "purpur_pillar_side": [
         "direction:any",
         "model:block"
     ],
@@ -3135,7 +3674,7 @@
         "direction:any",
         "model:block"
     ],
-    "quartz_pillar": [
+    "quartz_pillar_side": [
         "direction:any",
         "model:block"
     ],
@@ -3162,6 +3701,39 @@
     "raw_iron_block": [
         "direction:any",
         "model:block"
+    ],
+    "red_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "red_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "red_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "red_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "red_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "red_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "red_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
     ],
     "red_candle": [
         "model:candle"
@@ -3713,6 +4285,10 @@
         "direction:side",
         "model:door"
     ],
+    "spruce_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "spruce_leaves": [
         "direction:any",
         "model:block",
@@ -3738,6 +4314,10 @@
     "spruce_shelf": [
         "block-entity",
         "model:shelf"
+    ],
+    "spruce_sign": [
+        "block-entity",
+        "model:sign"
     ],
     "spruce_trapdoor": [
         "direction:any",
@@ -3889,6 +4469,58 @@
     "sugar_cane": [
         "direction:side",
         "model:flower"
+    ],
+    "sulfur": [
+        "direction:any",
+        "model:block",
+        "model:slab",
+        "model:stair"
+    ],
+    "sulfur_bricks": [
+        "direction:any",
+        "model:block",
+        "model:slab",
+        "model:stair"
+    ],
+    "sulfur_spike_down_base": [
+        "direction:side",
+        "model:other"
+    ],
+    "sulfur_spike_down_frustum": [
+        "direction:side",
+        "model:other"
+    ],
+    "sulfur_spike_down_middle": [
+        "direction:side",
+        "model:other"
+    ],
+    "sulfur_spike_down_tip": [
+        "direction:side",
+        "model:other"
+    ],
+    "sulfur_spike_down_tip_merge": [
+        "direction:side",
+        "model:other"
+    ],
+    "sulfur_spike_up_base": [
+        "direction:side",
+        "model:other"
+    ],
+    "sulfur_spike_up_frustum": [
+        "direction:side",
+        "model:other"
+    ],
+    "sulfur_spike_up_middle": [
+        "direction:side",
+        "model:other"
+    ],
+    "sulfur_spike_up_tip": [
+        "direction:side",
+        "model:other"
+    ],
+    "sulfur_spike_up_tip_merge": [
+        "direction:side",
+        "model:other"
     ],
     "sunflower_back": [
         "direction:east",
@@ -4261,6 +4893,10 @@
         "direction:side",
         "model:flower"
     ],
+    "warped_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
     "warped_nylium": [
         "direction:top",
         "model:block"
@@ -4285,6 +4921,10 @@
     "warped_shelf": [
         "block-entity",
         "model:shelf"
+    ],
+    "warped_sign": [
+        "block-entity",
+        "model:sign"
     ],
     "warped_stem": [
         "direction:any",
@@ -4415,6 +5055,39 @@
         "direction:side",
         "model:crops"
     ],
+    "white_bed_foot_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "white_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "white_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "white_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "white_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "white_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "white_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
     "white_candle": [
         "model:candle"
     ],
@@ -4471,6 +5144,38 @@
     "wither_rose": [
         "direction:side",
         "model:flower"
+    ],
+    "yellow_bed_foot_east": [
+        "model:bed",
+        "transparent"
+    ],
+    "yellow_bed_foot_south": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "yellow_bed_foot_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "yellow_bed_foot_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "yellow_bed_head_east": [
+        "direction:side",
+        "model:bed",
+        "transparent"
+    ],
+    "yellow_bed_head_up": [
+        "direction:top",
+        "model:bed"
+    ],
+    "yellow_bed_head_west": [
+        "direction:side",
+        "model:bed",
+        "transparent"
     ],
     "yellow_candle": [
         "model:candle"
