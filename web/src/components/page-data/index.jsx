@@ -134,9 +134,11 @@ export function Data() {
 			.then((blocks) => {
 				setBlocks(blocks.blocks)
 
-				const todos = blocks.blocks.filter((/** @type {import('shared/src/block.js').Block} */ block) => {
-					return !block.tags || !block.blockIds;
-				});
+				const todos = blocks.blocks
+					.filter((/** @type {import('shared/src/block.js').Block} */ block) => {
+						return !block.tags || !block.blockIds;
+					})
+					.sort((a, b) => a.name.localeCompare(b.name));
 
 				initQueue(todos);
 			});
@@ -230,13 +232,15 @@ export function Data() {
 		<div className="page-container">
 			<div className="texture-queue">
 				<div className="textures-left">Textures left: { queue.length } ({computePercent(queue.length, blocks.length)}%)</div>
+				<ul className="texture-queue-items">
 				{
 					queue.map((block) => {
-						return <div key={block.name}>
+						return <li key={block.name}>
 							{ block.name }
-						</div>
+						</li>
 					})
 				}
+				</ul>
 			</div>
 			<div className="texture-properties">
 				{

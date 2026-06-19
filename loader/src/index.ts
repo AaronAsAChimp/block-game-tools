@@ -71,7 +71,10 @@ for (const release of releases) {
 	
 	for (const entry of zipEntries) {
 		// console.log('  - ' + entry.entryName);
-		if (entry.entryName.startsWith('assets/minecraft/textures/block/')) {
+
+		const name = entry.entryName;
+
+		if (name.startsWith('assets/minecraft/textures/block/') && name !== 'assets/minecraft/textures/block/') {
 			zip.extractEntryTo(entry, jarFolder);
 		}
 

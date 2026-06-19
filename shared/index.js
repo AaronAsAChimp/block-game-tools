@@ -11,10 +11,10 @@ export const MC_DATA_VERSION = 4903;
 // 
 // https://minecraft.wiki/w/Java_Edition_data_values#Blocks
 // 
-// The sort and JSONify using:
+// Then sort and JSONify using:
 // 
 // ```sh
-// jq -cR "." "block-ids.txt" | jq -s --indent 4 "sort_by(.)" > web/data/block-ids.json
+// jq -cR "." "web/data/block-ids.txt" | jq -s --indent 4 "sort_by(.)" > web/data/block-ids.json
 // ````
 // 
 // Also review the textures in the data editor.
