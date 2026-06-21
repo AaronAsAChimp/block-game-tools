@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 export function PaletteSelector() {
 	const palette = useStore(paletteStore);
 
-	return <div className={styles['form-controls']}>
+	return <div className="form-controls">
 		<label>
 			Color Extraction:
 			<select onInput={(e) => paletteStore.set(e.target.value)} value={palette}>

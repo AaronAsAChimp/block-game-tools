@@ -1,3 +1,23 @@
+select,
+button,
+input,
+textarea {
+	padding: 0.6em 1.2em;
+	background: var(--layer1-color);
+	color: var(--layer1-contrast);
+	border: 1px solid var(--layer2-color);
+	border-radius: 0.8em;
+
+	&:hover {
+		background: var(--layer2-color);
+		color: var(--layer2-contrast);
+	}
+}
+
+button {
+	cursor: pointer;
+}
+
 .form-controls > label {
 	display: flex;
 	flex-direction: column;

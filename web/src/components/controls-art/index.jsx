@@ -102,7 +102,7 @@ export function ArtControls() {
 		window.URL.revokeObjectURL(url);
 	}
 
-	return <div className={styles['texturizer-controls'] + ' ' + styles['form-controls']}>
+	return <div className={styles['texturizer-controls'] + ' form-controls'}>
 		<PaletteSelector />
 		<label>
 			Image:
@@ -110,7 +110,7 @@ export function ArtControls() {
 		</label>
 		<label>
 			Size:
-			<span className={styles['custom-input']}>
+			<span className={styles['size-input']}>
 				<input type="number" value={texturizerOptions.width} min={1} size={3} onInput={ updateWidth } /> &times; <input type="number" value={texturizerOptions.height} min={1} size={3} onInput={ updateHeight } />
 			</span>
 		</label>

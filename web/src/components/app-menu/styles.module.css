@@ -7,7 +7,9 @@
 	background: var(--layer1-color);
 	color: var(--layer1-contrast-color);
 	border: none;
+	border-radius: 0;
 	cursor: pointer;
+	padding: initial;
 
 	&:hover {
 		background: var(--layer1-hover);

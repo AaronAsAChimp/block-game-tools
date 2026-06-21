@@ -27,8 +27,9 @@ export function ColorMap() {
 			const props = window.getComputedStyle(root);
 
 			if (root) {
-				color = props['background-color'];
-				inverse = props['color'];
+
+				color = props.getPropertyValue('--contrast-dark');
+				inverse = props.getPropertyValue('--contrast-light');
 			}
 		}
 
@@ -115,8 +116,8 @@ export function ColorMap() {
 		setColors(colors);
 
 		if (root instanceof HTMLElement) {
-			root.style.setProperty('--background-color', colors.color);
-			root.style.setProperty('--inverse-color', colors.inverse);
+			root.style.setProperty('--contrast-dark', colors.color);
+			root.style.setProperty('--contrast-light', colors.inverse);
 		}
 	}
 

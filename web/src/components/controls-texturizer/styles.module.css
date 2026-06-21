@@ -1,5 +1,7 @@
-@import '../../css/forms.css';
-
 .texturizer-gradient {
 	width: 100%;
+}
+
+.size-input input {
+	width: 4em;
 }
