@@ -37,6 +37,7 @@ function Minimap({naturalWidth, naturalHeight}) {
 	const imageAspectRatio = naturalWidth / naturalHeight;
 	const [viewWidth, setViewWidth] = useState(1);
 	const [viewHeight, setViewHeight] = useState(1);
+	const observerRef = useRef(null);
 
 	/** @type {React.RefObject<HTMLDivElement>} */
 	const minimapRef = useRef();
@@ -94,8 +95,23 @@ function Minimap({naturalWidth, naturalHeight}) {
 			passive: true
 		});
 
+		observerRef.current = new ResizeObserver((entries) => {
+			const entry = entries[0];
+			const rect = entry.contentRect
+
+			setViewWidth(rect.width);
+			setViewHeight(rect.height);
+
+			console.log('Rect', rect.width, rect.height);
+		});
+
+		observerRef.current.observe(scrollParent);		
+
 		return () => {
 			scrollParent.removeEventListener('scroll', onScrollHandler);
+
+			observerRef.current.unobserve(scrollParent);
+			observerRef.current = null;
 		}
 	}, [scrollParent, naturalHeight, naturalWidth]);
 
