@@ -32,11 +32,16 @@
 	transform: translateX(100%);
 	background: var(--layer1-color);
 	color: var(--layer1-contrast-color);
-	padding: 1em;}
+	padding: 1em;
+}
 
 .menu.open {
 	transform: translateX(0);
 	box-shadow: 0 0 60px #0000009c;
+
+	@media (prefers-color-scheme: light) {
+		box-shadow: 0 0 60px rgba(0, 0, 0, 0.20);
+	}
 }
 
 .menu .close {

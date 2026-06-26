@@ -15,6 +15,10 @@ import {AppMenu} from './app-menu/index.jsx';
 .app-title-bar {
 	display: flex;
 	gap: 0.5em;
+
+	@media (prefers-color-scheme: light) {
+		background: var(--layer1-color);
+	}
 }
 
 .app-title {

@@ -38,6 +38,10 @@ const hasOptions = Astro.slots.has('default');
 	& .app-title {
 		flex: 1 0 auto;
 	}
+
+	@media (prefers-color-scheme: light) {
+		background: var(--layer1-color);
+	}
 }
 
 .app-title-tool-specific {
