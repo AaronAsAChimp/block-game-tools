@@ -11,13 +11,6 @@ export default defineConfig({
     sitemap()
   ],
   vite: {
-    // build: {
-    //   commonjsOptions: {
-    //     include: [
-    //       stdLibBrowser.crypto
-    //     ]
-    //   }
-    // },
     resolve: {
       alias: {
       },

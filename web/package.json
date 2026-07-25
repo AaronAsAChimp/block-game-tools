@@ -32,8 +32,8 @@
     "vite-plugin-markdown": "^2.2.0"
   },
   "dependencies": {
-    "@astrojs/react": "^4.4.2",
-    "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/react": "^6.0.1",
+    "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/bitter": "^5.2.10",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
@@ -45,7 +45,7 @@
     "@react-three/fiber": "^9.4.2",
     "@rollup/plugin-inject": "^5.0.5",
     "@uidotdev/usehooks": "^2.4.1",
-    "astro": "^5.16.4",
+    "astro": "^7.0.7",
     "brace-expansion": "^4.0.1",
     "classnames": "^2.5.1",
     "nanostores": "^1.1.0",
