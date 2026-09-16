@@ -29,6 +29,7 @@
 .texture-queue-items {
 	margin: 0;
 	padding: 0.6em;
+	list-style: none;
 }
 
 .tags-editor {
