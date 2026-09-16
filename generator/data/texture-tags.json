@@ -3067,6 +3067,11 @@
         "direction:any",
         "model:block"
     ],
+    "orange_poplar_leaves": [
+        "direction:any",
+        "model:block",
+        "transparent"
+    ],
     "orange_shulker_box": [
         "direction:any",
         "model:block",
@@ -3492,6 +3497,47 @@
         "direction:any",
         "model:block"
     ],
+    "poplar_door_bottom": [
+        "direction:side",
+        "model:door",
+        "redstone"
+    ],
+    "poplar_door_top": [
+        "direction:side",
+        "model:door",
+        "redstone",
+        "transparent"
+    ],
+    "poplar_hanging_sign": [
+        "block-entity",
+        "model:hanging-sign"
+    ],
+    "poplar_log": [
+        "direction:any",
+        "model:block"
+    ],
+    "poplar_log_top": [
+        "direction:any",
+        "model:block"
+    ],
+    "poplar_planks": [
+        "direction:any",
+        "model:block"
+    ],
+    "poplar_sapling": [
+        "direction:side",
+        "model:flower"
+    ],
+    "poplar_shelf": [
+        "model:shelf"
+    ],
+    "poplar_sign": [
+        "model:sign"
+    ],
+    "poplar_trapdoor": [
+        "direction:any",
+        "model:trapdoor"
+    ],
     "poppy": [
         "direction:side",
         "model:flower"
@@ -3765,6 +3811,11 @@
         "direction:any",
         "model:block"
     ],
+    "red_poplar_leaves": [
+        "direction:any",
+        "model:block",
+        "transparent"
+    ],
     "red_sand": [
         "direction:any",
         "model:block"
@@ -3780,6 +3831,10 @@
     "red_sandstone_top": [
         "direction:top",
         "model:block"
+    ],
+    "red_shrub": [
+        "direction:side",
+        "model:flower"
     ],
     "red_shulker_box": [
         "direction:any",
@@ -4062,6 +4117,12 @@
     "seagrass": [
         "direction:side",
         "model:flower"
+    ],
+    "shelf_mushroom_stage0": [
+        "model:other"
+    ],
+    "shelf_mushroom_stage1": [
+        "model:other"
     ],
     "short_dry_grass": [
         "direction:side",
@@ -4347,6 +4408,9 @@
         "direction:top",
         "model:other"
     ],
+    "straw_bed": [
+        "model:other"
+    ],
     "stripped_acacia_log": [
         "direction:any",
         "model:block"
@@ -4424,6 +4488,14 @@
         "model:block"
     ],
     "stripped_pale_oak_log_top": [
+        "direction:any",
+        "model:block"
+    ],
+    "stripped_poplar_log": [
+        "direction:any",
+        "model:block"
+    ],
+    "stripped_poplar_log_top": [
         "direction:any",
         "model:block"
     ],
@@ -5194,6 +5266,11 @@
     "yellow_glazed_terracotta": [
         "direction:any",
         "model:block"
+    ],
+    "yellow_poplar_leaves": [
+        "direction:any",
+        "model:block",
+        "transparent"
     ],
     "yellow_shulker_box": [
         "direction:any",

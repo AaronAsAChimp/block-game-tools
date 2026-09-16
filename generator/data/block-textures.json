@@ -70,6 +70,10 @@
         "sculk_sensor_tendril_inactive",
         "sculk_sensor_bottom"
     ],
+    "stripped_poplar_log": [
+        "stripped_poplar_log",
+        "stripped_poplar_log_top"
+    ],
     "oxidized_cut_copper": [
         "oxidized_cut_copper"
     ],
@@ -300,6 +304,9 @@
     "horn_coral": [
         "horn_coral_block",
         "horn_coral"
+    ],
+    "straw_bed": [
+        "straw_bed"
     ],
     "chain_command_block": [
         "chain_command_block_side",
@@ -819,6 +826,9 @@
     "birch_shelf": [
         "birch_shelf"
     ],
+    "yellow_poplar_leaves": [
+        "yellow_poplar_leaves"
+    ],
     "red_candle": [
         "red_candle_lit",
         "red_candle"
@@ -969,6 +979,9 @@
     "mangrove_door": [
         "mangrove_door_bottom",
         "mangrove_door_top"
+    ],
+    "poplar_sapling": [
+        "poplar_sapling"
     ],
     "dirt": [
         "dirt"
@@ -1239,6 +1252,9 @@
     "diorite": [
         "diorite"
     ],
+    "red_poplar_leaves": [
+        "red_poplar_leaves"
+    ],
     "creaking_heart": [
         "creaking_heart_top",
         "creaking_heart_dormant",
@@ -1291,6 +1307,9 @@
     ],
     "chiseled_polished_blackstone": [
         "chiseled_polished_blackstone"
+    ],
+    "red_shrub": [
+        "red_shrub"
     ],
     "carrots": [
         "carrots_stage3",
@@ -1473,6 +1492,10 @@
     ],
     "yellow_wool": [
         "yellow_wool"
+    ],
+    "poplar_log": [
+        "poplar_log_top",
+        "poplar_log"
     ],
     "copper_door": [
         "copper_door_bottom",
@@ -1699,6 +1722,10 @@
     ],
     "dead_horn_coral_wall_fan": [
         "dead_horn_coral_fan"
+    ],
+    "stripped_poplar_wood": [
+        "stripped_poplar_log",
+        "stripped_poplar_log_top"
     ],
     "chorus_plant": [
         "chorus_plant"
@@ -2427,6 +2454,9 @@
     "brown_glazed_terracotta": [
         "brown_glazed_terracotta"
     ],
+    "orange_poplar_leaves": [
+        "orange_poplar_leaves"
+    ],
     "powder_snow": [
         "powder_snow"
     ],
@@ -2555,6 +2585,10 @@
     ],
     "warped_hanging_sign": [
         "warped_hanging_sign"
+    ],
+    "poplar_door": [
+        "poplar_door_top",
+        "poplar_door_bottom"
     ],
     "nether_gold_ore": [
         "nether_gold_ore"
@@ -2774,6 +2808,9 @@
     "dark_oak_leaves": [
         "dark_oak_leaves"
     ],
+    "poplar_sign": [
+        "poplar_sign"
+    ],
     "light_gray_wool": [
         "light_gray_wool"
     ],
@@ -2792,6 +2829,9 @@
     "mangrove_fence_gate": [
         "mangrove_planks"
     ],
+    "poplar_trapdoor": [
+        "poplar_trapdoor"
+    ],
     "light_gray_glazed_terracotta": [
         "light_gray_glazed_terracotta"
     ],
@@ -2806,6 +2846,9 @@
     ],
     "heavy_core": [
         "heavy_core"
+    ],
+    "poplar_hanging_sign": [
+        "poplar_hanging_sign"
     ],
     "red_sand": [
         "red_sand"
@@ -2843,6 +2886,9 @@
         "wheat_stage0",
         "wheat_stage2",
         "wheat_stage3"
+    ],
+    "poplar_shelf": [
+        "poplar_shelf"
     ],
     "soul_fire": [
         "soul_fire_1",
@@ -3032,6 +3078,9 @@
     "large_amethyst_bud": [
         "large_amethyst_bud"
     ],
+    "poplar_planks": [
+        "poplar_planks"
+    ],
     "glass": [
         "glass"
     ],
@@ -3160,6 +3209,10 @@
     ],
     "honeycomb_block": [
         "honeycomb_block"
+    ],
+    "shelf_mushroom": [
+        "shelf_mushroom_stage0",
+        "shelf_mushroom_stage1"
     ],
     "leaf_litter": [
         "leaf_litter"

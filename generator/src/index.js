@@ -48,8 +48,14 @@ function buildExcludes(colorBlocks, blockTextures) {
 	// destroy stages
 	for (let i = 0; i <= 9; i++) {
 		excludes.add(`destroy_stage_${i}`);
+		excludes.add(`destroy_oit_stage_${i}`);
 	}
 
+	// Particles
+	excludes.add("shelf_mushroom_particle");
+	excludes.add("straw_bed_particle");
+
+	// Debug blocks
 	excludes.add("debug");
 	excludes.add("debug2");
 
