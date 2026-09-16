@@ -423,7 +423,9 @@
     ],
     "black_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "blackstone": [
         "direction:any",
@@ -525,7 +527,9 @@
     ],
     "blue_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "bone_block_side": [
         "direction:any",
@@ -639,7 +643,9 @@
     ],
     "brown_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "bubble_coral": [
         "direction:side",
@@ -1370,7 +1376,9 @@
     ],
     "cyan_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "damaged_anvil_top": [
         "direction:top",
@@ -2086,7 +2094,9 @@
     ],
     "gray_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "green_bed_foot_east": [
         "direction:side",
@@ -2159,7 +2169,9 @@
     ],
     "green_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "grindstone_pivot": [
         "model:other"
@@ -2482,7 +2494,9 @@
     ],
     "light_blue_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "light_gray_bed_foot_east": [
         "direction:side",
@@ -2556,7 +2570,9 @@
     ],
     "light_gray_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "lightning_rod": [
         "direction:any",
@@ -2653,7 +2669,9 @@
     ],
     "lime_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "lodestone_side": [
         "direction:any",
@@ -2750,7 +2768,9 @@
     ],
     "magenta_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "magma": [
         "direction:any",
@@ -3096,7 +3116,9 @@
     ],
     "orange_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "oxeye_daisy": [
         "direction:side",
@@ -3338,7 +3360,9 @@
     ],
     "pink_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "piston_bottom": [
         "direction:any",
@@ -3690,7 +3714,9 @@
     ],
     "purple_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "purpur_block": [
         "direction:any",
@@ -3861,7 +3887,9 @@
     ],
     "red_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "redstone_block": [
         "direction:any",
@@ -5203,7 +5231,9 @@
     ],
     "white_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ],
     "wildflowers": [
         "direction:top",
@@ -5293,6 +5323,8 @@
     ],
     "yellow_wool": [
         "direction:any",
-        "model:block"
+        "model:block",
+        "model:slab",
+        "model:stair"
     ]
 }
