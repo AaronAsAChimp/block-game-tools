@@ -34,6 +34,8 @@ export function compareNbt(test, actual, expected, message) {
 		expected = expected.buffer;
 	}
 
+	console.log(expected);
+
 	readTagged(new DataView(expected), parsed);
 
 	const expectedParsed = sortKeys(parsed);

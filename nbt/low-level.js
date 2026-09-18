@@ -279,6 +279,8 @@ export function readTagged(buffer, parsed, offset) {
 			break;
 		}
 
+		console.log(buffer, offset, tag, parsed);
+
 		offset = readUntagged(buffer, offset, tag, parsed);
 	}
 
