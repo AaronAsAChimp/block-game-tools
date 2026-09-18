@@ -2,12 +2,13 @@ import fs from 'fs/promises';
 import { promisify } from 'util';
 import { gunzip as gz } from 'zlib';
 import { readTagged, sortKeys} from 'nbt-zero/low-level.js';
+import path from 'path';
 
 
 const gunzip = promisify(gz);
 
 export async function loadSchematic(filename, compressed) {
-	const dataPath = new URL(`./data/${ filename }`, import.meta.url);
+	const dataPath = path.join(import.meta.dirname, `data/`, filename);
 	const file = await fs.readFile(dataPath);
 
 	let buffer = null;
