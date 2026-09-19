@@ -27,9 +27,13 @@
 }
 
 .minimap {
-	border: 2px solid red;
 	position: fixed;
 	z-index: 1;
+}
+
+.minimap-bg {
+	width: 100%;
+	image-rendering: pixelated;
 }
 
 .minimap.wide {

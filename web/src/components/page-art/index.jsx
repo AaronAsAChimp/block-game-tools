@@ -33,22 +33,42 @@ function SwatchGrid({width, height, blocks}) {
 }
 
 
-function Minimap({naturalWidth, naturalHeight}) {
+/**
+ * @typedef {Object} MinimapProps
+ * @property {number} naturalWidth
+ * @property {number} naturalHeight
+ * @property {number} scale
+ * @property {React.RefObject<HTMLCanvasElement | null>} ref
+ */
+
+/**
+ * A component that represents a minimp
+ *
+ * @param {MinimapProps} options
+ */
+function Minimap({naturalWidth, naturalHeight, scale, ref}) {
 	const imageAspectRatio = naturalWidth / naturalHeight;
 	const [viewWidth, setViewWidth] = useState(1);
 	const [viewHeight, setViewHeight] = useState(1);
+
+	/** @type {React.RefObject<ResizeObserver | null>} */
 	const observerRef = useRef(null);
 
-	/** @type {React.RefObject<HTMLDivElement>} */
-	const minimapRef = useRef();
+	/** @type {React.RefObject<HTMLDivElement | null>} */
+	const minimapRef = useRef(null);
+
+	/** @type {React.RefObject<HTMLDivElement | null>} */
+	const cursorRef = useRef(null);
 
 	const scrollParent = useMemo(() => {
-		/** @type {HTMLElement} */
+		/** @type {HTMLElement | null} */
 		let parentEl = minimapRef.current;
+
+		/** @type {HTMLElement | null} */
 		let scrollParentEl = null;
 
 		if (!parentEl) {
-			return;
+			return null;
 		}
 
 		while (parentEl.parentElement && !scrollParentEl) {
@@ -59,6 +79,10 @@ function Minimap({naturalWidth, naturalHeight}) {
 			}
 
 			parentEl = parentEl.parentElement;
+		}
+
+		if (!scrollParentEl) {
+			return null;
 		}
 
 		const rect = scrollParentEl.getBoundingClientRect();
@@ -72,7 +96,7 @@ function Minimap({naturalWidth, naturalHeight}) {
 	}, [minimapRef.current]);
 
 	function onScrollHandler(e) {
-		const cursor = minimapRef.current.children[0];
+		const cursor = cursorRef.current;
 
 		if (cursor instanceof HTMLElement) {
 			const scroller = e.currentTarget;
@@ -81,7 +105,7 @@ function Minimap({naturalWidth, naturalHeight}) {
 			cursor.style.left = ((scroller.scrollLeft / scroller.scrollWidth) * 100) + '%';
 
 			// console.log('top', e.currentTarget.scrollTop, ((naturalHeight * 64) - viewHeight));
-			console.log('left', (scroller.scrollLeft / scroller.scrollWidth));
+			// console.log('left', (scroller.scrollLeft / scroller.scrollWidth));
 			// console.log('left', naturalWidth);
 		}
 	}
@@ -110,27 +134,59 @@ function Minimap({naturalWidth, naturalHeight}) {
 		return () => {
 			scrollParent.removeEventListener('scroll', onScrollHandler);
 
+			if (!observerRef.current) {
+				return;
+			}
+
 			observerRef.current.unobserve(scrollParent);
 			observerRef.current = null;
 		}
 	}, [scrollParent, naturalHeight, naturalWidth]);
 
-	return <div ref={minimapRef} className={classnames(styles['minimap'], imageAspectRatio > 1 ? styles['wide'] : styles['tall'])} style={{ aspectRatio: imageAspectRatio }}>
-		<div className={styles['minimap-cursor']} style={{ aspectRatio: viewWidth / viewHeight, width: ((viewWidth / (naturalWidth * 64)) * 100) + '%' }}></div>
-	</div>
+	return (
+		naturalWidth * 64 >= viewWidth  && naturalHeight * 64 >= viewHeight
+		? <div ref={minimapRef} className={classnames(styles['minimap'], imageAspectRatio > 1 ? styles['wide'] : styles['tall'])} style={{ aspectRatio: imageAspectRatio }}>
+			<canvas className={styles['minimap-bg']} ref={ref} height={naturalHeight} width={naturalWidth} style={{aspectRatio: imageAspectRatio}} />
+			<div className={styles['minimap-cursor']} ref={cursorRef} style={{ top: 0, left: 0, aspectRatio: viewWidth / viewHeight, width: ((viewWidth / (naturalWidth * scale)) * 100) + '%' }}></div>
+		</div>
+		: null
+	)
 }
 
 
 export function ArtBlocker() {
-	/** @type {React.RefObject<HTMLCanvasElement>} */
+	/** @type {React.RefObject<OffscreenCanvas | null>} */
 	const canvasRef = useRef(null);
 
-	/** @type {React.RefObject<HTMLDivElement>} */
+	/** @type {React.RefObject<HTMLCanvasElement | null>} */
+	const minimapBgRef = useRef(null);
+
+	/**
+	 * @return {OffscreenCanvas}
+	 */
+	function getCanvas() {
+		let canvas = canvasRef.current;
+
+		if (!canvas) {
+			canvas = new OffscreenCanvas(texturizerOptions.width, texturizerOptions.height);
+			canvasRef.current = canvas;
+		}
+
+		return canvas;
+	}
+
+	/** @type {React.RefObject<HTMLDivElement | null>} */
 	const dropperRef = useRef(null);
 
 	const texturizerOptions = useStore(artGenOptionsStore);
 	const textureBlocks = useStore(blockGrid);
-	const [imageData, setImageData] = useState(null);
+
+	const [imageData, setImageData] = useState(
+		/**
+		 * @type {ImageData | null}
+		 */
+		(null)
+	);
 
 	const [blocks, setBlocks] = useState([]);
 	const [dragging, setDraggingg] = useState(false);
@@ -174,7 +230,7 @@ export function ArtBlocker() {
 		function onDrop(e) {
 			e.preventDefault();
 
-			if (e.dataTransfer.files.length) {
+			if (e.dataTransfer?.files.length) {
 				console.log('drop', e.dataTransfer.files[0]);
 
 				loadImageFromFile(e.dataTransfer.files[0]);
@@ -224,13 +280,27 @@ export function ArtBlocker() {
 			return;
 		}
 
-		const ctx = canvasRef.current.getContext('2d');
+		const canvas = getCanvas();
+		const ctx = canvas.getContext('2d');
+
+		if (!ctx) {
+			throw new Error('Could not initialize canvas.');
+		}
 
 		const textureBlocks = imageAsBlocks(imageData, palette, texturizerOptions.ditheringAlgo, blockLookup);
 
 		blockGrid.set(textureBlocks);
 
 		ctx.putImageData(imageData, 0, 0);
+
+		if (minimapBgRef.current) {
+			const minimapBgCanvas = minimapBgRef.current;
+			const minimapBgCtx = minimapBgRef.current.getContext('2d');
+
+			minimapBgCtx?.drawImage(canvas,
+				0, 0, imageData.width, imageData.height,
+				0, 0, minimapBgCanvas.width, minimapBgCanvas.height)
+		}
 
 	}, [texturizerOptions, palette, blockLookup, imageData])
 
@@ -242,14 +312,25 @@ export function ArtBlocker() {
 			return;
 		}
 
-		if (texturizerOptions.width > 0 && texturizerOptions.height > 0) {
-			const canvas = canvasRef.current;
+		const canvas = getCanvas();
+
+		const width = texturizerOptions.width;
+		const height = texturizerOptions.height;
+
+		canvas.width = width;
+		canvas.height = height;
+
+		if (width > 0 && height > 0) {
 			const ctx = canvas.getContext('2d');
 
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+			if (!ctx) {
+				throw new Error('Could not initialize canvas.');
+			}
 
-			setImageData(ctx.getImageData(0, 0, canvas.width, canvas.height));
+			ctx.clearRect(0, 0, width, height);
+			ctx.drawImage(image, 0, 0, width, height);
+
+			setImageData(ctx.getImageData(0, 0, width, height));
 		}
 	}, [texturizerOptions.image, texturizerOptions.width, texturizerOptions.height, texturizerOptions.ditheringAlgo])
 
@@ -266,9 +347,10 @@ export function ArtBlocker() {
 				texturizerOptions.image
 					? <>
 						{ imageData
-							? <Minimap naturalWidth={imageData.width} naturalHeight={imageData.height} viewWidth={texturizerOptions.width * 64} viewHeight={texturizerOptions.height * 64} scale={64} />
+							? <Minimap ref={minimapBgRef} naturalWidth={imageData.width} naturalHeight={imageData.height} scale={64}>
+								
+							</Minimap>
 							: null }
-						<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={texturizerOptions.width} height={texturizerOptions.height} />
 						<SwatchGrid width={texturizerOptions.width} height={texturizerOptions.height} blocks={textureBlocks} />
 					</> 
 					: <div className={styles['art-placeholder']}>Drag and drop an image here to begin.</div>
