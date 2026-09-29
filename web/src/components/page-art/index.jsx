@@ -143,9 +143,64 @@ function Minimap({naturalWidth, naturalHeight, scale, ref}) {
 		}
 	}, [scrollParent, naturalHeight, naturalWidth]);
 
+
+	/**
+	 * @param  {React.PointerEvent<HTMLDivElement>} e
+	 */
+	function pointerDown(e) {
+		if (!minimapRef.current) {
+			return;
+		}
+
+		if (!scrollParent) {
+			return;
+		}
+
+		if (e.currentTarget instanceof HTMLElement) {
+			const xPct = e.offsetX / e.currentTarget.offsetWidth;
+			const yPct = e.offsetY / e.currentTarget.offsetHeight;
+
+			minimapRef.current.style.cursor = 'none';
+
+			scrollParent.scrollLeft = scrollParent.scrollWidth * xPct;
+			scrollParent.scrollTop = scrollParent.scrollHeight * yPct;
+		}
+
+		/**
+		 * @param  {PointerEvent} e
+		 */
+		function pointerMove(e) {
+			if (!scrollParent) {
+				return;
+			}
+
+			if (e.currentTarget instanceof HTMLElement) {
+				const xPct = e.offsetX / e.currentTarget.offsetWidth;
+				const yPct = e.offsetY / e.currentTarget.offsetHeight;
+
+				scrollParent.scrollLeft = scrollParent.scrollWidth * xPct;
+				scrollParent.scrollTop = scrollParent.scrollHeight * yPct;
+			}
+		}
+
+		/**
+		 * @param  {PointerEvent} e
+		 */
+		function pointerUp(e) {
+			if (minimapRef.current) {
+				minimapRef.current.style.cursor = '';
+				minimapRef.current.removeEventListener('pointermove', pointerMove);
+			}
+			document.addEventListener('pointerup', pointerUp);
+		}
+
+		minimapRef.current.addEventListener('pointermove', pointerMove);
+		document.addEventListener('pointerup', pointerUp);
+	}
+
 	return (
 		naturalWidth * 64 >= viewWidth  && naturalHeight * 64 >= viewHeight
-		? <div ref={minimapRef} className={classnames(styles['minimap'], imageAspectRatio > 1 ? styles['wide'] : styles['tall'])} style={{ aspectRatio: imageAspectRatio }}>
+		? <div ref={minimapRef} onPointerDown={pointerDown} className={classnames(styles['minimap'], imageAspectRatio > 1 ? styles['wide'] : styles['tall'])} style={{ aspectRatio: imageAspectRatio }}>
 			<canvas className={styles['minimap-bg']} ref={ref} height={naturalHeight} width={naturalWidth} style={{aspectRatio: imageAspectRatio}} />
 			<div className={styles['minimap-cursor']} ref={cursorRef} style={{ top: 0, left: 0, aspectRatio: viewWidth / viewHeight, width: ((viewWidth / (naturalWidth * scale)) * 100) + '%' }}></div>
 		</div>
