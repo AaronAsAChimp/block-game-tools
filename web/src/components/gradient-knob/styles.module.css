@@ -36,6 +36,10 @@
 	padding: 0.4em;
 	cursor: pointer;
 	transform-origin: center 80%;
+
+	&:hover {
+		background: transparent;
+	}
 }
 
 @media not (prefers-reduced-motion) {
