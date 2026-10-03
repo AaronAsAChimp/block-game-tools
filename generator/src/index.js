@@ -58,6 +58,11 @@ function buildExcludes(colorBlocks, blockTextures) {
 	// Debug blocks
 	excludes.add("debug");
 	excludes.add("debug2");
+	excludes.add("test_block_accept");
+	excludes.add("test_block_log");
+	excludes.add("test_block_start");
+	excludes.add("test_block_fail");
+	excludes.add("test_instance_block");
 
 	return excludes;
 }
