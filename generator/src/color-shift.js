@@ -34,8 +34,10 @@ export function buildTintMap(colorBlocks, blockTextures) {
     for (const key in colorBlocks) {
         for (const blockId of colorBlocks[key]) {
             console.log(blockId);
-            if (blockId in blockTextures) {
-                for (const texName of blockTextures[blockId]) {
+            const textures = Array.isArray(blockId) ? blockId : blockTextures[blockId];
+
+            if (textures) {
+                for (const texName of textures) {
                     if (key === 'constant') {
                         if (texName in BLOCK_COLORS.constant) {
                             tintMap[texName] = BLOCK_COLORS.constant[texName];
