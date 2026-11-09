@@ -13,6 +13,7 @@ import { imageAsBlocks } from '../../image.js';
 import styles from './styles.module.css';
 import { useStore } from '@nanostores/react';
 import { texturizerOptionsStore } from '../../context/texturizer-store.js';
+import { Minimap } from '../minimap/index.jsx';
 
 const MONOCHROME_STEPS = 32;
 const TextureSwatchMemo = memo(TextureSwatch);
@@ -74,7 +75,7 @@ const BUILTIN_GRADIENTS = {
 };
 
 export function Texturizer() {
-	/** @type {React.MutableRefObject<HTMLCanvasElement>} */
+	/** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
 	const canvasRef = useRef(null);
 	const noiserRef = useRef(null);
 	const [textureBlocks, setTextureBlocks] = useState(null);
@@ -185,6 +186,10 @@ export function Texturizer() {
 	}, [palette, blocks, texturizerOptions.isMonochrome]);
 
 	useEffect(() => {
+		if (!canvasRef.current) {
+			return;
+		}
+
 		const width = texturizerOptions.width;
 		const height = texturizerOptions.height;
 
@@ -229,7 +234,7 @@ export function Texturizer() {
 			<div className={styles['texturizer-controls']}>
 				<button ref={downloadSchematicRef} onClick={downloadSchematic}>Download Litematica Schematic</button>
 			</div>
-			<canvas className={styles['texturizer-canvas']} ref={canvasRef} width={texturizerOptions.width} height={texturizerOptions.height} />
+			<Minimap ref={canvasRef} naturalWidth={texturizerOptions.width} naturalHeight={texturizerOptions.height} scale={64}></Minimap>
 			<SwatchGrid width={texturizerOptions.width} height={texturizerOptions.height} blocks={textureBlocks} />
 		</PaletteContext.Provider>
 	</>;

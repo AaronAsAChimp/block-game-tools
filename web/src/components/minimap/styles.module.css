@@ -1,0 +1,23 @@
+.minimap {
+	position: fixed;
+	z-index: 1;
+}
+
+.minimap-bg {
+	width: 100%;
+	image-rendering: pixelated;
+}
+
+.minimap.wide {
+	width: 6em;
+}
+
+.minimap.tall {
+	height: 6em;
+}
+
+.minimap-cursor {
+	pointer-events: none;
+	position: absolute;
+	border: 2px solid white;
+}
