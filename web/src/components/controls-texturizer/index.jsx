@@ -5,6 +5,8 @@ import { RGBColor } from "shared";
 import { PaletteSelector } from '../palette-selector/index.jsx';
 import styles from './styles.module.css';
 import { useEffect, useState } from 'react';
+import { DownloadSchematicButton } from '../download-schematic-button/index.js';
+import { blockGrid } from '../../context/block-grid-store.js';
 
 const DEFAULT_START = 0x000000;
 const DEFAULT_END = 0xFFFFFF;
@@ -56,6 +58,7 @@ const INITIAL_GRADIENT = [
 export function TexturizerControls() {
 
 	const texturizerOptions = useStore(texturizerOptionsStore);
+	const textureBlocks = useStore(blockGrid);
 	const [gradientName, setGradientName] = useState('grayscale');
 	const [presetGradient, setPresetGradient] = useState(INITIAL_GRADIENT);
 
@@ -182,5 +185,6 @@ export function TexturizerControls() {
 		</div>
 
 		<button type="button" onClick={updateNoiseVersion}>Randomize</button>
+		<DownloadSchematicButton width={texturizerOptions.width} height={texturizerOptions.height} textureBlocks={textureBlocks} />
 	</div>
 }

@@ -1,19 +1,16 @@
-import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { RGBColor } from "shared";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { createNoise2D } from "simplex-noise";
 import { TextureSwatch } from "../texture-swatch";
 import { PaletteContext } from "../../context/palette-context";
-import { LitematicaSchematic } from "../../schematic/schematic.js";
-import { SchematicRegion } from "../../schematic/schematic-region.js";
 import { BlockLookup, loadBlocks } from "../../blocks";
 import { coordToIndex } from "../../dithering";
 import { paletteStore } from '../../context/palette-store';
 import { imageAsBlocks } from '../../image.js';
 
-import styles from './styles.module.css';
 import { useStore } from '@nanostores/react';
 import { texturizerOptionsStore } from '../../context/texturizer-store.js';
 import { Minimap } from '../minimap/index.jsx';
+import { blockGrid } from '../../context/block-grid-store.js';
 
 const MONOCHROME_STEPS = 32;
 const TextureSwatchMemo = memo(TextureSwatch);
@@ -78,69 +75,12 @@ export function Texturizer() {
 	/** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
 	const canvasRef = useRef(null);
 	const noiserRef = useRef(null);
-	const [textureBlocks, setTextureBlocks] = useState(null);
 	const texturizerOptions = useStore(texturizerOptionsStore);
+	const textureBlocks = useStore(blockGrid);
 
 	const [blocks, setBlocks] = useState([]);
 
 	const palette = useStore(paletteStore);
-
-	const downloadSchematicRef = useRef(null);
-
-	async function downloadSchematic() {
-		const width = texturizerOptions.width;
-		const height = texturizerOptions.height;
-
-		const schematic = new LitematicaSchematic({
-			author: 'Block Game Tools',
-			description: "",
-			name: 'Texturizer',
-			timeCreated: new Date(),
-			timeModified: new Date(),
-		});
-
-		const region = new SchematicRegion({x: 0, y: 0, z: 0}, {x: width, y: 1, z: height});
-
-		for (let idx = 0; idx < textureBlocks.length; idx++) {
-			/** @type {import('shared/src/block').Block} */
-			const block = textureBlocks[idx];
-			const properties = {};
-
-			if (block.name === 'polished_basalt_side') {
-				console.log(block);
-			}
-
-			// Hacky way of determining the axis
-			// TODO: this should be added to the preprocessed data instead
-			if (block.name.endsWith('_side') || block.name.endsWith('_log')) {
-				properties.axis = 'z';
-			} else if (block.name.endsWith('_top')) {
-				properties.axis = 'y';
-			}
-
-			region.setBlock('minecraft:' + block.blockIds[0], properties, {
-				x: idx % width,
-				y: 0,
-				z: Math.floor(idx / width),
-			});
-		}
-
-		schematic.addRegion('region', region);
-
-		const blob = await LitematicaSchematic.writeCompressed(schematic);
-		const url = URL.createObjectURL(new Blob([blob]));
-		const anchor = document.createElement('a');
-
-		anchor.href = url.toString();
-		anchor.download = 'schematic.litematic';
-
-		document.body.appendChild(anchor);
-
-		anchor.click();
-		anchor.remove();
-
-		window.URL.revokeObjectURL(url);
-	}
 
 	useEffect(() => {
 		paletteStore.set('average');
@@ -206,6 +146,11 @@ export function Texturizer() {
 		}
 
 		const ctx = canvasRef.current.getContext('2d');
+
+		if (!ctx) {
+			return;
+		}
+
 		const pixels = ctx.getImageData(0, 0, width, height);
 		const noiseScale = texturizerOptions.noiseScale;
 
@@ -224,16 +169,13 @@ export function Texturizer() {
 
 		const textureBlocks = imageAsBlocks(pixels, palette, texturizerOptions.ditheringAlgo, blockLookup);
 
-		setTextureBlocks(textureBlocks);
+		blockGrid.set(textureBlocks);
 
 		ctx.putImageData(pixels, 0, 0);
 	}, [texturizerOptions, palette, blockLookup])
 
 	return <>
 		<PaletteContext.Provider value={palette}>
-			<div className={styles['texturizer-controls']}>
-				<button ref={downloadSchematicRef} onClick={downloadSchematic}>Download Litematica Schematic</button>
-			</div>
 			<Minimap ref={canvasRef} naturalWidth={texturizerOptions.width} naturalHeight={texturizerOptions.height} scale={64}></Minimap>
 			<SwatchGrid width={texturizerOptions.width} height={texturizerOptions.height} blocks={textureBlocks} />
 		</PaletteContext.Provider>
